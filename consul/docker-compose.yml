@@ -1,0 +1,132 @@
+version: '2'
+services:
+
+  consul:
+    image: "consul"
+    network_mode: host
+    container_name: consul
+    hostname: $HOSTNAME
+    restart: always
+    environment:
+      SERVICE_8500_CHECK_HTTP: /ui
+      SERVICE_8500_NAME: consul
+      SERVICE_8500_CHECK_INTERVAL: 10s
+      SERVICE_8500_CHECK_TIMEOUT: 5s
+      SERVICE_8500_TAGS: urlprefix-consul*/
+      SERVICE_8300_IGNORE: 'yes'
+      SERVICE_8301_IGNORE: 'yes'
+      SERVICE_8302_IGNORE: 'yes'
+      SERVICE_8400_IGNORE: 'yes'
+      SERVICE_8600_IGNORE: 'yes'
+      CONSUL_LOCAL_CONFIG: '{"skip_leave_on_interrupt": true}'
+      CONSUL_ALLOW_PRIVILEGED_PORTS: 'yes'
+#    command: -server -bootstrap -dev -ui
+#    command: consul agent -dev -ui -advertise 172.26.5.218
+    command: agent -server -advertise 172.26.5.218 -client 172.26.5.218 -bootstrap-expect=1 -data-dir=/tmp -dns-port=53 -ui
+    ports:
+      - "8300:8300"
+      - "8301:8301"
+      - "8302:8302"
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600/udp"
+#      - "53:53/udp"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/local/docker/hashicorp/consul/config:/consul/config
+
+  registrator:
+    depends_on:
+      - consul
+    image: gliderlabs/registrator:latest
+    command: "-ip 172.26.5.218 consul://172.26.5.218:8500"
+    network_mode: host
+    container_name: registrator
+    hostname: registrator
+    restart: always
+    environment:
+      SERVICE_TAGS: "infra,consul,registrator"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+
+  fabio:
+    depends_on:
+      - consul
+      - registrator
+    image: magiconair/fabio
+    network_mode: host
+    container_name: fabio
+    dns:
+      - 192.168.1.1
+      - 172.26.5.218
+    hostname: fabio
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/local/docker/consul/fabio:/etc/fabio
+    environment:
+      SERVICE_TAGS: "urlprefix-fabio*/"
+    ports:
+      - "9998:9998"
+      - "9999:9999"
+
+
+  vault:
+    depends_on:
+      - consul
+    image: "vault"
+    container_name: vault
+    hostname: vault
+    restart: always
+    links:
+      - "consul:consul"
+    environment:
+      SERVICE_TAGS: "infra,consul,vault"
+      SERVICE_8200_NAME: "vault"
+      VAULT_ADDR: http://127.0.0.1:8200
+    ports:
+      - "8200:8200"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/local/docker/consul/wait-for-it.sh:/wait-for-it.sh
+      - /usr/local/docker/consul/with-consul.hcl:/config/with-consul.hcl
+    entrypoint: /wait-for-it.sh -t 20 -h consul -p 8500 -s -- vault server -config=/config/with-consul.hcl
+#
+#  vault_ui:
+#    depends_on:
+#      - vault
+#    build: ./Dockerfile.vault_ui
+#    image: vault_ui
+#    container_name: vault_ui
+#    hostname: vault_ui
+#    restart: always
+#    environment:
+#      - "VAULT_ADDR=vault.oppd.oppd-ds.com"
+#    ports:
+#      - "8701:80"
+
+#  nomad:
+#    depends_on:
+#      - consul
+#      - vault
+#
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.nomad
+#    image: nomad
+#    network_mode: "host"
+#    container_name: nomad
+#    hostname: nomad
+#    restart: always
+#    environment:
+#      SERVICE_TAGS: "infra,consul,nomad"
+#    ports:
+#      - "4646:4646"
+#      - "4647:4647"
+#      - "4648:4648"
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - /docker/data/nomad/:/data
+#      - /docker/config/nomad/:/config
+

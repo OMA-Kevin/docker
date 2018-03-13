@@ -1,0 +1,13 @@
+# account_key is the only required value
+account_key:
+hostname:
+display_name:
+log_file:
+ruby_path:
+environment:
+roles:
+agent_data_file:
+http_proxy:
+https_proxy:
+statsd:
+  addr: 172.17.42.1:8125

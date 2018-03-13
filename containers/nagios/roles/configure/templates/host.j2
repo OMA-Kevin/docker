@@ -1,0 +1,11 @@
+
+
+define host {
+	use                     {{ ansible_system|lower }}-server
+	host_name               {{ ansible_hostname }} 
+	alias                   {{ ansible_nodename }}
+	address                 {{ ansible_default_ipv4.address }}
+	hostgroups 		{{group_names[0]}}
+}
+
+

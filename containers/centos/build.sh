@@ -1,0 +1,6 @@
+
+
+
+
+docker build -t centos .
+

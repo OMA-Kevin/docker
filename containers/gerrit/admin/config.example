@@ -1,0 +1,38 @@
+[gerrit]
+        basePath = git
+        canonicalWebUrl = http://gerrit
+[database]
+        type = h2
+        database = db/ReviewDB
+[index]
+        type = LUCENE
+[auth]
+        type = LDAP
+        gitBasicAuth = true
+[sendemail]
+        smtpServer = localhost
+        enable = false
+[container]
+        user = root
+        javaHome = /usr/java/latest
+        heapLimit = 2048m
+        javaOptions = 
+[sshd]
+        listenAddress = *:29418
+[httpd]
+        listenUrl = proxy-http://*:8080
+[cache]
+        directory = cache
+[ldap]
+        server = ldap://sepds03.oppd.oppd-ds.com:3268
+        accountBase = ou=Accounts,dc=oppd,dc=oppd-ds,dc=com
+        accountPattern = (&(objectClass=person)(sAMAccountName=${username}))
+        accountFullName = sAMAccountName
+        accountEmailAddress = mail
+        username = cn=wlaldap,ou=Accounts,dc=oppd,dc=oppd-ds,dc=com
+        password = www.wla1
+        groupBase = ou=Accounts,dc=oppd,dc=oppd-ds,dc=com
+[plugins]
+        allowRemoteAdmin = true
+[gitweb]
+        cgi = /var/www/git/gitweb.cgi

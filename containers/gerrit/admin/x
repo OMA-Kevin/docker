@@ -1,0 +1,60 @@
+gerrit_config=$(env | grep "^grr_" | sort)
+arr=($gerrit_config)
+last_section=""
+for i in ${arr[@]}; 
+do 
+    i=${i:4}
+    section=$(echo $i | cut -d'_' -f 1)
+    if [ "$last_section" == "" ] || [ "$last_section" != $section ]
+    then 
+        echo " "
+        echo "[$section]"
+        last_section=$section
+    fi
+    line="${i#_${section}}"
+    line=${line/=/ = }
+    echo "        $line"
+done
+
+
+
+#
+#[gerrit]
+#        basePath = git
+#        canonicalWebUrl = http://gerrit
+#[database]
+#        type = h2
+#        database = db/ReviewDB
+#[index]
+#        type = LUCENE
+#[auth]
+#        allowRemoteAdmin = true
+#[gitweb]
+#        cgi = /var/www/git/gitweb.cgi
+##http://gerrit-review.googlesource.com/Documentation/config-gerrit.html#log
+#grr.gerrit.basePath=git
+#grr.gerrit.canonicalWebUrl=http://gerrit
+#grr.database.type=h2
+#grr.database.database=db/ReviewDB
+#grr.index.type=LUCENE
+#grr.auth.type=LDAP
+#grr.auth.gitBasicAuth=true
+#grr.sendemail.smtpServer=localhost
+#grr.sendemail.enable=false
+#grr.container.user=root
+#grr.container.javaHome=/usr/java/latest
+#grr.container.heapLimit=2048m
+#grr.container.javaOptions=
+#grr.sshd.listenAddress=*:29418
+#grr.httpd.listenUrl=proxy-http://*:8080
+#grr.cache.directory=cache
+#grr.ldap.server=ldap://sepds03.oppd.oppd-ds.com:3268
+#grr.ldap.accountBase=ou=Accounts,dc=oppd,dc=oppd-ds,dc=com
+#grr.ldap.accountPattern=(&(objectClass=person)(sAMAccountName=${username}))
+#grr.ldap.accountFullName=sAMAccountName
+#grr.ldap.accountEmailAddress=mail
+#grr.ldap.username=cn=wlaldap,ou=Accounts,dc=oppd,dc=oppd-ds,dc=com
+#grr.ldap.password=www.wla1
+#grr.ldap.groupBase=ou=Accounts,dc=oppd,dc=oppd-ds,dc=com
+#grr.plugins.allowRemoteAdmin=true
+#grr.gitweb.cgi=/var/www/git/gitweb.cgi

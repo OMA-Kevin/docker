@@ -1,0 +1,12 @@
+
+define hostextinfo{
+	host_name	{{ansible_hostname}}
+	notes		This is the primary Netware file server
+	notes_url	http://webserver.localhost.localdomain/hostinfo.pl?host=netware1
+	icon_image	{{ansible_distribution}}.png 
+#	icon_image_alt	IntranetWare 4.11
+	vrml_image	{{ansible_distribution}}.png
+	statusmap_image	{{ansible_distribution}}.gd2
+#	2d_coords	100,250
+#	3d_coords	100.0,50.0,75.0
+	}

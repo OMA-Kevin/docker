@@ -1,0 +1,136 @@
+---
+- name: Load distribution specifics
+  include_vars: '../vars/{{ ansible_os_family }}.yml'
+
+
+- name: Install required packages
+  action: "{{ ansible_pkg_mgr }} {{ 'pkg' if ansible_pkg_mgr == 'apt' else 'name' }}={{ item }} state=latest"
+  with_items:
+    - "{{ build_tools }}"
+    - "{{ ssl_libs }}"
+    - "{{ ldap_libs }}"
+    - "{{ mysql_libs }}"
+    - python-psycopg2
+    - autoconf
+    - automake
+    - m4
+    - unzip
+    - python-devel
+    - python-pip
+    - mailx
+    - mod_ldap
+    - perl-Net-SNMP
+    - "{{ apache }}"
+    - "{{ gd }}"
+    - "{{ gd_dev }}"
+    - "{{ php }}"
+    - "{{ rrdtools }}"
+    - "{{ gd_perl }}"
+    - python-pip
+    - gperf
+    - mailx
+
+- name: copy vhost config
+  copy: src=nagios-vhost.conf dest=/etc/httpd/conf.d/nagios.conf owner=nagios
+
+- name: Install python packages
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - passlib
+    - mechanize
+    - sleekxmpp
+    - python-novaclient
+    - python-neutronclient
+
+- name: Add nagcmd group
+  group:
+    name: nagcmd
+    state: present
+
+- name: Set up nagios and www users
+  user:
+    name: "{{ item }}"
+    createhome: no
+    groups: nagcmd
+  with_items:
+    - nagios
+    - apache
+
+#- name: Allow nagios to run python as postgres
+#  lineinfile:
+#    dest: /etc/sudoers
+#    line: 'nagios ALL=(postgres) NOPASSWD:/usr/bin/python'
+#    validate: 'visudo -cf %s'
+
+- name: clone nagios and plugins
+  git: repo={{ item.url }} dest={{ item.dest }} force=yes
+  with_items:
+    - {url: "https://github.com/NagiosEnterprises/nagioscore.git",dest: /tmp/nagioscore}
+#    - {url: "http://git.code.sf.net/p/nagiosgraph/git",dest: /tmp/nagiosgraph}
+#    - {url: "https://github.com/nagios-plugins/nagios-plugins.git",dest: /tmp/nagios-plugins}
+#    - {url: "http://git.code.sf.net/p/nagios/nrpe",dest: /tmp/nrpe}
+
+#- name: create configure script
+#  shell: ./autogen.sh
+#    chdir=/tmp/nagios-plugins
+#  register: autogen_plugins
+#- debug: var=autogen_plugins
+
+#- name: Configure nagios plugins
+#  shell: ./configure --with-nagios-user=nagios --with-nagios-group=nagios --enable-perl-modules
+#    chdir=/tmp/nagios-plugins
+#    creates=/tmp/nagios-plugins/Makefile
+#  register: configure_plugins
+#- debug: var=configure_plugins
+#
+#- name: Build nagios plugins and install
+#  shell: make {{ item }}
+#    chdir=/tmp/nagios-plugins
+#  with_items:
+#    - ""
+#    - install
+#  register: build_plugins
+#- debug: var=build_plugins
+
+#- name: Install extra check_mem plugin
+#  copy:
+#    src: nagios-plugins/check_mem/check_mem.pl
+#    dest: /usr/local/nagios/libexec/check_mem
+#    owner: nagios
+#    group: nagios
+#    mode: 0755
+
+#- name: Upload extra plugins
+#  copy:
+#    src: "{{ item }}"
+#    dest: "/usr/local/nagios/libexec/{{ item }}"
+#    owner: nagios
+#    group: nagios
+#    mode: 0755
+#  with_items:
+#    - check_postgresql
+#    - check_snmp_storage
+#    - check_snmp_load
+#    - check_postgresql.py
+#    - check_openstack.py
+#    - check_cas_sessions
+#    - docopt.py
+#
+#- name: Find the ssl library for nrpe configuration
+#  shell: find / -name libssl.so
+#  register: libssl
+#  changed_when: False
+#
+#- name: Configure nrpe
+#  shell: ./configure --with-ssl="{{ '/'.join(libssl.stdout.split('/')[0:-1]) }}"
+#    chdir=/tmp/nrpe
+#    creates=/tmp/nrpe/Makefile
+#
+#- name: Build nrpe
+#  shell: make
+#    chdir=/tmp/nrpe
+#  register: build_nrpe
+#- debug: var=build_nrpe
+
+

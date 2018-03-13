@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# This is a SUID wrapper of the check_postgresql.py script
+# so it can be executed as an arbitrary user instead of the
+# default nagios user, e.g. when using peer authentication.
+sudo -u $1 -H `which python` "$(dirname "$(which "$0")")"/check_postgresql.py ${@:2}

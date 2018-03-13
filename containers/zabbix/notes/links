@@ -1,0 +1,9 @@
+https://hub.docker.com/r/klevo/zabbix_server/
+http://hackersome.com/p/dkanbier/docker-zabbix-server
+http://rancher.com/comparing-monitoring-options-for-docker-deployments/
+https://www.zabbix.com/forum/showthread.php?t=46920
+http://beta.monitoringartist.com/grafana2-for-zenoss5.php
+https://github.com/jangaraj/zabbix-community-docker/tree/master/Dockerfile/zabbix-server-2.4
+http://repo.zabbix.com/zabbix/2.4/rhel/7/x86_64/
+https://github.com/hankerepo/docker-zabbix
+https://github.com/ahelal/ansible-zabbix

@@ -1,0 +1,2203 @@
+mkdir -p /docker/volumes/motion
+docker build -t motion .
+Sending build context to Docker daemon  5.12 kB
+Step 1/6 : FROM motion-prereq
+ ---> bbbc31299b59
+Step 2/6 : MAINTAINER Ross Timson <ross@rosstimson.com>
+ ---> Using cache
+ ---> f2c49e9b4c4e
+Step 3/6 : RUN cd /tmp && git clone https://github.com/Mr-Dave/motion.git motion-mrdave && cd /tmp/motion-mrdave  &&  autoreconf -fiv
+ ---> Using cache
+ ---> 1429bef81812
+Step 4/6 : RUN cd /tmp/motion-mrdave && ./configure --prefix=/usr --without-pgsql --without-sdl --without-sqlite3 --without-mysql
+ ---> Using cache
+ ---> 21d8ce1d3ba6
+Step 5/6 : RUN cd /tmp/motion-mrdave && make
+ ---> Running in b15a93275feb
+Welcome to the setup procedure for Motion, the motion detection daemon! If you get
+error messages during this procedure, please report them to the mailing list. The
+Motion Guide contains all information you should need to get Motion up and running.
+
+Version: 4.0.1+gitefb4c87
+Platform: Linux (if this is incorrect, please read README.FreeBSD)
+
+Generating dependencies, please wait...
+
+Compiling Motion object files...
+--------------------------------------------------------------------------------
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o motion.o motion.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o logger.o logger.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o conf.o conf.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o draw.o draw.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o jpegutils.o jpegutils.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o video_loopback.o video_loopback.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o video_v4l2.o video_v4l2.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o video_common.o video_common.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o video_bktr.o video_bktr.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o netcam.o netcam.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o netcam_ftp.o netcam_ftp.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o netcam_jpeg.o netcam_jpeg.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o netcam_wget.o netcam_wget.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o track.o track.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o alg.o alg.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o event.o event.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o picture.o picture.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o rotate.o rotate.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o webhttpd.o webhttpd.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o stream.o stream.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o md5.o md5.c
+gcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o netcam_rtsp.o netcam_rtsp.c
+[91mnetcam_rtsp.c: In function 'decode_packet':
+netcam_rtsp.c:102:5: warning: 'avcodec_decode_video2' is deprecated [-Wdeprecated-declarations]
+     retcd = avcodec_decode_video2(cc, frame, &check, packet);
+     ^~~~~
+[0m[91mIn file included from netcam_rtsp.h:8:0,
+                 from netcam_rtsp.c:23:
+/usr/include/ffmpeg/libavcodec/avcodec.h:4753:5: note: declared here
+ int avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
+     ^~~~~~~~~~~~~~~~~~~~~
+[0m[91mnetcam_rtsp.c: In function 'netcam_open_codec':
+netcam_rtsp.c:160:5: warning: 'codec' is deprecated [-Wdeprecated-declarations]
+     dec_ctx = st->codec;
+     ^~~~~~~
+In file included from netcam_rtsp.h:9:0,
+                 from netcam_rtsp.c:23:
+/usr/include/ffmpeg/libavformat/avformat.h:880:21: note: declared here
+     AVCodecContext *codec;
+                     ^~~~~
+[0m[91mnetcam_rtsp.c: In function 'netcam_rtsp_open_context':
+[0m[91mnetcam_rtsp.c:490:5: warning: 'codec' is deprecated [-Wdeprecated-declarations]
+     netcam->rtsp->codec_context = netcam->rtsp->format_context->streams[netcam->rtsp->video_stream_index]->codec;
+     ^~~~~~
+In file included from netcam_rtsp.h:9:0,
+                 from netcam_rtsp.c:23:
+/usr/include/ffmpeg/libavformat/avformat.h:880:21: note: declared here
+     AVCodecContext *codec;
+                     ^~~~~
+[0mgcc -g -O2 -I/usr/local/include -g -O2 -D_REENTRANT   -march=native -mtune=native -Wall -DVERSION=\"4.0.1+gitefb4c87\" -Dsysconfdir=\"/etc\" -I/usr/include/ffmpeg    -c -o ffmpeg.o ffmpeg.c
+[91mffmpeg.c: In function 'ffmpeg_cleanups':
+ffmpeg.c:304:9: warning: 'codec' is deprecated [-Wdeprecated-declarations]
+         avcodec_close(AVSTREAM_CODEC_PTR(ffmpeg->video_st));
+         ^~~~~~~~~~~~~
+[0m[91mIn file included from ffmpeg.h:17:0,
+                 from ffmpeg.c:26:
+/usr/include/ffmpeg/libavformat/avformat.h:880:21: note: declared here
+     AVCodecContext *codec;
+                     ^~~~~
+ffmpeg.c: In function 'ffmpeg_put_frame':
+[0m[91mffmpeg.c:343:9: warning: 'avcodec_encode_video2' is deprecated [-Wdeprecated-declarations]
+         retcd = avcodec_encode_video2(AVSTREAM_CODEC_PTR(ffmpeg->video_st),
+         ^~~~~
+[0m[91mIn file included from /usr/include/ffmpeg/libavformat/avformat.h:317:0,
+                 from ffmpeg.h:17,
+                 from ffmpeg.c:26:
+/usr/include/ffmpeg/libavcodec/avcodec.h:5261:5: note: declared here
+ int avcodec_encode_video2(AVCodecContext *avctx, AVPacket *avpkt,
+     ^~~~~~~~~~~~~~~~~~~~~
+[0m[91mffmpeg.c:343:9: warning: 'codec' is deprecated [-Wdeprecated-declarations]
+         retcd = avcodec_encode_video2(AVSTREAM_CODEC_PTR(ffmpeg->video_st),
+         ^~~~~
+In file included from ffmpeg.h:17:0,
+                 from ffmpeg.c:26:
+/usr/include/ffmpeg/libavformat/avformat.h:880:21: note: declared here
+     AVCodecContext *codec;
+                     ^~~~~
+[0m[91mffmpeg.c: In function 'ffmpeg_open':
+ffmpeg.c:669:5: warning: 'codec' is deprecated [-Wdeprecated-declarations]
+     ffmpeg->c     = c = AVSTREAM_CODEC_PTR(ffmpeg->video_st);
+     ^~~~~~
+In file included from ffmpeg.h:17:0,
+                 from ffmpeg.c:26:
+/usr/include/ffmpeg/libavformat/avformat.h:880:21: note: declared here
+     AVCodecContext *codec;
+                     ^~~~~
+[0m[91mffmpeg.c: In function 'ffmpeg_close':
+ffmpeg.c:861:9: warning: 'codec' is deprecated [-Wdeprecated-declarations]
+         avcodec_close(AVSTREAM_CODEC_PTR(ffmpeg->video_st));
+         ^~~~~~~~~~~~~
+In file included from ffmpeg.h:17:0,
+                 from ffmpeg.c:26:
+/usr/include/ffmpeg/libavformat/avformat.h:880:21: note: declared here
+     AVCodecContext *codec;
+                     ^~~~~
+[0m--------------------------------------------------------------------------------
+Motion object files compiled.
+
+Linking Motion...
+--------------------------------------------------------------------------------
+gcc -L/usr/local/lib  -o motion motion.o logger.o conf.o draw.o jpegutils.o video_loopback.o video_v4l2.o video_common.o video_bktr.o netcam.o netcam_ftp.o netcam_jpeg.o netcam_wget.o track.o alg.o event.o picture.o rotate.o webhttpd.o stream.o md5.o netcam_rtsp.o ffmpeg.o  -lm -L/usr/local/lib -lpthread -ljpeg   -lavutil -lavformat -lavcodec -lswscale
+[91m/usr/local/lib/libavformat.a(avienc.o): In function `avi_write_header':
+/usr/local/src/ffmpeg/libavformat/avienc.c:474: undefined reference to `av_get_media_type_string'
+/usr/local/lib/libavformat.a(dvenc.o): In function `dv_delete_mux':
+/usr/local/src/ffmpeg/libavformat/dvenc.c:389: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavformat.a(dvenc.o): In function `dv_init_mux':
+/usr/local/src/ffmpeg/[0m[91mlibavformat/dvenc.c:370: undefined reference to `av_fifo_alloc_array'
+/usr/local/lib/libavformat.a(dvenc.o): In function `dv_write_header':
+/usr/local/src/ffmpeg/libavformat/dvenc.c:415: undefined reference to `av_timecode_init_from_string'
+/usr/local/src/ffmpeg/libavformat/dvenc.c:417: undefined reference to `av_timecode_init'
+/usr/local/lib/libavformat.a(dvenc.o): In function `dv_init_mux':
+/usr/local/src/ffmpeg/libavformat/dvenc.c:373: undefined reference to `av_fifo_freep'
+/usr[0m[91m/local/lib/libavformat.a(dvenc.o): In function `dv_write_pack':
+/usr/local/src/ffmpeg/libavformat/dvenc.c:102: undefined reference to `av_timecode_get_smpte_from_framenum'
+/usr/local/src/ffmpeg/libavformat/dvenc.c:102: undefined reference to `av_timecode_get_smpte_from_framenum'
+/usr/local/lib/libavformat.a(dvenc.o): In function `dv_assemble_frame':
+/usr/local/src/ffmpeg/libavformat/dvenc.c:268: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/dvenc.c:270: undefined reference to `av_fifo_generic_write'
+/usr/local/src/ffmpeg/libavformat/dvenc.c:275: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/dvenc.c:289: undefined reference to `av_fifo_drain'
+/usr/local/src/ffmpeg/libavformat/dvenc.c:290: undefined reference to `av_fifo_size'
+/usr/local/lib/libavformat.a(matroskaenc.o): In function `end_ebml_master_crc32':
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:356: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:356: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(matroskaenc.o): In function `mkv_write_header':
+/usr/local/src/ffmpeg[0m[91m/libavformat/matroskaenc.c:1806: undefined reference to `av_get_random_seed'
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1806: undefined reference to `av_lfg_init'
+/usr/local/lib/libavformat.a(matroskaenc.o): In function `get_metadata_duration':
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1701: undefined reference to `av_parse_time'
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1710: undefined reference to `av_parse_time'
+/usr/local/lib/libavformat.a(matroskaenc.o): In function `mkv_write_attachments':
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1611: undefined reference to `av_get_random_seed'
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1611: undefined reference to `av_lfg_init'
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1666: undefined reference to `av_sha_alloc'
+[0m[91m/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1670: undefined reference to `av_sha_init'
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1671: undefined reference to `av_sha_update'
+/usr/local/src/ffmpeg/libavformat/matroskaenc.c:1672: undefined reference [0m[91mto `av_sha_final'
+/usr/local/lib/libavformat.a(movenc.o): In function `mov_check_timecode_track':
+/usr/local/src/ffmpeg/libavformat/movenc.c:5347: undefined reference to `av_timecode_init_from_string'
+/usr/local/lib/libavformat.a(movenc.o): In function `find_fps':
+/usr/local/src/ffmpeg/libavformat/movenc.c:1279: undefined reference to `av_timecode_check_frame_rate'
+/usr/local/src/ffmpeg/libavformat/movenc.c:1279: undefined reference to `av_timecode_check_frame_rate'
+/usr/local/src/ffmpeg/libavformat/movenc.c:1279: undefined reference to `av_timecode_check_frame_rate'
+/usr/local/src/ffmpeg/libavformat/movenc.c:1279: undefined reference to `av_timecode_check_frame_rate'
+/usr/local/lib/libavformat.a(movenc.o): In function `mov_write_gama_tag':
+/usr/local/src/ffmpeg/libavformat/movenc.c:1624: undefined reference to `avpriv_get_gamma_from_trc'
+/usr/local/lib/libavformat.a(movenc.o): In function `find_fps':
+/usr/local/src/ffmpeg/libavformat/movenc.c:1279: undefined reference to `[0m[91mav_timecode_check_frame_rate'
+/usr/local/src/ffmpeg/libavformat/movenc.c:1279: undefined reference to `av_timecode_check_frame_rate'
+/usr/local/lib/libavformat.a(movenc.o): In function `mov_check_timecode_track':
+/usr/local/src/ffmpeg/libavformat/movenc.c:5347: undefined reference to `av_timecode_init_from_string'
+/usr/local/lib/libavformat.a(mpegenc.o): In function `flush_packet':
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:747: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:785: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:880: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:881: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:785: undefined reference to `av_fifo_size'
+/usr/local/lib/libavformat.a(mpegenc.o): In function `mpeg_mux_write_packet':
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1159: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1159: undefined reference to `av_fifo_realloc2'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1167: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1173: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavformat.a(mpegenc.o): In function `output_packet':
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:979: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1049: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1069: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:979: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1049: undefined reference to `av_fifo_size'
+/usr/local/lib/libavformat.a(mpegenc.o): In function `mpeg_mux_end':
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1205: undefined reference to `av_fifo_freep'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1204: undefined reference to `av_fifo_size'
+/usr/local/lib/libavformat.a(mpegenc.o): In function `output_packet':
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:1069: undefined reference to `av_fifo_size'
+/usr/local/lib/libavformat.a(mpegenc.o): In function `mpeg_mux_init':
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:417: undefined reference to `av_get_media_type_string'
+/usr/local/src/ffmpeg/libavformat/mpegenc.c:421: undefined reference to `av_fifo_alloc'
+/usr/local/lib/libavformat.a(mux.o): In function `avformat_alloc_output_context2':
+/usr/local/src/ffmpeg/libavformat/mux.c:184: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libavformat.a(mux.o): In function `init_muxer':
+/usr/local/src/ffmpeg/libavformat/mux.c:248: undefined reference to `av_opt_set_dict'
+/usr/local/src/ffmpeg/libavformat/mux.c:398: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavformat/mux.c:399: undefined reference to `av_opt_set_dict2'
+/usr/local/src/ffmpeg/libavformat/mux.c:250: undefined reference to `av_opt_set_dict2'
+/usr/local/lib/libavformat.a(mux.o): In function `[0m[91mav_write_trailer':
+/usr/local/src/ffmpeg/libavformat/mux.c:1351: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(rdt.o): In function `rdt_parse_b64buf':
+/usr/local/src/ffmpeg/libavformat/rdt.c:404: undefined reference to `av_base64_decode'
+/usr/local/lib/libavformat.a(rdt.o): In function `[0m[91mff_rdt_calc_response_and_checksum':
+/usr/local/src/ffmpeg/libavformat/rdt.c:119: undefined reference to `av_md5_sum'
+/usr/local/lib/libavformat.a(rtsp.o): In function `rtsp_send_cmd_with_content_async':
+/usr/local/src/ffmpeg/libavformat/rtsp.c:1334: undefined reference to `av_base64_encode'
+/usr/local/src/ffmpeg/libavformat/rtsp.c:1349: undefined reference to[0m[91m `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/rtsp.c:1334: undefined[0m[91m reference[0m[91m to `[0m[91mav_base64_encode'
+/usr[0m[91m/[0m[91mlocal[0m[91m/lib/libavformat.a([0m[91mrtsp.o)[0m[91m: [0m[91mIn [0m[91mfunction `rtsp_parse_range_npt':
+/usr/[0m[91mlocal[0m[91m/[0m[91msrc[0m[91m/[0m[91mffmpeg/[0m[91mlibavformat/rtsp.c:[0m[91m177[0m[91m:[0m[91m undefined[0m[91m reference[0m[91m [0m[91mto `av_parse_time'
+[0m[91m/[0m[91musr[0m[91m/[0m[91mlocal/src[0m[91m/ffmpeg[0m[91m/[0m[91mlibavformat/[0m[91mrtsp.c:[0m[91m182: undefined reference[0m[91m [0m[91mto[0m[91m [0m[91m`av_parse_time'
+/[0m[91musr[0m[91m/[0m[91mlocal/lib/libavformat.a[0m[91m(rtsp.o[0m[91m): In function `ff_rtsp_read_reply'[0m[91m:
+[0m[91m/usr/local/src/ffmpeg[0m[91m/libavformat[0m[91m/rtsp.c:1252: undefined reference[0m[91m to[0m[91m [0m[91m`[0m[91mav_gettime_relative[0m[91m'[0m[91m
+[0m[91m/usr/local/src/[0m[91mffmpeg[0m[91m/[0m[91mlibavformat[0m[91m/[0m[91mrtsp.c[0m[91m:[0m[91m1247: undefined[0m[91m [0m[91mreference to[0m[91m [0m[91m`[0m[91mav_base64_encode[0m[91m'[0m[91m
+/usr/[0m[91mlocal/lib/libavformat.a[0m[91m([0m[91mrtsp.o[0m[91m): [0m[91mIn[0m[91m function `udp_read_packet'[0m[91m:
+/usr/local[0m[91m/src/[0m[91mffmpeg/[0m[91mlibavformat[0m[91m/[0m[91mrtsp.c:1938:[0m[91m [0m[91mundefined[0m[91m [0m[91mreference to [0m[91m`[0m[91mav_gettime_relative[0m[91m'[0m[91m
+[0m[91m/[0m[91musr[0m[91m/[0m[91mlocal[0m[91m/lib[0m[91m/[0m[91mlibavformat.a[0m[91m([0m[91mrtsp.o[0m[91m)[0m[91m:[0m[91m [0m[91mIn[0m[91m [0m[91mfunction[0m[91m [0m[91m`[0m[91mff_rtsp_fetch_packet[0m[91m'[0m[91m:[0m[91m
+/usr/[0m[91mlocal[0m[91m/[0m[91msrc/ffmpeg/[0m[91mlibavformat[0m[91m/[0m[91mrtsp.c[0m[91m:[0m[91m2137[0m[91m:[0m[91m [0m[91mundefined[0m[91m [0m[91mreference[0m[91m [0m[91mto[0m[91m [0m[91m`av_gettime_relative'[0m[91m
+[0m[91m/[0m[91musr/local[0m[91m/lib/libavformat.a(rtsp.o)[0m[91m: In[0m[91m [0m[91mfunction[0m[91m `[0m[91mff_rtsp_make_setup_request':[0m[91m
+/[0m[91musr[0m[91m/local/src/ffmpeg/[0m[91mlibavformat[0m[91m/[0m[91mrtsp.c[0m[91m:[0m[91m1430:[0m[91m [0m[91mundefined[0m[91m [0m[91mreference [0m[91mto `av_get_random_seed'
+/[0m[91musr[0m[91m/local[0m[91m/[0m[91mlib[0m[91m/[0m[91mlibavformat.a(rtsp.o): In [0m[91mfunction[0m[91m [0m[91m`[0m[91mff_rtsp_connect':
+/usr[0m[91m/local[0m[91m/src/ffmpeg/libavformat[0m[91m/rtsp.c:1737[0m[91m: undefined reference [0m[91mto `av_get_random_seed'[0m[91m
+/usr/local/[0m[91msrc/ffmpeg/libavformat[0m[91m/[0m[91mrtsp.c:1737: [0m[91mundefined reference[0m[91m to `av_get_random_seed'[0m[91m
+/usr/local/[0m[91msrc/ffmpeg/libavformat/[0m[91mrtsp.c:1754: undefined[0m[91m reference to `[0m[91mav_opt_set'[0m[91m
+/usr/[0m[91mlocal/[0m[91msrc[0m[91m/ffmpeg[0m[91m/[0m[91mlibavformat/rtsp.c:1884[0m[91m:[0m[91m undefined[0m[91m [0m[91mreference[0m[91m [0m[91mto[0m[91m `ff_log2_tab'
+[0m[91m/[0m[91musr/local[0m[91m/src[0m[91m/ffmpeg/libavformat/rtsp.c[0m[91m:1786:[0m[91m [0m[91mundefined[0m[91m [0m[91mreference[0m[91m to [0m[91m`[0m[91mav_opt_set[0m[91m'[0m[91m
+[0m[91m/usr/local[0m[91m/[0m[91msrc/ffmpeg/libavformat[0m[91m/[0m[91mrtsp.c:1787[0m[91m:[0m[91m [0m[91mundefined reference to[0m[91m `av_opt_set'
+/[0m[91musr/local/lib[0m[91m/[0m[91mlibavformat.a([0m[91mswfdec.o): [0m[91mIn[0m[91m function[0m[91m [0m[91m`[0m[91mswf_read_packet':
+/[0m[91musr[0m[91m/local/src/ffmpeg[0m[91m/[0m[91mlibavformat/swfdec.c:[0m[91m364[0m[91m: undefined reference[0m[91m [0m[91mto[0m[91m `uncompress'
+/usr/local/lib[0m[91m/[0m[91mlibavformat.a[0m[91m([0m[91mswfdec.o): [0m[91mIn[0m[91m function `swf_read_header[0m[91m'[0m[91m:[0m[91m
+/usr/local/src/ffmpeg/libavformat[0m[91m/swfdec.c[0m[91m:153: undefined [0m[91mreference[0m[91m to [0m[91m`[0m[91minflateInit_'
+/usr/[0m[91mlocal[0m[91m/lib/libavformat.a(swfdec.o[0m[91m)[0m[91m: In[0m[91m [0m[91mfunction[0m[91m `zlib_refill[0m[91m'[0m[91m:
+/usr/local/src/[0m[91mffmpeg/libavformat/[0m[91mswfdec.c:[0m[91m121: [0m[91mundefined reference [0m[91mto[0m[91m [0m[91m`inflate'
+/usr/local[0m[91m/lib/libavformat.a(swfdec.o):[0m[91m In function[0m[91m `[0m[91mswf_read_close[0m[91m':
+/usr/local/src/ffmpeg/libavformat/swfdec.c:531: undefined reference to `inflateEnd'
+/usr/local/lib/libavformat.a(utils.o): In function `ff_read_packet':
+/usr/local/src/ffmpeg/libavformat/utils.c:876: undefined reference to `av_gettime'
+/usr/local/lib/libavformat.a(utils.o): In function `read_frame_internal':
+/usr/local/src/ffmpeg/libavformat/utils.c:1679: undefined reference to `av_opt_get_dict_val'
+/usr/local/src/ffmpeg/libavformat/utils.c:1684: undefined reference to `av_opt_set_dict_val'
+/usr/local/lib/libavformat.a(utils.o): In function `avformat_find_stream_info':
+/usr/local/src/ffmpeg/libavformat/utils.c:3382: undefined reference to `av_opt_ptr'
+/usr/local/src/ffmpeg/libavformat/utils.c:3386: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavformat/utils.c:3852: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(utils.o): In function `estimate_timings_from_pts':
+/usr/local/src/ffmpeg/libavformat/utils.c:2740: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavformat/utils.c:2808: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(utils.o): In function `avformat_free_context':
+/usr/local/src/ffmpeg/libavformat/utils.c:4172: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/utils.c:4174: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/utils.c:4176: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(utils.o): In function `ff_ntp_time':
+/usr/local/src/ffmpeg/libavformat/utils.c:4417: undefined reference to `av_gettime'
+/usr/local/lib/libavformat.a(utils.o): In function `avformat_open_input':
+/usr/local/src/ffmpeg/libavformat/utils.c:533: undefined reference to `av_opt_set_dict'
+/usr/local/src/ffmpeg/libavformat/utils.c:583: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavformat/utils.c:584: undefined reference to `av_opt_set_dict'
+/usr/local/lib/libavformat.a(utils.o): In function `ff_stream_add_bitstream_filter':
+/usr/local/src/ffmpeg/libavformat/utils.c:5216: undefined reference to `av_opt_next'
+/usr/local/src/ffmpeg/libavformat/utils.c:5222: undefined reference to `av_opt_set_from_string'
+/usr/local/lib/libavformat.a(utils.o): In function `ff_parse_creation_time_metadata':
+/usr/local/src/ffmpeg/libavformat/utils.c:5325: undefined reference to `av_parse_time'
+/usr/local/src/ffmpeg/libavformat/utils.c:5325: undefined reference to `av_parse_time'
+/usr/local/lib/libavformat.a(data_uri.o): In function `data_open':
+/usr/local/src/ffmpeg/libavformat/data_uri.c:78: undefined reference to `av_base64_decode'
+/usr/local/lib/libavcodec.a(alsdec.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/alsdec.c:1861: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/alsdec.c:1838: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/alsdec.c:1838: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(alsdec.o): In function `read_specific_config':
+/usr/local/src/ffmpeg/libavcodec/alsdec.c:423: undefined reference to `av_crc_get_table'
+/usr/local/lib/libavcodec.a(amrwbdec.o): In function `amrwb_decode_init':
+/usr/local/src/ffmpeg/libavcodec/amrwbdec.c:112: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(ansi.o): In function `execute_code':
+/usr/local/src/ffmpeg/libavcodec/ansi.c:224: undefined reference to `avpriv_vga16_font'
+/usr/local/src/ffmpeg/libavcodec/ansi.c:244: undefined reference to `avpriv_cga_font'
+/usr/local/src/ffmpeg/libavcodec/ansi.c:230: undefined reference to `avpriv_cga_font'
+/usr/local/src/ffmpeg/libavcodec/ansi.c:238: undefined reference to `avpriv_cga_font'
+/usr/local/src/ffmpeg/libavcodec/ansi.c:218: undefined reference to `avpriv_cga_font'
+/usr/local/lib/libavcodec.a(ansi.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/ansi.c:88: undefined reference to `avpriv_vga16_font'
+/usr/local/lib/libavcodec.a(asvdec.o): In function `asv2_get_bits':
+/usr/local/src/ffmpeg/libavcodec/asvdec.c:74: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(asvdec.o): In function `asv2_decode_block':
+/usr/local/src/ffmpeg/libavcodec/asvdec.c:134: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(asvdec.o): In function `asv2_get_level':
+/usr/local/src/ffmpeg/libavcodec/asvdec.c:92: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/asvdec.c:92: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/asvdec.c:92: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(asvdec.o):/usr/local/src/ffmpeg/libavcodec/asvdec.c:92: more undefined references to `ff_reverse' follow
+/usr/local/lib/libavcodec.a(atrac1.o): In function `atrac1_decode_init':
+/usr/local/src/ffmpeg/libavcodec/atrac1.c:364: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(atrac3.o): In function `atrac3_decode_init':
+/usr/local/src/ffmpeg/libavcodec/atrac3.c:999: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(atrac3plusdec.o): In function `atrac3p_decode_init':
+/usr/local/src/ffmpeg/libavcodec/atrac3plusdec.c:174: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(bintext.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/bintext.c:87: undefined reference to `avpriv_cga_font'
+/usr/local/src/ffmpeg/libavcodec/bintext.c:90: undefined reference to `avpriv_vga16_font'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_free':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_alloc':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:113: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:124: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_free':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_list_append2':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:435: undefined reference to `av_opt_set_dict2'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_free':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_alloc':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:113: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:124: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_free':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_list_append2':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:435: undefined reference to `av_opt_set_dict2'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_free':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_alloc':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:113: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:124: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libavcodec.a(bsf.o): In function `av_bsf_free':
+/usr/local/src/ffmpeg/libavcodec/bsf.c:47: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/bsf.c:49: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(cinepakenc.o): In function `cinepak_encode_init':
+/usr/local/src/ffmpeg/libavcodec/cinepakenc.c:244: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(cngdec.o): In function `cng_decode_init':
+/usr/local/src/ffmpeg/libavcodec/cngdec.c:75: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(cook.o): In function `cook_decode_init':
+/usr/local/src/ffmpeg/libavcodec/cook.c:1079: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(cscd.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/cscd.c:91: undefined reference to `uncompress'
+/usr/local/src/ffmpeg/libavcodec/cscd.c:84: undefined reference to `av_lzo1x_decode'
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_handle_picture_display':
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:319: undefined reference to `av_fifo_generic_write'
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:321: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_decode_packet':
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:343: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_flush':
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:900: undefined reference to `av_fifo_freep'
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:902: undefined reference to `av_fifo_alloc'
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_handle_video_sequence':
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:283: undefined reference to `av_hwframe_ctx_init'
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_output_frame':
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:438: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:445: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:514: undefined reference to `av_hwframe_transfer_data'
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:457: undefined reference to `av_hwframe_get_buffer'
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_free_functions':
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:168: undefined reference to `dlclose'
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_decode_end':
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:613: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_load_functions':
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:202: undefined reference to `dlopen'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:204: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:205: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:206: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:208: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:209: undefined reference to `dlsym'
+/usr/local/lib/libavcodec.a(cuvid.o):/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:214: more undefined references to `dlsym' follow
+/usr/local/lib/libavcodec.a(cuvid.o): In function `cuvid_decode_init':
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:714: undefined reference to `av_fifo_alloc'
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:735: undefined reference to `av_hwdevice_ctx_create'
+/usr/local/src/ffmpeg/libavcodec/cuvid.c:739: undefined reference to `av_hwframe_ctx_alloc'
+/usr/local/lib/libavcodec.a(dcadec.o): In function `dcadec_init':
+/usr/local/src/ffmpeg/libavcodec/dcadec.c:344: undefined reference to `av_crc_get_table'
+/usr/local/lib/libavcodec.a(dstdec.o): In function `prob_dst_x_bit':
+/usr/local/src/ffmpeg/libavcodec/dstdec.c:200: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(dxa.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/dxa.c:250: undefined reference to `uncompress'
+/usr/local/lib/libavcodec.a(exr.o): In function `decode_block':
+/usr/local/src/ffmpeg/libavcodec/exr.c:1059: undefined reference to `avpriv_get_trc_function_from_trc'
+/usr/local/lib/libavcodec.a(exr.o): In function `pxr24_uncompress':
+/usr/local/src/ffmpeg/libavcodec/exr.c:848: undefined reference to `uncompress'
+/usr/local/lib/libavcodec.a(exr.o): In function `zip_uncompress':
+/usr/local/src/ffmpeg/libavcodec/exr.c:293: undefined reference to `uncompress'
+/usr/local/lib/libavcodec.a(exr.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/exr.c:1767: undefined reference to `avpriv_get_trc_function_from_trc'
+/usr/local/lib/libavcodec.a(ffv1dec.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/ffv1dec.c:864: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/ffv1dec.c:864: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(ffv1dec.o): In function `read_extra_header':
+/usr/local/src/ffmpeg/libavcodec/ffv1dec.c:487: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/ffv1dec.c:487: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(ffv1enc.o): In function `encode_frame':
+/usr/local/src/ffmpeg/libavcodec/ffv1enc.c:1230: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/ffv1enc.c:1230: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(ffv1enc.o): In function `write_extradata':
+/usr/local/src/ffmpeg/libavcodec/ffv1enc.c:460: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/ffv1enc.c:460: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(flac_parser.o): In function `flac_parse_close':
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:747: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavcodec.a(flac_parser.o): In function `check_header_mismatch':
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:387: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:387: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:392: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:392: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(flac_parser.o): In function `get_best_header':
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:514: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:480: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(flac_parser.o): In function `flac_parse':
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:567: undefined reference to `av_fifo_drain'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:620: undefined reference to `av_fifo_space'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:621: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:630: undefined reference to `av_fifo_space'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:639: undefined reference to `av_fifo_generic_write'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:647: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(flac_parser.o): In function `find_new_headers':
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:243: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(flac_parser.o): In function `flac_parse':
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:643: undefined reference to `av_fifo_generic_write'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:631: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:631: undefined reference to `av_fifo_realloc2'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:634: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:709: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(flac_parser.o): In function `flac_parse_init':
+/usr/local/src/ffmpeg/libavcodec/flac_parser.c:727: undefined reference to `av_fifo_alloc_array'
+/usr/local/lib/libavcodec.a(flacdec.o): In function `flac_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/flacdec.c:607: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/flacdec.c:607: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(flacenc.o): In function `write_frame_header':
+/usr/local/src/ffmpeg/libavcodec/flacenc.c:1236: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/flacenc.c:1236: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(flacenc.o): In function `write_frame_footer':
+/usr/local/src/ffmpeg/libavcodec/flacenc.c:1306: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/flacenc.c:1306: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(flacenc.o): In function `update_md5_sum':
+/usr/local/src/ffmpeg/libavcodec/flacenc.c:1353: undefined reference to `av_md5_update'
+/usr/local/lib/libavcodec.a(flacenc.o): In function `flac_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/flacenc.c:1370: undefined reference to `av_md5_final'
+/usr/local/lib/libavcodec.a(flacenc.o): In function `flac_encode_init':
+/usr/local/src/ffmpeg/libavcodec/flacenc.c:420: undefined reference to `av_md5_alloc'
+/usr/local/src/ffmpeg/libavcodec/flacenc.c:423: undefined reference to `av_md5_init'
+/usr/local/lib/libavcodec.a(flashsv.o): In function `flashsv_decode_block':
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:191: undefined reference to `inflateReset'
+/usr/local/lib/libavcodec.a(flashsv.o): In function `flashsv2_prime':
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:158: undefined reference to `inflate'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:160: undefined reference to `deflateInit_'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:166: undefined reference to `deflate'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:167: undefined reference to `deflateEnd'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:169: undefined reference to `inflateReset'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:178: undefined reference to `inflate'
+/usr/local/lib/libavcodec.a(flashsv.o): In function `flashsv_decode_block':
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:207: undefined reference to `inflate'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:210: undefined reference to `inflateSync'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:211: undefined reference to `inflate'
+/usr/local/lib/libavcodec.a(flashsv.o): In function `calc_deflate_block_size':
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:259: undefined reference to `deflateInit_'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:261: undefined reference to `deflateBound'
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:262: undefined reference to `deflateEnd'
+/usr/local/lib/libavcodec.a(flashsv.o): In function `flashsv_decode_end':
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:107: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(flashsv.o): In function `flashsv_decode_init':
+/usr/local/src/ffmpeg/libavcodec/flashsv.c:126: undefined reference to `inflateInit_'
+/usr/local/lib/libavcodec.a(flashsv2enc.o): In function `encode_zlib':
+/usr/local/src/ffmpeg/libavcodec/flashsv2enc.c:354: undefined reference to `compress2'
+/usr/local/lib/libavcodec.a(flashsv2enc.o): In function `encode_zlibprime':
+/usr/local/src/ffmpeg/libavcodec/flashsv2enc.c:366: undefined reference to `deflateInit_'
+/usr/local/src/ffmpeg/libavcodec/flashsv2enc.c:375: undefined reference to `deflate'
+/usr/local/src/ffmpeg/libavcodec/flashsv2enc.c:384: undefined reference to `deflate'
+/usr/local/src/ffmpeg/libavcodec/flashsv2enc.c:385: undefined reference to `deflateEnd'
+/usr/local/lib/libavcodec.a(flashsvenc.o): In function `encode_bitstream':
+/usr/local/src/ffmpeg/libavcodec/flashsvenc.c:182: undefined reference to `compress2'
+/usr/local/lib/libavcodec.a(flashsvenc.o): In function `flashsv_encode_end':
+/usr/local/src/ffmpeg/libavcodec/flashsvenc.c:95: undefined reference to `deflateEnd'
+/usr/local/lib/libavcodec.a(g2meet.o): In function `kempf_decode_tile':
+/usr/local/src/ffmpeg/libavcodec/g2meet.c:1116: undefined reference to `uncompress'
+/usr/local/lib/libavcodec.a(hevc.o): In function `set_side_data':
+/usr/local/src/ffmpeg/libavcodec/hevc.c:2561: undefined reference to `av_stereo3d_create_side_data'
+/usr/local/src/ffmpeg/libavcodec/hevc.c:2593: undefined reference to `av_display_rotation_set'
+/usr/local/src/ffmpeg/libavcodec/hevc.c:2594: undefined reference to `av_display_matrix_flip'
+/usr/local/src/ffmpeg/libavcodec/hevc.c:2610: undefined reference to `av_mastering_display_metadata_create_side_data'
+/usr/local/lib/libavcodec.a(hevc.o): In function `verify_md5':
+/usr/local/src/ffmpeg/libavcodec/hevc.c:2943: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavcodec/hevc.c:2953: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavcodec/hevc.c:2955: undefined reference to `av_md5_final'
+/usr/local/lib/libavcodec.a(hevc.o): In function `hevc_init_context':
+/usr/local/src/ffmpeg/libavcodec/hevc.c:3234: undefined reference to `av_md5_alloc'
+/usr/local/lib/libavcodec.a(imc.o): In function `imc_decode_init':
+/usr/local/src/ffmpeg/libavcodec/imc.c:258: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(ituh263dec.o): In function `ff_h263_show_pict_info':
+/usr/local/src/ffmpeg/libavcodec/ituh263dec.c:79: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(ivi.o): In function `inv_bits':
+/usr/local/src/ffmpeg/libavcodec/ivi.c:130: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/ivi.c:131: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/ivi.c:128: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(lcldec.o): In function `zlib_decomp':
+/usr/local/src/ffmpeg/libavcodec/lcldec.c:133: undefined reference to `inflateReset'
+/usr/local/src/ffmpeg/libavcodec/lcldec.c:142: undefined reference to `inflate'
+/usr/local/src/ffmpeg/libavcodec/lcldec.c:133: undefined reference to `inflateReset'
+/usr/local/src/ffmpeg/libavcodec/lcldec.c:142: undefined reference to `inflate'
+/usr/local/src/ffmpeg/libavcodec/lcldec.c:133: undefined reference to `inflateReset'
+/usr/local/src/ffmpeg/libavcodec/lcldec.c:142: undefined reference to `inflate'
+/usr/local/lib/libavcodec.a(lcldec.o): In function `decode_end':
+/usr/local/src/ffmpeg/libavcodec/lcldec.c:628: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(lcldec.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/lcldec.c:609: undefined reference to `inflateInit_'
+/usr/local/lib/libavcodec.a(lclenc.o): In function `encode_frame':
+/usr/local/src/ffmpeg/libavcodec/lclenc.c:71: undefined reference to `deflateBound'
+/usr/local/src/ffmpeg/libavcodec/lclenc.c:81: undefined reference to `deflateReset'
+/usr/local/src/ffmpeg/libavcodec/lclenc.c:92: undefined reference to `deflate'
+/usr/local/src/ffmpeg/libavcodec/lclenc.c:98: undefined reference to `deflate'
+/usr/local/lib/libavcodec.a(lclenc.o): In function `encode_end':
+/usr/local/src/ffmpeg/libavcodec/lclenc.c:165: undefined reference to `deflateEnd'
+/usr/local/lib/libavcodec.a(lclenc.o): In function `encode_init':
+/usr/local/src/ffmpeg/libavcodec/lclenc.c:151: undefined reference to `deflateInit_'
+/usr/local/lib/libavcodec.a(libfdk-aacdec.o): In function `fdk_aac_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:322: undefined reference to `aacDecoder_Fill'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:328: undefined reference to `aacDecoder_DecodeFrame'
+/usr/local/lib/libavcodec.a(libfdk-aacdec.o): In function `get_stream_info':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:88: undefined reference to `aacDecoder_GetStreamInfo'
+/usr/local/lib/libavcodec.a(libfdk-aacdec.o): In function `fdk_aac_decode_close':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:201: undefined reference to `aacDecoder_Close'
+/usr/local/lib/libavcodec.a(libfdk-aacdec.o): In function `fdk_aac_decode_init':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:213: undefined reference to `aacDecoder_Open'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:220: undefined reference to `aacDecoder_ConfigRaw'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:227: undefined reference to `aacDecoder_SetParam'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:251: undefined reference to `aacDecoder_SetParam'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:269: undefined reference to `aacDecoder_SetParam'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:276: undefined reference to `aacDecoder_SetParam'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:283: undefined reference to `aacDecoder_SetParam'
+/usr/local/lib/libavcodec.a(libfdk-aacdec.o):/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:290: more undefined references to `aacDecoder_SetParam' follow
+/usr/local/lib/libavcodec.a(libfdk-aacdec.o): In function `fdk_aac_decode_init':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:260: undefined reference to `aacDecoder_AncDataInit'
+/usr/local/lib/libavcodec.a(libfdk-aacdec.o): In function `fdk_aac_decode_flush':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacdec.c:366: undefined reference to `aacDecoder_SetParam'
+/usr/local/lib/libavcodec.a(libfdk-aacenc.o): In function `aac_encode_close':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:97: undefined reference to `aacEncClose'
+/usr/local/lib/libavcodec.a(libfdk-aacenc.o): In function `aac_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:357: undefined reference to `aacEncEncode'
+/usr/local/lib/libavcodec.a(libfdk-aacenc.o): In function `aac_encode_init':
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:114: undefined reference to `aacEncOpen'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:123: undefined reference to `aacEncoder_SetParam'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:130: undefined reference to `aacEncoder_SetParam'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:138: undefined reference to `aacEncoder_SetParam'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:172: undefined reference to `aacEncoder_SetParam'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:179: undefined reference to `aacEncoder_SetParam'
+/usr/local/lib/libavcodec.a(libfdk-aacenc.o):/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:197: more undefined references to `aacEncoder_SetParam' follow
+/usr/local/lib/libavcodec.a(libfdk-aacenc.o): In function `aac_encode_init':
+/usr/local[0m[91m/[0m[91msrc/ffmpeg/libavcodec/libfdk-aacenc.c:276: undefined reference to `aacEncEncode'
+/usr/local/src/ffmpeg/libavcodec/libfdk-aacenc.c:282: undefined reference to `aacEncInfo'
+/usr/local/lib/libavcodec.a(libmp3lame.o): In function `mp3lame_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:216: undefined reference to `lame_encode_buffer_float'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:200: undefined reference to `lame_encode_buffer'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:203: undefined reference to `lame_encode_buffer_int'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:224: undefined reference to `lame_encode_flush'
+/usr/local/lib/libavcodec.a(libmp3lame.o): In function `mp3lame_encode_close':
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:87: undefined reference to `lame_close'
+/usr/local/lib/libavcodec.a(libmp3lame.o): In function `mp3lame_encode_init':
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:99: undefined reference to `lame_init'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:103: undefined reference to `lame_set_num_channels'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:104: undefined reference to `lame_set_mode'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:107: undefined reference to `lame_set_in_samplerate'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:108: undefined reference to `lame_set_out_samplerate'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:112: undefined reference to `lame_set_quality'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:116: undefined reference to `lame_set_VBR'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:117: undefined reference to `lame_set_VBR_quality'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:121: undefined reference to `lame_set_VBR'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:122: undefined reference to `lame_set_VBR_mean_bitrate_kbps'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:124: undefined reference to `lame_set_brate'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:130: undefined reference to `lame_set_lowpassfreq'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:133: undefined reference to `lame_set_bWriteVbrTag'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:136: undefined reference to `lame_set_disable_reservoir'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:139: undefined reference to `lame_init_params'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:145: undefined reference to `lame_get_encoder_delay'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:148: undefined reference to `lame_get_framesize'
+/usr/local/src/ffmpeg/libavcodec/libmp3lame.c:167: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(libopusdec.o): In function `libopus_flush':
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:186: undefined reference to `opus_multistream_decoder_ctl'
+/usr/local/lib/libavcodec.a(libopusdec.o): In function `libopus_decode':
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:151: undefined reference to `opus_multistream_decode_float'
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:147: undefined reference to `opus_multistream_decode'
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:156: undefined reference to `opus_strerror'
+/usr/local/lib/libavcodec.a(libopusdec.o): In function `libopus_decode_close':
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:129: undefined reference to `opus_multistream_decoder_destroy'
+/usr/local/lib/libavcodec.a(libopusdec.o): In function `libopus_decode_init':
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:95: undefined reference to `opus_multistream_decoder_create'
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:99: undefined reference to `opus_strerror'
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:105: undefined reference to `opus_multistream_decoder_ctl'
+/usr/local/src/ffmpeg/libavcodec/libopusdec.c:107: undefined reference to `opus_strerror'
+/usr/local/lib/libavcodec.a(libopusenc.o): In function `libopus_encode':
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:466: undefined reference to `opus_multistream_encode'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:462: undefined reference to `opus_multistream_encode_float'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:471: undefined reference to `opus_strerror'
+/usr/local/lib/libavcodec.a(libopusenc.o): In function `libopus_encode_close':
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:509: undefined reference to `opus_multistream_encoder_destroy'
+/usr/local/lib/libavcodec.a(libopusenc.o): In function `libopus_encode_init':
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:327: undefined reference to `opus_multistream_encoder_create'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:337: undefined reference to `opus_multistream_surround_encoder_create'
+/usr/local/src/ffmpeg[0m[91m/libavcodec/libopusenc.c:344: undefined reference to `opus_strerror'
+/usr/local/lib/libavcodec.a(libopusenc.o): In function `libopus_configure_encoder':
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:118: undefined reference to `opus_multistream_encoder_ctl'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:120: undefined reference to `opus_strerror'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:125: undefined reference to `opus_multistream_encoder_ctl'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:128: undefined reference to `opus_strerror'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:131: undefined reference to `opus_multistream_encoder_ctl'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:133: undefined reference to `opus_strerror'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:136: undefined reference to `opus_multistream_encoder_ctl'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:139: undefined reference to `opus_strerror'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:142: undefined reference to `opus_multistream_encoder_ctl'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:145: undefined reference to `opus_strerror'[0m[91m
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:150: undefined reference to `opus_multistream_encoder_ctl'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:153: undefined reference to `opus_strerror'
+/usr/local/lib/libavcodec.a(libopusenc.o): In function `libopus_encode_init':
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:389: undefined reference to [0m[91m`opus_multistream_encoder_ctl'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:391: undefined reference to `opus_strerror'
+/usr/local/src/ffmpeg/libavcodec/libopusenc.c:405: undefined reference to `opus_multistream_encoder_destroy'
+/usr/local/lib/libavcodec.a(libvorbisenc.o): In function `libvorbis_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:287: undefined reference to `vorbis_analysis_buffer'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:294: undefined reference to `vorbis_analysis_wrote'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:310: undefined reference to `vorbis_analysis_blockout'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:311: undefined reference to `vorbis_analysis'
+/usr[0m[91m/local/src/ffmpeg/libavcodec/libvorbisenc.c:313: undefined reference to `vorbis_bitrate_addblock'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:318: undefined reference to `av_fifo_space'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:322: undefined reference to `av_fifo_generic_write'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:323: undefined reference to `av_fifo_generic_write'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:317: undefined reference to `[0m[91mvorbis_bitrate_flushpacket'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:302: undefined reference to `vorbis_analysis_wrote'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:336: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:339: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:343: undefined reference to `av_fifo_generic_read'
+/usr/local/lib/libavcodec.a(libvorbisenc.o): In function `libvorbis_encode_close':
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:180: undefined reference to [0m[91m`vorbis_analysis_wrote'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:182: undefined reference to `vorbis_block_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:183: undefined reference to `vorbis_dsp_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:184: undefined reference to `vorbis_info_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:186: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavcodec.a(libvorbisenc.o): In function `libvorbis_encode_init':
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:203: [0m[91mundefined reference to `vorbis_info_init'
+/usr/local/lib/libavcodec.a(libvorbisenc.o): In function `libvorbis_setup':
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:98: undefined reference to `vorbis_encode_setup_vbr'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:107: undefined reference to `vorbis_encode_setup_managed'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:114: undefined reference to `vorbis_encode_ctl'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:121: undefined reference to `vorbis_encode_ctl'
+/[0m[91musr/[0m[91mlocal/src/ffmpeg/libavcodec/libvorbisenc.c:127: undefined reference to `vorbis_encode_ctl'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:160: undefined reference to `vorbis_encode_setup_init'
+/usr/local/lib/libavcodec.a(libvorbisenc.o): In function `libvorbis_encode_init':
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:208: undefined reference to `vorbis_analysis_init'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:214: undefined reference to `vorbis_block_init'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:220: undefined reference to `vorbis_comment_init'
+/usr/local/src/[0m[91mffmpeg/libavcodec/libvorbisenc.c:222: undefined reference to `vorbis_comment_add_tag'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:224: undefined reference to `vorbis_analysis_headerout'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:257: undefined reference to `vorbis_comment_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisenc.c:262: undefined reference to `av_fifo_alloc'
+/usr/local/lib/libavcodec.a(libvpxdec.o): In function `decode_frame':
+/[0m[91musr/local/src/ffmpeg/libavcodec/libvpxdec.c:182: undefined reference to `vpx_codec_decode'
+/usr/local/lib/libavcodec.a(libvpxdec.o): In function `vpx_decode':
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:242: undefined reference to `vpx_codec_get_frame'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:243: undefined reference to `vpx_codec_get_frame'
+/usr/local/lib/libavcodec.a(libvpxdec.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:[0m[91m183: undefined reference to `vpx_codec_error'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:184: undefined reference to `vpx_codec_error_detail'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:182: undefined reference to `vpx_codec_decode'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:183: undefined reference to `vpx_codec_error'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:184: undefined reference to `vpx_codec_error_detail'
+/usr/local/lib/libavcodec.a(libvpxdec.o)[0m[91m: In function `vpx_decode':
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:222: undefined reference to `vpx_codec_vp8_dx_algo'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:222: undefined reference to `vpx_codec_vp9_dx_algo'
+/usr/local/lib/libavcodec.a(libvpxdec.o): In function `vpx_free':
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:288: undefined reference to `vpx_codec_destroy'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:290: undefined reference to `vpx_codec_destroy'
+/usr/local/lib/libavcodec.a(libvpxdec.o): In function `vpx_init':
+/usr[0m[91m/local/src/ffmpeg/libavcodec/libvpxdec.c:54: undefined reference to `vpx_codec_version_str'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:55: undefined reference to `vpx_codec_build_config'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:57: undefined reference to `vpx_codec_dec_init_ver'
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:60: undefined reference to `vpx_codec_error'
+/usr/local/lib/libavcodec.a(libvpxdec.o): In function `vp8_init':
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:297: undefined reference to `vpx_codec_vp8_dx_algo'
+/usr/[0m[91mlocal/lib/libavcodec.a(libvpxdec.o): In function `vp9_init':
+/usr/local/src/ffmpeg/libavcodec/libvpxdec.c:316: undefined reference to `vpx_codec_vp9_dx_algo'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `vpx_encode':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:1019: undefined reference to `vpx_codec_encode'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:1027: undefined reference to `vpx_codec_encode'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `queue_frames':
+/usr/local/[0m[91msrc/ffmpeg/libavcodec/libvpxenc.c:896: undefined reference to `vpx_codec_get_cx_data'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:898: undefined reference to `vpx_codec_get_cx_data'
+/usr/local/lib/libavcodec.a(libvpxenc.o):[0m[91m In function `vpx_encode':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:1046: undefined reference to `av_base64_encode'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `log_encoder_error':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:148: undefined reference to `vpx_codec_error'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:149: undefined reference to `vpx_codec_error_detail'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `codecctl_int':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:258: undefined reference to `vpx_codec_control_'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `vpx_init':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:461: undefined reference to `vpx_codec_get_caps'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:464: undefined reference to `vpx_codec_version_str'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:465: undefined reference to `vpx_codec_build_config'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:470: undefined reference to `vpx_codec_enc_config_default'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:471: undefined reference to `vpx_codec_err_to_string'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:619: undefined reference to `av_base64_decode'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:640: undefined reference to `vpx_codec_enc_init_ver'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:648: undefined reference to `vpx_codec_enc_init_ver'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:729: undefined reference to `vpx_img_wrap'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:737: undefined reference to `vpx_img_wrap'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `vp8_init':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:1154: undefined reference to `vpx_codec_vp8_cx'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `vp9_init':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:1183: undefined reference to `vpx_codec_vp9_cx'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `codecctl_intp':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:280: undefined reference to `vpx_codec_control_'
+/usr/local/lib/libavcodec.a(libvpxenc.o): In function `vpx_free':
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:304: undefined reference to `vpx_codec_destroy'
+/usr/local/src/ffmpeg/libavcodec/libvpxenc.c:306: undefined reference to `vpx_codec_destroy'
+/usr/local/lib/libavcodec.a(libx264.o): In function `X264_frame':
+/usr/local/src/ffmpeg/libavcodec/libx264.c:280: undefined reference to `x264_picture_init'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:282: undefined reference to `x264_bit_depth'
+/usr/local/lib/libavcodec.a(libx264.o): In function `reconfig_encoder':
+/usr/local/src/ffmpeg/libavcodec/libx264.c:266: undefined reference to `x264_encoder_reconfig'
+/usr/local/lib/libavcodec.a(libx264.o): In function `X264_frame':
+/usr/local/src/ffmpeg/libavcodec/libx264.c:336: undefined reference to `x264_encoder_encode'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:336: undefined reference to `x264_encoder_encode'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:342: undefined reference to `x264_encoder_delayed_frames'
+/usr/local/lib/libavcodec.a(libx264.o): In function `reconfig_encoder':
+/usr/local/src/ffmpeg/libavcodec/libx264.c:181: undefined reference to `x264_encoder_reconfig'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:186: undefined reference to `x264_encoder_reconfig'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:193: undefined reference to `x264_encoder_reconfig'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:213: undefined reference to `x264_encoder_reconfig'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:219: undefined reference to `x264_encoder_reconfig'
+/usr/local/lib/libavcodec.a(libx264.o):/usr/local/src/ffmpeg/libavcodec/libx264.c:199: more undefined references to `x264_encoder_reconfig' follow
+/usr/local/lib/libavcodec.a(libx264.o): In function `X264_init_static':
+/usr/local/src/ffmpeg/libavcodec/libx264.c:892: undefined reference to `x264_bit_depth'
+/usr/local/lib/libavcodec.a(libx264.o): In function `X264_close':
+/usr/local/src/ffmpeg/libavcodec/libx264.c:392: undefined reference to `x264_encoder_close'
+/usr/local/lib/libavcodec.a(libx264.o): In function `X264_init':
+/usr/local/src/ffmpeg/libavcodec/libx264.c:467: undefined reference to `x264_param_default'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:472: undefined reference to `x264_param_default_preset'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:494: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:524: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:576: undefined reference to `av_strtod'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:581: undefined reference to `x264_levels'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:623: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:624: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:625: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:626: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:674: undefined reference to `x264_param_apply_fastfirstpass'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:730: undefined reference to `x264_param_apply_profile'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:782: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:784: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:796: undefined reference to `x264_param_parse'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:814: undefined reference to `x264_encoder_open_148'
+/usr/local/src/ffmpeg/libavcodec/libx264.c:823: undefined reference to `x264_encoder_headers'
+/usr/local/lib/libavcodec.a(libx265.o): In function `libx265_encode_init':
+/usr/local/src/ffmpeg/libavcodec/libx265.c:82: undefined reference to `x265_api_get_111'
+/usr/local/src/ffmpeg/libavcodec/libx265.c:84: undefined reference to `x265_api_get_111'
+/usr/local/lib/libavcodec.a(libx265.o): In function `libx265_encode_init_csp':
+/usr/local/src/ffmpeg/libavcodec/libx265.c:375: undefined reference to `x265_api_get_111'
+/usr/local/src/ffmpeg/libavcodec/libx265.c:377: undefined reference to `x265_api_get_111'
+/usr/local/src/ffmpeg/libavcodec/libx265.c:379: undefined reference to `x265_api_get_111'
+/usr/local/lib/libavcodec.a(lpc.o): In function `ff_lpc_calc_coefs':
+/usr/local/src/ffmpeg/libavcodec/lpc.c:250: undefined reference to `avpriv_init_lls'
+/usr/local/src/ffmpeg/libavcodec/lpc.c:271: undefined reference to `avpriv_solve_lls'
+/usr/local/lib/libavcodec.a(mjpegdec.o): In function `ff_mjpeg_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/mjpegdec.c:2472: undefined reference to `av_stereo3d_create_side_data'
+/usr/local/lib/libavcodec.a(mjpegdec.o): In function `mjpeg_decode_app':
+/usr/local/src/ffmpeg/libavcodec/mjpegdec.c:1796: undefined reference to `av_stereo3d_alloc'
+/usr/local/lib/libavcodec.a(mpc7.o): In function `mpc7_decode_init':
+/usr/local/src/ffmpeg/libavcodec/mpc7.c:72: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(mpc8.o): In function `mpc8_decode_init':
+/usr/local/src/ffmpeg/libavcodec/mpc8.c:120: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(mpeg12dec.o): In function `mpeg_decode_gop':
+/usr/local/src/ffmpeg/libavcodec/mpeg12dec.c:2424: undefined reference to `av_timecode_make_mpeg_tc_string'
+/usr/local/lib/libavcodec.a(mpeg12dec.o): In function `mpeg_field_start':
+/usr/local/src/ffmpeg/libavcodec/mpeg12dec.c:1661: undefined reference to `av_stereo3d_create_side_data'
+/usr/local/lib/libavcodec.a(mpeg12enc.o): In function `mpeg1_encode_sequence_header':
+/usr/local/src/ffmpeg/libavcodec/mpeg12enc.c:380: undefined reference to `av_timecode_adjust_ntsc_framenum2'
+/usr/local/lib/libavcodec.a(mpeg12enc.o): In function `encode_init':
+/usr/local/src/ffmpeg/libavcodec/mpeg12enc.c:218: undefined reference to `av_timecode_init_from_string'
+/usr/local/lib/libavcodec.a(mpegaudiodec_float.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/mpegaudiodec_template.c:433: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(mpegvideo.o): In function `ff_print_debug_info2':
+/usr/local/src/ffmpeg/libavcodec/mpegvideo.c:1680: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(msvideo1enc.o): In function `encode_init':
+/usr/local/src/ffmpeg/libavcodec/msvideo1enc.c:276: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(nellymoserdec.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/nellymoserdec.c:121: undefined reference to `av_lfg_init'
+/usr/local/src/ffmpeg/libavcodec/nellymoserdec.c:124: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(nellymoserenc.o): In function `encode_init':
+/usr/local/src/ffmpeg/libavcodec/nellymoserenc.c:174: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(nuv.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/nuv.c:216: undefined reference to `av_lzo1x_decode'
+/usr/local/lib/libavcodec.a(on2avc.o): In function `on2avc_decode_init':
+/usr/local/src/ffmpeg/libavcodec/on2avc.c:955: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_packet':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:438: undefined reference to `av_audio_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:438: undefined reference to `av_audio_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:478: undefined reference to `av_audio_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:490: undefined reference to `av_audio_fifo_read'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:490: undefined reference to `av_audio_fifo_read'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_subpacket':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:353: undefined reference to `swr_is_initialized'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:254: undefined reference to `av_audio_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:269: undefined reference to `av_audio_fifo_drain'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:194: undefined reference to `swr_is_initialized'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_init_resample':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:134: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:135: undefined reference to `swr_init'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:141: undefined reference to `swr_convert'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:208: undefined reference to `swr_convert'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:258: undefined reference to `av_audio_fifo_read'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:296: undefined reference to `av_audio_fifo_write'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_subpacket':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:356: undefined reference to `av_opt_get_int'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_flush_resample':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:87: undefined reference to `av_audio_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:89: undefined reference to `swr_convert'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:105: undefined reference to `av_audio_fifo_read'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_subpacket':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:385: undefined reference to `swr_close'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_packet':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:544: undefined reference to `av_audio_fifo_write'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_flush':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:587: undefined reference to `av_audio_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:587: undefined reference to `av_audio_fifo_drain'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:588: undefined reference to `swr_close'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:590: undefined reference to `av_audio_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:590: undefined reference to `av_audio_fifo_drain'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_close':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:611: undefined reference to `av_audio_fifo_free'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:612: undefined reference to `swr_free'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:619: undefined reference to `av_audio_fifo_free'
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_init':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:642: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:681: undefined reference to `swr_alloc'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:686: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:687: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:688: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:689: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:690: undefined reference to `av_opt_set_int'
+/usr/local/lib/libavcodec.a(opusdec.o):/usr/local/src/ffmpeg/libavcodec/opusdec.c:691: more undefined references to `av_opt_set_int' follow
+/usr/local/lib/libavcodec.a(opusdec.o): In function `opus_decode_init':
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:701: undefined reference to `av_audio_fifo_alloc'
+/usr/local/src/ffmpeg/libavcodec/opusdec.c:708: undefined reference to `av_audio_fifo_alloc'
+/usr/local/lib/libavcodec.a(opusenc.o): In function `opus_encode_init':
+/usr/local/src/ffmpeg/libavcodec/opusenc.c:1072: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(pcm.o): In function `pcm_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/pcm.c:391: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/pcm.c:391: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(pcm.o): In function `pcm_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/pcm.c:130: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/pcm.c:129: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(pcm.o): In function `pcm_decode_init':
+/usr/local/src/ffmpeg/libavcodec/pcm.c:255: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(pngdec.o): In function `decode_zbuf':
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:433: undefined reference to `inflateInit_'
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:447: undefined reference to `inflate'
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:456: undefined reference to `inflateEnd'
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:461: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(pngdec.o): In function `png_decode_idat':
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:401: undefined reference to `inflate'
+/usr/local/lib/libavcodec.a(pngdec.o): In function `decode_frame_common':
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:1210: undefined reference to `av_stereo3d_create_side_data'
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:1210: undefined reference to `av_stereo3d_create_side_data'
+/usr/local/lib/libavcodec.a(pngdec.o): In function `decode_frame_apng':
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:1391: undefined reference to `inflateInit_'
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:1415: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(pngdec.o): In function `decode_frame_png':
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:1336: undefined reference to `inflateInit_'
+/usr/local/src/ffmpeg/libavcodec/pngdec.c:1358: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_write_chunk':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:227: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:233: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:236: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_get_gama':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:337: undefined reference to `avpriv_get_gamma_from_trc'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_write_image_data':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:247: undefined reference to `av_crc_get_table'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_write_chunk':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:227: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:233: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:236: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_write_image_data':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:259: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:261: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_write_row':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:279: undefined reference to `deflate'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `encode_frame':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:498: undefined reference to `deflate'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:520: undefined reference to `deflateReset'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_write_row':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:279: undefined reference to `deflate'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `encode_png':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:532: undefined reference to `deflateBound'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_write_chunk':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:227: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:233: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `encode_apng':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:862: undefined reference to `deflateBound'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:851: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:851: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_enc_close':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:1102: undefined reference to `deflateEnd'
+/usr/local/lib/libavcodec.a(pngenc.o): In function `png_enc_init':
+/usr/local/src/ffmpeg/libavcodec/pngenc.c:1092: undefined reference to `deflateInit2_'
+/usr/local/lib/libavcodec.a(qcelpdec.o): In function `apply_gain_ctrl':
+/usr/local/src/ffmpeg/libavcodec/qcelpdec.c:401: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(qcelpdec.o): In function `postfilter':
+/usr/local/src/ffmpeg/libavcodec/qcelpdec.c:679: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(ra288.o): In function `decode':
+/usr/local/src/ffmpeg/libavcodec/ra288.c:124: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(ra288.o): In function `convolve':
+/usr/local/src/ffmpeg/libavcodec/ra288.c:95: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/src/ffmpeg/libavcodec/ra288.c:95: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(ra288.o):/usr/local/src/ffmpeg/libavcodec/ra288.c:95: more undefined references to `avpriv_scalarproduct_float_c' follow
+/usr/local/lib/libavcodec.a(ra288.o): In function `ra288_decode_init':
+/usr/local/src/ffmpeg/libavcodec/ra288.c:85: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(ratecontrol.o): In function `get_qscale':
+/usr/local/src/ffmpeg/libavcodec/ratecontrol.c:272: undefined reference to `av_expr_eval'
+/usr/local/lib/libavcodec.a(ratecontrol.o): In function `ff_rate_estimate_qscale':
+/usr/local/src/ffmpeg/libavcodec/ratecontrol.c:1004: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(ratecontrol.o): In function `ff_rate_control_uninit':
+/usr/local/src/ffmpeg/libavcodec/ratecontrol.c:677: undefined reference to `av_expr_free'
+/usr/local/lib/libavcodec.a(ratecontrol.o): In function `ff_rate_control_init':
+/usr/local/src/ffmpeg/libavcodec/ratecontrol.c:518: undefined reference to `av_expr_parse'
+/usr/local/lib/libavcodec.a(roqvideoenc.o): In function `roq_encode_init':
+/usr/local/src/ffmpeg/libavcodec/roqvideoenc.c:996: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(rscc.o): In function `rscc_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/rscc.c:190: undefined reference to `uncompress'
+/usr/local/src/ffmpeg/libavcodec/rscc.c:273: undefined reference to `uncompress'
+/usr/local/lib/libavcodec.a(s302menc.o): In function `s302m_encode2_frame':
+/usr/local/src/ffmpeg/libavcodec/s302menc.c:106: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/s302menc.c:107: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/s302menc.c:108: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/s302menc.c:109: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/s302menc.c:110: undefined reference to [0m[91m`ff_reverse'
+/usr/local/lib/libavcodec.a(s302menc.o):/usr/local/src/ffmpeg/libavcodec/s302menc.c:111: more undefined references to `ff_reverse' follow
+/usr/local/lib/libavcodec.a(screenpresso.o): In function `screenpresso_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/screenpresso.c:141: undefined reference to `uncompress'
+/usr/local/lib/libavcodec.a(sipr.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/sipr.c:414: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/src/ffmpeg/libavcodec/sipr.c:458: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(sipr16k.o): In function `acelp_decode_gain_codef':
+/usr/local/src/ffmpeg/libavcodec/sipr16k.c:166: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/src/ffmpeg/libavcodec/sipr16k.c:170: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(speedhq.o): In function `bitswap_32':
+/usr/local/src/ffmpeg/libavcodec/mathops.h:257: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/mathops.h:255: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/mathops.h:256: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/mathops.h:257: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/mathops.h:255: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(speedhq.o):/usr/local/src/ffmpeg/libavcodec/mathops.h:256: more undefined references to `ff_reverse' follow
+/usr/local/lib/libavcodec.a(svq3.o): In function `svq3_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/svq3.c:1502: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(svq3.o): In function `svq3_decode_init':
+/usr/local/src/ffmpeg/libavcodec/svq3.c:1291: undefined reference to `uncompress'
+/usr/local/lib/libavcodec.a(tdsc.o): In function `tdsc_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/tdsc.c:538: undefined reference to `uncompress'
+/usr/local/lib/libavcodec.a(tiertexseqv.o): In function `seq_decode_op1':
+/usr/local/src/ffmpeg/libavcodec/tiertexseqv.c:111: undefined reference to `ff_log2_tab'
+/usr/local/lib/libavcodec.a(tiff.o): In function `tiff_unpack_fax':
+/usr/local/src/ffmpeg/libavcodec/tiff.c:468: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(tiff.o): In function `tiff_unpack_strip':
+/usr/local/src/ffmpeg/libavcodec/tiff.c:610: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(tiff.o): In function `tiff_uncompress':
+/usr/local/src/ffmpeg/libavcodec/tiff.c:329: undefined reference to `inflateInit_'
+/usr/local/src/ffmpeg/libavcodec/tiff.c:334: undefined reference to `inflate'
+/usr/local/src/ffmpeg/libavcodec/tiff.c:335: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(tiff.o): In function `deinvert_buffer':
+/usr/local/src/ffmpeg/libavcodec/tiff.c:285: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/tiff.c:285: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(tiff.o): In function `tiff_unpack_strip':
+/usr/local/src/ffmpeg/libavcodec/tiff.c:600: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/tiff.c:639: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(tiffenc.o): In function `encode_strip':
+/usr/local/src/ffmpeg/libavcodec/tiffenc.c:179: undefined reference to `compress'
+/usr/local/lib/libavcodec.a(tmv.o): In function `tmv_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/tmv.c:72: undefined reference to `avpriv_cga_font'
+/usr/local/lib/libavcodec.a(tscc.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/tscc.c:76: undefined reference to `inflateReset'
+/usr/local/src/ffmpeg/libavcodec/tscc.c:85: undefined reference to `inflate'
+/usr/local/lib/libavcodec.a(tscc.o): In function `decode_end':
+/usr/local/src/ffmpeg/libavcodec/tscc.c:175: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(tscc.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/tscc.c:157: undefined reference to `inflateInit_'
+/usr/local/lib/libavcodec.a(tta.o): In function `tta_check_crc':
+/usr/local/src/ffmpeg/libavcodec/tta.c:80: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(tta.o): In function `tta_decode_init':
+/usr/local/src/ffmpeg/libavcodec/tta.c:136: undefined reference to `av_crc_get_table'
+/usr/local/lib/libavcodec.a(ttaenc.o): In function `tta_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/ttaenc.c:186: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(ttaenc.o): In function `tta_encode_init':
+/usr/local/src/ffmpeg/libavcodec/ttaenc.c:40: undefined reference to `av_crc_get_table'
+/usr/local/lib/libavcodec.a(twinvq.o): In function `ff_twinvq_decode_init':
+/usr/local/src/ffmpeg/libavcodec/twinvq.c:792: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(utils.o): In function `avcodec_default_get_buffer2':
+/usr/local/src/ffmpeg/libavcodec/utils.c:733: undefined reference to `av_hwframe_get_buffer'
+/usr/local/lib/libavcodec.a(utils.o): In function `avcodec_string':
+/usr/local/src/ffmpeg/libavcodec/utils.c:3207: undefined reference to `av_get_media_type_string'
+/usr/local/lib/libavcodec.a(utils.o): In function `avcodec_open2':
+/usr/local/src/ffmpeg/libavcodec/utils.c:1320: undefined reference to `av_opt_set_dict'
+/usr/local/src/ffmpeg/libavcodec/utils.c:1325: undefined reference to `av_opt_set_dict'
+/usr/local/src/ffmpeg/libavcodec/utils.c:1707: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/utils.c:1706: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/utils.c:1317: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libavcodec.a(utils.o): In function `avcodec_close':
+/usr/local/src/ffmpeg/libavcodec/utils.c:3073: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/utils.c:3074: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(vc1dec.o): In function `vc1_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/vc1dec.c:860: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(vorbisdec.o): In function `vorbis_parse_id_hdr':
+/usr/local/src/ffmpeg/libavcodec/vorbisdec.c:1011: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(webp.o): In function `webp_get_vlc':
+/usr/local/src/ffmpeg/libavcodec/webp.c:251: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/webp.c:261: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/webp.c:251: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/webp.c:261: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(wmaprodec.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/wmaprodec.c:523: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(wmavoice.o): In function `kalman_smoothen':
+/usr/local/src/ffmpeg/libavcodec/wmavoice.c:560: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/src/ffmpeg/libavcodec/wmavoice.c:569: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(wmavoice.o): In function `tilt_factor':
+/usr/local/src/ffmpeg/libavcodec/wmavoice.c:599: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/src/ffmpeg/libavcodec/wmavoice.c:600: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(wmavoice.o): In function `calc_input_response':
+/usr/local/src/ffmpeg/libavcodec/wmavoice.c:693: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(wmavoice.o):/usr/local/src/ffmpeg/libavcodec/wmavoice.c:599: more undefined references to `avpriv_scalarproduct_float_c' follow
+/usr/local/lib/libavcodec.a(wnv1.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/wnv1.c:90: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(wnv1.o): In function `wnv1_get_code':
+/usr/local/src/ffmpeg/libavcodec/wnv1.c:53: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/wnv1.c:53: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/wnv1.c:53: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/wnv1.c:53: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(blockdsp_init.o): In function `ff_blockdsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/blockdsp_init.c:38: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(bswapdsp_init.o): In function `ff_bswapdsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/bswapdsp_init.c:31: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(dcadsp_init.o): In function `ff_dcadsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/dcadsp_init.c:38: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(dct_init.o): In function `ff_dct_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/dct_init.c:31: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(dnxhdenc_init.o): In function `ff_dnxhdenc_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/dnxhdenc_init.c:33: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(fdctdsp_init.o):/usr/local/src/ffmpeg/libavcodec/x86/fdctdsp_init.c:29: more undefined references to `av_get_cpu_flags' follow
+/usr/local/lib/libavcodec.a(xsubdec.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/xsubdec.c:155: undefined reference to `ff_log2_tab'
+/usr/local/lib/libavcodec.a(xsubenc.o): In function `put_xsub_rle':
+/usr/local/src/ffmpeg/libavcodec/xsubenc.c:45: undefined reference to `ff_log2_tab'
+/usr/local/src/ffmpeg/libavcodec/xsubenc.c:45: undefined reference to `ff_log2_tab'
+/usr/local/lib/libavcodec.a(zerocodec.o): In function `zerocodec_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/zerocodec.c:56: undefined reference to `inflateReset'
+/usr/local/src/ffmpeg/libavcodec/zerocodec.c:79: undefined reference to `inflate'
+/usr/local/lib/libavcodec.a(zerocodec.o): In function `zerocodec_decode_close':
+/usr/local/src/ffmpeg/libavcodec/zerocodec.c:109: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(zerocodec.o): In function `zerocodec_decode_init':
+/usr/local/src/ffmpeg/libavcodec/zerocodec.c:127: undefined reference to `inflateInit_'
+/usr/local/lib/libavcodec.a(zmbv.o): In function `decode_frame':
+/usr/local/src/ffmpeg/libavcodec/zmbv.c:491: undefined reference to `inflateReset'
+/usr/local/src/ffmpeg/libavcodec/zmbv.c:528: undefined reference to `inflate'
+/usr/local/lib/libavcodec.a(zmbv.o): In function `decode_end':
+/usr/local/src/ffmpeg/libavcodec/zmbv.c:621: undefined reference to `inflateEnd'
+/usr/local/lib/libavcodec.a(zmbv.o): In function `decode_init':
+/usr/local/src/ffmpeg/libavcodec/zmbv.c:606: undefined reference to `inflateInit_'
+/usr/local/lib/libavcodec.a(zmbvenc.o): In function `encode_frame':
+/usr/local/src/ffmpeg/libavcodec/zmbvenc.c:228: undefined reference to `deflate'
+/usr/local/src/ffmpeg/libavcodec/zmbvenc.c:219: undefined reference to `deflateReset'
+/usr/local/src/ffmpeg/libavcodec/zmbvenc.c:219: undefined reference to `deflateReset'
+/usr/local/lib/libavcodec.a(zmbvenc.o): In function `encode_end':
+/usr/local/src/ffmpeg/libavcodec/zmbvenc.c:263: undefined reference to `deflateEnd'
+/usr/local/lib/libavcodec.a(zmbvenc.o): In function `encode_init':
+/usr/local/src/ffmpeg/libavcodec/zmbvenc.c:323: undefined reference to `deflateInit_'
+/usr/local/lib/libavcodec.a(a64multienc.o): In function `a64multi_encode_init':
+/usr/local/src/ffmpeg/libavcodec/a64multienc.c:207: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(aacdec.o): In function `aac_decode_init':
+/usr/local/src/ffmpeg/libavcodec/aacdec_template.c:1197: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(aacdec_fixed.o): In function `aac_decode_init':
+/usr/local/src/ffmpeg/libavcodec/aacdec_template.c:1195: undefined reference to `avpriv_alloc_fixed_dsp'
+/usr/local/lib/libavcodec.a(aacenc.o): In function `dsp_init':
+/usr/local/src/ffmpeg/libavcodec/aacenc.c:875: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(ac3dec_fixed.o): In function `ac3_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:1434: undefined reference to `av_lfg_init_from_data'
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:1607: undefined reference to `av_downmix_info_update_side_data'
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:1485: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:1485: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(ac3dec_fixed.o): In function `ac3_decode_init':
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:198: undefined reference to `avpriv_alloc_fixed_dsp'
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:205: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(ac3dec_float.o): In function `ac3_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:1434: undefined reference to `av_lfg_init_from_data'
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:1607: undefined reference to `av_downmix_info_update_side_data'
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:1485: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:1485: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(ac3dec_float.o): In function `ac3_decode_init':
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:200: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/src/ffmpeg/libavcodec/ac3dec.c:205: undefined reference to `av_lfg_init'
+/usr/local/lib/libavcodec.a(ac3enc.o): In function `output_frame_end':
+/usr/local/src/ffmpeg/libavcodec/ac3enc.c:1614: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/ac3enc.c:1641: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/ac3enc.c:1644: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/ac3enc.c:1648: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/ac3enc.c:1635: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(ac3enc_float.o): In function `ff_ac3_float_encode_init':
+/usr/local/src/ffmpeg/libavcodec/ac3enc_float.c:142: undefined reference to `avpriv_float_dsp_alloc'
+[0m[91m/usr/local/lib/libavcodec.a(dca_core.o): In function `ff_dca_check_crc':
+/usr/local/src/ffmpeg/libavcodec/dcadec.h:84: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/dcadec.h:84: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/dcadec.h:84: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/dcadec.h:84: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(dca_core.o): In function `parse_optional_info':
+/usr/local/src/ffmpeg/libavcodec/dca_core.c:1875: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(dca_core.o):/usr/local/src/ffmpeg/libavcodec/dcadec.h:84: more undefined references to `av_crc' follow
+/usr/local/lib/libavcodec.a(dca_core.o): In function `ff_dca_core_init':
+/usr/local/src/ffmpeg/libavcodec/dca_core.c:2510: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/src/ffmpeg/libavcodec/dca_core.c:2512: undefined reference to `avpriv_alloc_fixed_dsp'
+/usr/local/lib/libavcodec.a(dca_lbr.o): In function `ff_dca_lbr_init':
+/usr/local/src/ffmpeg/libavcodec/dca_lbr.c:1803: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(dca_xll.o): In function `ff_dca_check_crc':
+/usr/local/src/ffmpeg/libavcodec/dcadec.h:84: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/dcadec.h:84: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavcodec/dcadec.h:84: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(dsd.o): In function `ff_dsd2pcm_translate':
+/usr/local/src/ffmpeg/libavcodec/dsd.c:66: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/dsd.c:70: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(error_resilience.o): In function `ff_er_frame_end':
+/usr/local/src/ffmpeg/libavcodec/error_resilience.c:1123: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(h264_cavlc.o): In function `ff_h264_decode_mb_cavlc':
+/usr/local/src/ffmpeg/libavcodec/h264_cavlc.c:759: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(libvpx.o): In function `ff_vp9_init_static':
+/usr/local/src/ffmpeg/libavcodec/libvpx.c:74: undefined reference to `vpx_codec_version'
+/usr/local/src/ffmpeg/libavcodec/libvpx.c:75: undefined reference to `vpx_codec_version'
+/usr/local/src/ffmpeg/libavcodec/libvpx.c:75: undefined reference to `vpx_codec_version'
+/usr/local/src/ffmpeg/libavcodec/libvpx.c:79: undefined reference to `vpx_codec_version'
+/usr/local/src/ffmpeg/libavcodec/libvpx.c:82: undefined reference to `vpx_codec_vp9_cx'
+/usr/local/src/ffmpeg/libavcodec/libvpx.c:82: undefined reference to `vpx_codec_get_caps'
+/usr/local/src/ffmpeg/libavcodec/libvpx.c:80: undefined reference to `vpx_codec_version'
+/usr/local/src/ffmpeg/libavcodec/libvpx.c:80: undefined reference to `vpx_codec_version'
+/usr/local/lib/libavcodec.a(mlp.o): In function `ff_mlp_checksum16':
+/usr/local/src/ffmpeg/libavcodec/mlp.c:89: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(mlp.o): In function `ff_mlp_checksum8':
+/usr/local/src/ffmpeg/libavcodec/mlp.c:96: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(mlp.o): In function `ff_mlp_restart_checksum':
+/usr/local/src/ffmpeg/libavcodec/mlp.c:107: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(mlp.o): In function `ff_mlp_init_crc':
+/usr/local/src/ffmpeg/libavcodec/mlp.c:78: undefined reference to `av_crc_init'
+/usr/local/src/ffmpeg/libavcodec/mlp.c:79: undefined reference to `av_crc_init'
+/usr/local/src/ffmpeg/libavcodec/mlp.c:80: undefined reference to `av_crc_init'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `ff_nvenc_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1739: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `timestamp_queue_enqueue':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1473: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `output_ready':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1641: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1642: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `ff_nvenc_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1757: undefined reference to `av_fifo_generic_read'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `timestamp_queue_dequeue':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1479: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `ff_nvenc_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1751: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1752: undefined reference to `av_fifo_generic_write'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1750: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `output_ready':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1641: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1642: undefined reference to `av_fifo_size'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `timestamp_queue_dequeue':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1479: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1480: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1479: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1479: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1480: undefined reference to `av_fifo_generic_read'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `nvenc_free_functions':
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:173: undefined reference to `dlclose'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `cuda_free_functions':
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:162: undefined reference to `dlclose'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `ff_nvenc_encode_close':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1193: undefined reference to `av_fifo_freep'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1194: undefined reference to `av_fifo_freep'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1195: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `cuda_load_functions':
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:179: undefined reference to `dlopen'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:181: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:182: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:183: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:184: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:185: undefined reference to `dlsym'
+/usr/local/lib/libavcodec.a(nvenc.o):/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:186: more undefined references to `dlsym' follow
+/usr/local/lib/libavcodec.a(nvenc.o): In function `nvenc_load_functions':
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:235: undefined reference to `dlopen'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:237: undefined reference to `dlsym'
+/usr/local/src/ffmpeg/./compat/cuda/dynlink_loader.h:238: undefined reference to `dlsym'
+/usr/local/lib/libavcodec.a(nvenc.o): In function `nvenc_setup_surfaces':
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1127: undefined reference to `av_fifo_alloc'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1130: undefined reference to `av_fifo_alloc'
+/usr/local/src/ffmpeg/libavcodec/nvenc.c:1133: undefined reference to `av_fifo_alloc'
+/usr/local/lib/libavcodec.a(wma.o): In function `ff_wma_init':
+/usr/local/src/ffmpeg/libavcodec/wma.c:341: undefined reference to `avpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(aacencdsp_init.o): In function `ff_aac_dsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/aacencdsp_init.c:36: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(ac3dsp_init.o): In function `ff_ac3dsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/ac3dsp_init.c:200: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(alacdsp_init.o): In function `ff_alacdsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/alacdsp_init.c:34: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(audiodsp_init.o): In function `ff_audiodsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/audiodsp_init.c:45: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(cavsdsp.o): In function `ff_cavsdsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/cavsdsp.c:566: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(fmtconvert_init.o[0m[91m):/usr/local/src/ffmpeg/libavcodec/x86/fmtconvert_init.c:44: more undefined references to `av_get_cpu_flags' follow
+/usr/local/lib/libavcodec.a(aacps_fixed.o): In function `ff_ps_read_data_fixed':
+/usr/local/src/ffmpeg/libavcodec/aacps.c:202: undefined reference to `ff_log2_tab'
+/usr/local/lib/libavcodec.a(aacps_float.o): In function `ff_ps_read_data':
+/usr/local/src/ffmpeg/libavcodec/aacps.c:202: undefined reference to `ff_log2_tab'
+/usr/local/lib/libavcodec.a(aacpsdsp_init.o): In function `ff_psdsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/aacpsdsp_init.c:43: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libswscale.a(swscale.o): In function `swscale':
+/usr/local/src/ffmpeg/libswscale/swscale.c:327: undefined reference to `av_get_cpu_flags'
+/usr/local/src/ffmpeg/libswscale/swscale.c:519: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libswscale.a(utils.o): In function `sws_alloc_context':
+/usr/local/src/ffmpeg/libswscale/utils.c:1075: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libswscale/utils.c:1075: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libswscale/utils.c:1075: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libswscale/utils.c:1075: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libswscale.a(utils.o): In function `sws_getCachedContext':
+/usr/local/src/ffmpeg/libswscale/utils.c:2367: undefined reference to `av_opt_get_int'
+/usr/local/src/ffmpeg/libswscale/utils.c:2368: undefined reference to `av_opt_get_int'
+/usr/local/src/ffmpeg/libswscale/utils.c:2369: undefined reference to `av_opt_get_int'
+/usr/local/src/ffmpeg/libswscale/utils.c:2370: undefined reference to `av_opt_get_int'
+/usr/local/lib/libswscale.a(utils.o): In function `sws_alloc_context':
+/usr/local/src/ffmpeg/libswscale/utils.c:1075: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libswscale.a(utils.o): In function `sws_getCachedContext':
+/usr/local/src/ffmpeg/libswscale/utils.c:2388: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libswscale/utils.c:2389: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libswscale/utils.c:2390: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libswscale/utils.c:2391: undefined reference to `av_opt_set_int'
+/usr/local/lib/libswscale.a(utils.o): In function `sws_init_context':
+/usr/local/src/ffmpeg/libswscale/utils.c:1173: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libswscale.a(swscale.o): In function `ff_sws_init_swscale_x86':
+/usr/local/src/ffmpeg/libswscale/x86/swscale.c:386: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libswscale.a(rgb2rgb.o): In function `rgb2rgb_init_x86':
+/usr/local/src/ffmpeg/libswscale/x86/rgb2rgb.c:150: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libswscale.a(yuv2rgb.o): In function `ff_yuv2rgb_init_x86':
+/usr/local/src/ffmpeg/libswscale/x86/yuv2rgb.c:75: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavformat.a(apngenc.o): In function `apng_write_chunk':
+/usr/local/src/ffmpeg/libavformat/apngenc.c:64: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/apngenc.c:72: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavformat/apngenc.c:75: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(apngenc.o): In function `flush_packet':
+/usr/local/src/ffmpeg/libavformat/apngenc.c:209: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/apngenc.c:209: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(apngenc.o): In function `apng_write_chunk':
+/usr/local/src/ffmpeg/libavformat/apngenc.c:64: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/apngenc.c:72: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavformat/apngenc.c:64: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/apngenc.c:72: undefined reference to `av_crc'
+/usr/local/src/ffmpeg/libavformat/apngenc.c:75: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(aviobuf.o): In function `ff_crc04C11DB7_update':
+/usr/local/src/ffmpeg/libavformat/aviobuf.c:570: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/aviobuf.c:570: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(aviobuf.o): In function `ff_crcEDB88320_update':
+/usr/local/src/ffmpeg/libavformat/aviobuf.c:576: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/aviobuf.c:576: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(aviobuf.o): In function `ff_crcA001_update':
+/usr/local/src/ffmpeg/libavformat/aviobuf.c:582: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/aviobuf.c:582: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(aviobuf.o): In function `avio_close':
+/usr/local/src/ffmpeg/libavformat/aviobuf.c:1104: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/aviobuf.c:1104: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(cdxl.o): In function `cdxl_read_header':
+/usr/local/src/ffmpeg/libavformat/cdxl.c:90: undefined reference to `av_parse_video_rate'
+/usr/local/lib/libavformat.a(concatdec.o): In function `concat_read_header':
+/usr/local/src/ffmpeg/libavformat/concatdec.c:418: undefined reference to `av_parse_time'
+/usr/local/lib/libavformat.a(crcenc.o): In function `crc_write_packet':
+/usr/local/src/ffmpeg/libavformat/crcenc.c:44: undefined reference to `av_adler32_update'
+/usr/local/lib/libavformat.a(dtsdec.o): In function `dts_probe':
+/usr/local/src/ffmpeg/libavformat/dtsdec.c:70: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/dtsdec.c:70: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(dump.o): In function `dump_stream_format':
+/usr/local/src/ffmpeg/libavformat/dump.c:467: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(dump.o): In function `dump_sidedata':
+/usr/local/src/ffmpeg/libavformat/dump.c:413: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavformat.a(dump.o): In function `dump_stereo3d':
+/usr/local/src/ffmpeg/libavformat/dump.c:264: undefined reference to `av_stereo3d_type_name'
+/usr/local/lib/libavformat.a(dump.o): In function `dump_sidedata':
+/usr/local/src/ffmpeg/libavformat/dump.c:401: undefined reference to `av_display_rotation_get[0m[91m'
+/usr/local/lib/libavformat.a(dv.o): In function `dv_extract_timecode':
+/usr/local/src/ffmpeg/libavformat/dv.c:318: undefined reference to `av_timecode_make_smpte_tc_string'
+/usr/local/lib/libavformat.a(ffmdec.o): In function `ffm2_read_header':
+/usr/local/src/ffmpeg/libavformat/ffmdec.c:491: undefined reference to `av_set_options_string'
+/usr/local/src/ffmpeg/libavformat/ffmdec.c:509: undefined reference to `av_set_options_string'
+/usr/local/lib/libavformat.a(ffmenc.o): In function `ffm_write_header_codec_ctx':
+/usr/local/src/ffmpeg/libavformat/ffmenc.c:121: undefined reference to `av_opt_serialize'
+/usr/local/src/ffmpeg/libavformat/ffmenc.c:128: undefined reference to `av_opt_serialize'
+/usr/local/lib/libavformat.a(ffmenc.o): In function `ffm_write_recommended_config':
+/usr/local/src/ffmpeg/libavformat/ffmenc.c:174: undefined reference to `av_opt_find'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_deinit':
+/usr/local/src/ffmpeg/libavformat/fifo.c:605: undefined reference to `av_thread_message_queue_free'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_init':
+/usr/local/src/ffmpeg/libavformat/fifo.c:509: undefined reference to `av_thread_message_queue_alloc'
+/usr/local/src/ffmpeg/libavformat/fifo.c:514: undefined reference to `av_thread_message_queue_set_free_func'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_write_trailer':
+/usr/local/src/ffmpeg/libavformat/fifo.c:586: undefined reference to `av_thread_message_queue_set_err_recv'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_write_packet':
+/usr/local/src/ffmpeg/libavformat/fifo.c:552: undefined reference to `av_thread_message_queue_send'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_thread_recover':
+/usr/local/src/ffmpeg/libavformat/fifo.c:368: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_consumer_thread':
+/usr/local/src/ffmpeg/libavformat/fifo.c:407: undefined reference to `av_thread_message_queue_set_err_send'
+/usr/local/src/ffmpeg/libavformat/fifo.c:430: undefined reference to `av_thread_message_queue_recv'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_thread_recover':
+/usr/local/src/ffmpeg/libavformat/fifo.c:371: undefined reference to[0m[91m `av_usleep'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_thread_attempt_recovery':
+/usr/local/src/ffmpeg/libavformat/fifo.c:321: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_consumer_thread':
+/usr/local/src/ffmpeg/libavformat/fifo.c:419: undefined reference to `av_thread_message_flush'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_thread_process_recovery_failure':
+/usr/local/src/ffmpeg/libavformat/fifo.c:273: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(fifo.o): In function `fifo_consumer_thread':
+/usr/local/src/ffmpeg/libavformat/fifo.c:432: undefined reference to `av_thread_message_queue_set_err_send'
+/usr/local/lib/libavformat.a(flvdec.o): In function `flv_read_packet':
+/usr/local/src/ffmpeg/libavformat/flvdec.c:1036: undefined reference to `av_get_media_type_string'
+/usr/local/lib/libavformat.a(flvenc.o): In function `flv_write_header':
+/usr/local/src/ffmpeg/libavformat/flvenc.c:720: undefined reference to `av_get_media_type_string'
+/usr/local/lib/libavformat.a(format.o): In function `av_probe_input_buffer2':
+/usr/local/src/ffmpeg/libavformat/format.c:290: undefined reference to `av_opt_get'
+/usr/local/lib/libavformat.a(framecrcenc.o): In function `framecrc_write_packet':
+/usr/local/src/ffmpeg/libavformat/framecrcenc.c:47: undefined reference to `av_adler32_update[0m[91m'
+/usr/local/src/ffmpeg/libavformat/framecrcenc.c:67: undefined reference to `av_adler32_update'
+/usr/local/lib/libavformat.a(framecrcenc.o): In function `framecrc_write_header':
+/usr/local/src/ffmpeg/libavformat/framecrcenc.c:36: undefined reference to `av_adler32_update'
+/usr/local/lib/libavformat.a(framehash.o): In function `ff_framehash_write_header':
+[0m[91m/usr/local/src/ffmpeg/libavformat/framehash.c:34: undefined reference to `av_get_media_type_string'
+/usr/local/lib/libavformat.a(hashenc.o): In function `hash_write_trailer':
+/usr/local/src/ffmpeg/libavformat/hashenc.c:77: undefined reference to `av_hash_get_name'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:79: undefined reference to `av_hash_final_hex'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:84: undefined reference to `av_hash_freep'
+/usr/local/lib/libavformat.a(hashenc.o): In function `framehash_write_trailer':
+/usr/local/src/ffmpeg/libavformat/hashenc.c:213: undefined reference to `av_hash_freep'
+/usr/local/lib/libavformat.a(hashenc.o): In function `hash_write_packet':
+/usr/local/src/ffmpeg/libavformat/hashenc.c:69: undefined reference to `av_hash_update'
+/usr/local/lib/libavformat.a(hashenc.o): In function `hash_write_header':
+/usr/local/src/ffmpeg/libavformat/hashenc.c:59: undefined reference to `av_hash_alloc'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:62: undefined reference to `av_hash_init'
+/usr/local/lib/libavformat.a(hashenc.o): In function `framehash_write_packet':
+/usr/local/src/ffmpeg/libavformat/hashenc.c:177: undefined reference to `av_hash_init'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:178: undefined reference to `av_hash_update'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:183: undefined reference to `av_hash_final_hex'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:190: undefined reference to `av_hash_init'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:197: undefined reference to `av_hash_update'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:200: undefined reference to `av_hash_final_hex'
+/usr/local/lib/libavformat.a(hashenc.o): In function `framehash_write_header':
+/usr/local/src/ffmpeg/libavformat/hashenc.c:160: undefined reference to `av_hash_alloc'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:165: undefined reference to `av_hash_get_name'
+/usr/local/lib/libavformat.a(hashenc.o): In function `framehash_print_extradata':
+/usr/local/src/ffmpeg/libavformat/hashenc.c:148: undefined reference to `av_hash_init'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:149: undefined reference to `av_hash_update'
+/usr/local/src/ffmpeg/libavformat/hashenc.c:150: undefined reference to `av_hash_final_hex'
+/usr/local/lib/libavformat.a(hdsenc.o): In function `write_manifest':
+/usr/local/src/ffmpeg/libavformat/hdsenc.c:195: undefined reference to `av_base64_encode'
+/usr/local/lib/libavformat.a(hls.o): In function `parse_playlist':
+/usr/local/src/ffmpeg/libavformat/hls.c:690: undefined reference to `av_opt_get'
+/usr/local/src/ffmpeg/libavformat/hls.c:841: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(hls.o): In function `select_cur_seq_no':
+/usr/local/src/ffmpeg/libavformat/hls.c:1439: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(hls.o): In function `update_options':
+/usr/local/src/ffmpeg/libavformat/hls.c:593: undefined reference to `av_opt_get'
+/usr/local/lib/libavformat.a(hls.o): In function `read_data':
+/usr/local/src/ffmpeg/libavformat/hls.c:1301: undefined reference to `av_usleep'
+/usr/local/src/ffmpeg/libavformat/hls.c:1298: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/hls.c:1278: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(hls.o): In function `update_options':
+/usr/local/src/ffmpeg/libavformat/hls.c:593: undefined reference to `av_opt_get'
+/usr/local/src/ffmpeg/libavformat/hls.c:593: undefined reference to `av_opt_get'
+/usr/local/src/ffmpeg/libavformat/hls.c:593: undefined reference to `av_opt_get'
+/usr/local/src/ffmpeg/libavformat/hls.c:593: undefined reference to `av_opt_get'
+/usr/local/lib/libavformat.a(hls.o): In function `save_avio_options':
+/usr/local/src/ffmpeg/libavformat/hls.c:1483: undefined reference to `av_opt_get'
+/usr/local/lib/libavformat.a(hlsenc.o): In function `hls_start':
+/usr/local/src/ffmpeg/libavformat/hlsenc.c:994: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavformat/hlsenc.c:995: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavformat/hlsenc.c:996: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(hlsenc.o): In function `hls_write_packet':
+/usr/local/src/ffmpeg/libavformat/hlsenc.c:1335: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavformat/hlsenc.c:1331: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(id3v2.o): In function `id3v2_parse':
+/usr/local/src/ffmpeg/libavformat/id3v2.c:1009: undefined reference to `uncompress'
+/usr/local/lib/libavformat.a(matroskadec.o): In function `ebml_read_num':
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:840: undefined reference to `ff_log2_tab'
+/usr/local/lib/libavformat.a(matroskadec.o): In function `matroska_decode_buffer':
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1380: undefined reference to `av_lzo1x_decode'
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1393: undefined reference to `inflateInit_'
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1408: undefined reference to `inflate'
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1401: undefined reference to `inflateEnd'
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1426: undefined reference to `BZ2_bzDecompressInit'
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1441: undefined reference to `BZ2_bzDecompress'
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1434: undefined reference to `BZ2_bzDecompressEnd'
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1444: undefined reference to `BZ2_bzDecompressEnd'
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1411: undefined reference to `inflateEnd'
+/usr/local/lib/libavformat.a(matroskadec.o): In function `matroska_parse_tracks':
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:2045: undefined reference to `av_base64_encode'
+/usr/local/lib/libavformat.a(matroskadec.o): In function `mkv_parse_video_projection':
+/usr/local/src/ffmpeg/libavformat/matroskadec.c:1931: undefined reference to `av_spherical_alloc'
+/usr/local/lib/libavformat.a(mov.o): In function `mov_read_sv3d':
+/usr/local/src/ffmpeg/libavformat/mov.c:4698: undefined reference to `av_spherical_alloc'
+/usr/local/lib/libavformat.a(mov.o): In function `mov_read_st3d':
+/usr/local/src/ffmpeg/libavformat/mov.c:4614: undefined reference to `av_stereo3d_alloc'
+/usr/local/lib/libavformat.a(mov.o): In function `mov_read_senc':
+/usr/local/src/ffmpeg/libavformat/mov.c:4994: undefined reference to `av_aes_ctr_alloc'
+/usr/local/lib/libavformat.a(mov.o): In function `mov_parse_uuid_spherical':
+/usr/local/src/ffmpeg/libavformat/mov.c:4733: undefined reference to `av_spherical_alloc'
+/usr/local/src/ffmpeg/libavformat/mov.c:4749: undefined reference to `av_stereo3d_alloc'
+/usr/local/lib/libavformat.a(mov.o): In function `mov_read_cmov':
+/usr/local/src/ffmpeg/libavformat/mov.c:4499: undefined reference to `uncompress'
+/usr/local/lib/libavformat.a(mov.o): In function `mov_read_tkhd':
+/usr/local/src/ffmpeg/libavformat/mov.c:4021: undefined reference to `av_display_rotation_get'
+/usr/[0m[91mlocal/lib/libavformat.a(mov.o)[0m[91m: In function `mov_read_adrm':
+/usr/local/src/ffmpeg/libavformat/mov.c:1013: undefined reference to `av_sha_alloc'
+/usr/local/src/ffmpeg/libavformat/mov.c:1016: undefined reference[0m[91m to [0m[91m`[0m[91mav_aes_alloc'[0m[91m
+[0m[91m/[0m[91musr[0m[91m/local[0m[91m/[0m[91msrc/[0m[91mffmpeg/libavformat/mov.c:1053: undefined reference to `av_sha_init'
+/usr/local/src[0m[91m/ffmpeg/[0m[91mlibavformat/mov.c:1054: undefined reference[0m[91m to `av_sha_update'
+/usr/local/src/ffmpeg/libavformat[0m[91m/mov.c:1055: undefined reference[0m[91m to `av_sha_update'
+/[0m[91musr/local/src/ffmpeg/libavformat[0m[91m/mov.c:1056: undefined reference [0m[91mto `av_sha_final'
+/[0m[91musr/local/src/ffmpeg/libavformat/[0m[91mmov.c:1057: undefined [0m[91mreference to `av_sha_init'
+/[0m[91musr/local/src/ffmpeg/[0m[91mlibavformat[0m[91m/mov.c:1058: undefined reference to `av_sha_update[0m[91m'
+/usr/local/src/ffmpeg/libavformat/mov.c:1059: undefined[0m[91m reference [0m[91mto `av_sha_update'
+/usr/local/src/ffmpeg/libavformat/mov.c:1060[0m[91m: undefined reference to `av_sha_update[0m[91m'
+/[0m[91musr[0m[91m/local[0m[91m/[0m[91msrc[0m[91m/ffmpeg/libavformat/mov.c:1061: undefined[0m[91m reference to `av_sha_final'
+[0m[91m/usr/local/src/ffmpeg/[0m[91mlibavformat/mov.c:1062: undefined[0m[91m reference to `av_sha_init'
+/usr/local[0m[91m/src[0m[91m/ffmpeg/libavformat/mov.c:1063: undefined [0m[91mreference to[0m[91m `[0m[91mav_sha_update'[0m[91m
+/[0m[91musr[0m[91m/local/src[0m[91m/ffmpeg/libavformat/mov.c:1064: undefined reference to `av_sha_update'
+/usr/local[0m[91m/src[0m[91m/ffmpeg/libavformat/mov.c:1065: undefined reference to `[0m[91mav_sha_final'[0m[91m
+[0m[91m/usr/local/src/ffmpeg/libavformat/mov.c:1071[0m[91m: undefined reference to `[0m[91mav_aes_init'
+/[0m[91musr/[0m[91mlocal[0m[91m/[0m[91msrc/ffmpeg/libavformat/mov.c[0m[91m:1072: undefined [0m[91mreference to `av_aes_crypt'
+/usr/local/src[0m[91m/[0m[91mffmpeg/libavformat/mov.c:1083: undefined [0m[91mreference to[0m[91m [0m[91m`[0m[91mav_sha_init[0m[91m'[0m[91m
+[0m[91m/[0m[91musr[0m[91m/[0m[91mlocal[0m[91m/[0m[91msrc[0m[91m/[0m[91mffmpeg[0m[91m/[0m[91mlibavformat[0m[91m/[0m[91mmov.c[0m[91m:[0m[91m1084[0m[91m:[0m[91m [0m[91mundefined[0m[91m [0m[91mreference[0m[91m [0m[91mto[0m[91m [0m[91m`av_sha_update[0m[91m'[0m[91m
+/usr/local/[0m[91msrc[0m[91m/[0m[91mffmpeg[0m[91m/libavformat[0m[91m/[0m[91mmov.c[0m[91m:[0m[91m1085[0m[91m:[0m[91m [0m[91mundefined[0m[91m [0m[91mreference[0m[91m [0m[91mto[0m[91m [0m[91m`[0m[91mav_sha_update[0m[91m'[0m[91m
+[0m[91m/[0m[91musr[0m[91m/[0m[91mlocal[0m[91m/[0m[91msrc[0m[91m/[0m[91mffmpeg[0m[91m/[0m[91mlibavformat[0m[91m/[0m[91mmov.c[0m[91m:[0m[91m1086[0m[91m:[0m[91m [0m[91mundefined reference to `[0m[91mav_sha_update'
+/usr/local/src/ffmpeg/libavformat/[0m[91mmov.c:1087: undefined reference to `av_sha_final'[0m[91m
+/usr/local/lib/libavformat.a([0m[91mmov.o)[0m[91m: [0m[91mIn [0m[91mfunction[0m[91m `mov_read_close'[0m[91m:
+/usr/local/src/ffmpeg/libavformat/mov.c:5706: undefined[0m[91m reference[0m[91m to[0m[91m `av_aes_ctr_free'
+/usr/local/lib/[0m[91mlibavformat.a(mov.o): In function `[0m[91mparse_timecode_in_framenum_format'[0m[91m:[0m[91m
+[0m[91m/[0m[91musr[0m[91m/local/src/[0m[91mffmpeg/libavformat/mov.c:5601: undefined reference to `av_timecode_init'
+/[0m[91musr/[0m[91mlocal/src/ffmpeg/libavformat/mov.c:5605[0m[91m: undefined[0m[91m [0m[91mreference[0m[91m [0m[91mto[0m[91m [0m[91m`[0m[91mav_timecode_make_string[0m[91m'[0m[91m
+[0m[91m/[0m[91musr[0m[91m/[0m[91mlocal[0m[91m/lib/libavformat.a(mov.o): In function[0m[91m [0m[91m`cenc_filter':
+/usr/[0m[91mlocal/src/ffmpeg/libavformat/mov.c:5151: [0m[91mundefined[0m[91m reference to `[0m[91mav_aes_ctr_set_iv'
+[0m[91m/usr[0m[91m/local[0m[91m/src/ffmpeg/libavformat/[0m[91mmov.c:5192[0m[91m: undefined reference to `av_aes_ctr_crypt'
+/usr/local/lib/libavformat.a(mov.o): In function `aax_filter':
+/usr/local/src/ffmpeg/libavformat/mov.c:1103: undefined reference to `av_aes_init'
+/usr/local/src/ffmpeg/libavformat/mov.c:1104: undefined reference to `av_aes_crypt'
+/usr/local/lib/libavformat.a(mov.o): In function `cenc_filter':
+/usr/local/src/ffmpeg/libavformat/mov.c:5157: undefined reference to `av_aes_ctr_crypt'
+/usr/local/lib/libavformat.a(mov.o): In function `mov_read_senc':
+/usr/local/src/ffmpeg/libavformat/mov.c:4999: undefined reference to `av_aes_ctr_init'
+/usr/local/lib/libavformat.a(movenccenc.o): In function `mov_cenc_write_encrypted':
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:99: undefined reference to `av_aes_ctr_crypt'
+/usr/local/lib/libavformat.a(movenccenc.o): In function `mov_cenc_start_packet':
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:114: undefined reference to `av_aes_ctr_get_iv'
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:114: undefined reference to `av_aes_ctr_get_iv'
+/usr/local/lib/libavformat.a(movenccenc.o): In function `mov_cenc_end_packet':
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:141: undefined reference to `av_aes_ctr_increment_iv'
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:141: undefined reference to `av_aes_ctr_increment_iv'
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:141: undefined reference to `av_aes_ctr_increment_iv'
+/usr/local/lib/libavformat.a(movenccenc.o): In function `ff_mov_cenc_init':
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:393: undefined reference to `av_aes_ctr_alloc'
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:398: undefined reference to `av_aes_ctr_init'
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:404: undefined reference to `av_aes_ctr_set_random_iv'
+/usr/local/lib/libavformat.a(movenccenc.o): In function `ff_mov_cenc_free':
+/usr/local/src/ffmpeg/libavformat/movenccenc.c:414: undefined reference to `av_aes_ctr_free'
+/usr/local/lib/libavformat.a(mp3enc.o): In function `mp3_write_audio_packet':
+/usr/local/src/ffmpeg/libavformat/mp3enc.c:350: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/mp3enc.c:350: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(mp3enc.o): In function `mp3_update_xing':
+/usr/local/src/ffmpeg/libavformat/mp3enc.c:450: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/mp3enc.c:450: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(mpegts.o): In function `write_section_data':
+/usr/local/src/ffmpeg/libavformat/mpegts.c:425: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/mpegts.c:425: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(mpegtsenc.o): In function `mpegts_write_section':
+/usr/local/src/ffmpeg/libavformat/mpegtsenc.c:137: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/mpegtsenc.c:137: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(mpjpegdec.o): In function `mpjpeg_get_boundary':
+/usr/local/src/ffmpeg/libavformat/mpjpegdec.c:262: undefined reference to `av_opt_get'
+/usr/local/lib/libavformat.a(mvdec.o): In function `var_read_float':
+/usr/local/src/ffmpeg/libavformat/mvdec.c:91: undefined reference to `av_strtod'
+/usr/local/src/ffmpeg/libavformat/mvdec.c:91: undefined reference to `av_strtod'
+/usr/local/lib/libavformat.a(mxfdec.o): In function `mxf_decrypt_triplet':
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:474: undefined reference to `av_aes_crypt'
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:485: undefined reference to `av_aes_crypt'
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:444: undefined reference to `av_aes_alloc'
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:447: undefined reference to `av_aes_init'
+/usr/local/lib/libavformat.a(mxfdec.o): In function `mxf_timestamp_to_int64':
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:2292: undefined reference to `av_timegm'
+/usr/local/lib/libavformat.a(mxfdec.o): In function `mxf_add_metadata_stream':
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:1892: undefined reference to `av_get_media_type_string'
+/usr/local/lib/libavformat.a(mxfdec.o): In function `mxf_parse_structural_metadata':
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:1958: undefined reference to `av_timecode_init'
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:1941: undefined reference to `av_timecode_init'
+/usr/local/lib/libavformat.a(mxfdec.o): In function `mxf_add_timecode_metadata':
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:1653: undefined reference to `av_timecode_make_string'
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:1653: undefined reference to `av_timecode_make_string'
+/usr/local/lib/libavformat.a(mxfdec.o): In function `mxf_parse_physical_source_package':
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:1847: undefined reference to `av_timecode_init'
+/usr/local/lib/libavformat.a(mxfdec.o): In function `mxf_add_timecode_metadata':
+/usr/local/src/ffmpeg/libavformat/mxfdec.c:1653: undefined reference to `av_timecode_make_string'
+/usr/local/lib/libavformat.a(mxfenc.o): In function `mxf_init_timecode':
+/usr/local/src/ffmpeg/libavformat/mxfenc.c:2033: undefined reference to `av_timecode_init_from_string'
+/usr/local/src/ffmpeg/libavformat/mxfenc.c:2033: undefined reference to `av_timecode_init_from_string'
+/usr/local/src/ffmpeg/libavformat/mxfenc.c:2035: undefined reference to `av_timecode_init'
+/usr/local/lib/libavformat.a(mxfenc.o): In function `mxf_gen_umid':
+/usr/local/src/ffmpeg/libavformat/mxfenc.c:2016: undefined reference to `av_get_random_seed'
+/usr/local/lib/libavformat.a(mxfenc.o): In function `mxf_init_timecode':
+/usr/local/src/ffmpeg/libavformat/mxfenc.c:2035: undefined reference to `av_timecode_init'
+/usr/local/lib/libavformat.a(mxfenc.o): In function `mxf_write_system_item':
+/usr/local/src/ffmpeg/libavformat/mxfenc.c:2266: undefined reference to `av_timecode_get_smpte_from_framenum'
+/usr/local/lib/libavformat.a(nutdec.o): In function `read_seek':
+/usr/local/src/ffmpeg/libavformat/nutdec.c:1282: undefined reference to `av_tree_find'
+/usr/local/src/ffmpeg/libavformat/nutdec.c:1297: undefined reference to `av_tree_find'
+/usr/local/src/ffmpeg/libavformat/nutdec.c:1308: undefined reference to `av_tree_find'
+/usr/local/lib/libavformat.a(nutenc.o): In function `write_index':
+/usr/local/src/ffmpeg/libavformat/nutenc.c:600: undefined reference to `av_tree_find'
+/usr/local/lib/libavformat.a(nutenc.o): In function `nut_write_packet':
+/usr/local/src/ffmpeg/libavformat/nutenc.c:1044: undefined reference to `av_gettime'
+/usr/local/lib/libavformat.a(oggenc.o): In function `ogg_write_header':
+/usr/local/src/ffmpeg/libavformat/oggenc.c:530: undefined reference to `av_get_random_seed'
+/usr/local/lib/libavformat.a(oggparsevorbis.o): In function `ff_vorbis_comment':
+/usr/local/src/ffmpeg/libavformat/oggparsevorbis.c:165: undefined reference to `av_base64_decode'
+/usr/local/lib/libavformat.a(omadec.o): In function `read_packet':
+/usr/local/src/ffmpeg/libavformat/omadec.c:336: undefined reference to `av_des_crypt'
+/usr/local/lib/libavformat.a(omadec.o): In function `rprobe':
+/usr/local/src/ffmpeg/libavformat/omadec.c:137: undefined reference to `av_des_alloc'
+/usr/local/src/ffmpeg/libavformat/omadec.c:142: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/omadec.c:143: undefined reference to `av_des_crypt'
+/usr/local/src/ffmpeg/libavformat/omadec.c:146: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/omadec.c:147: undefined reference to `av_des_crypt'
+/usr/local/src/ffmpeg/libavformat/omadec.c:151: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/omadec.c:152: undefined reference to `av_des_mac'
+/usr/local/lib/libavformat.a(omadec.o): In function `nprobe':
+/usr/local/src/ffmpeg/libavformat/omadec.c:191: undefined reference to `av_des_alloc'
+/usr/local/src/ffmpeg/libavformat/omadec.c:195: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/omadec.c:197: undefined reference to `av_des_crypt'
+/usr/local/lib/libavformat.a(omadec.o): In function `rprobe':
+/usr/local/src/ffmpeg/libavformat/omadec.c:137: undefined reference to `av_des_alloc'
+/usr/local/src/ffmpeg/libavformat/omadec.c:142: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/omadec.c:143: undefined reference to `av_des_crypt'
+/usr/local/src/ffmpeg/libavformat/omadec.c:146: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/omadec.c:147: undefined reference to `av_des_crypt'
+/usr/local/src/ffmpeg/libavformat/omadec.c:151: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/omadec.c:152: undefined reference to `av_des_mac'
+/usr/local/lib/libavformat.a(omadec.o): In function `decrypt_init':
+/usr/local/src/ffmpeg/libavformat/omadec.c:291: undefined reference to `av_des_alloc'
+/usr/local/src/ffmpeg/libavformat/omadec.c:296: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/omadec.c:297: undefined reference to `av_des_crypt'
+/usr/local/src/ffmpeg/libavformat/omadec.c:302: undefined reference to `av_des_init'
+/usr/local/lib/libavformat.a(options.o): In function `avformat_get_context_defaults':
+/usr/local/src/ffmpeg/libavformat/options.c:129: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libavformat.a(pcmdec.o): In function `pcm_read_header':
+/usr/local/src/ffmpeg/libavformat/pcmdec.c:51: undefined reference to `av_opt_get'
+/usr/local/lib/libavformat.a(rtpdec.o): In function `ff_rtp_check_and_send_back_rr':
+/usr/local/src/ffmpeg/libavformat/rtpdec.c:350: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(rtpdec.o): In function `ff_rtp_send_rtcp_feedback':
+/usr/local/src/ffmpeg/libavformat/rtpdec.c:475: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(rtpdec.o): In function `rtp_parse_one_packet':
+/usr/local/src/ffmpeg/libavformat/rtpdec.c:802: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(rtpdec.o): In function `enqueue_packet':
+/usr/local/src/ffmpeg/libavformat/rtpdec.c:722: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(rtpdec.o): In function `rtcp_parse_packet':
+/usr/local/src/ffmpeg/libavformat/rtpdec.c:170: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(rtpdec_asf.o): In function `ff_wms_parse_sdp_a_line':
+/usr/local/src/ffmpeg/libavformat/rtpdec_asf.c:113: undefined reference to `av_base64_decode'
+/usr/local/lib/libavformat.a(rtpdec_h264.o): In function `ff_h264_parse_sprop_parameter_sets':
+/usr/local/src/ffmpeg/libavformat/rtpdec_h264.c:116: undefined reference to `av_base64_decode'
+/usr/local/lib/libavformat.a(rtpdec_xiph.o): In function `xiph_parse_fmtp_pair':
+/usr/local/src/ffmpeg/libavformat/rtpdec_xiph.c:334: undefined reference to `av_base64_decode'
+/usr/local/lib/libavformat.a(rtpenc.o): In function `rtp_write_header':
+/usr/local/src/ffmpeg/libavformat/rtpenc.c:119: undefined reference to `av_get_random_seed'
+/usr/local/src/ffmpeg/libavformat/rtpenc.c:123: undefined reference to `av_get_random_seed'
+/usr/local/src/ffmpeg/libavformat/rtpenc.c:137: undefined reference to `av_get_random_seed'
+/usr/local/lib/libavformat.a(rtpenc_chain.o): In function `ff_rtp_chain_mux_open':
+/usr/local/src/ffmpeg/libavformat/rtpenc_chain.c:71: undefined reference to `av_opt_get'
+/usr/local/lib/libavformat.a(rtspdec.o): In function `rtsp_read_packet':
+/usr/local/src/ffmpeg/libavformat/rtspdec.c:911: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(rtspdec.o): In function `rtsp_read_setup':
+/usr/local/src/ffmpeg/libavformat/rtspdec.c:329: undefined reference to `av_get_random_seed'
+/usr/local/lib/libavformat.a(rtspenc.o): In function `ff_rtsp_setup_output_streams':
+/usr/local/src/ffmpeg/libavformat/rtspenc.c:55: undefined reference to `av_gettime'
+/usr/local/lib/libavformat.a(sapenc.o): In function `sap_write_packet':
+/usr/local/src/ffmpeg/libavformat/sapenc.c:252: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(sapenc.o): In function `sap_write_header':
+/usr/local/src/ffmpeg/libavformat/sapenc.c:95: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/sapenc.c:98: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/sapenc.c:101:[0m[91m [0m[91mundefined reference[0m[91m to `av_find_info_tag'
+/[0m[91musr/local/src/ffmpeg/libavformat[0m[91m/sapenc.c:[0m[91m104:[0m[91m [0m[91mundefined [0m[91mreference [0m[91mto `av_find_info_tag'
+/usr/local/src/ffmpeg[0m[91m/libavformat/sapenc.c[0m[91m:144: undefined reference to `av_gettime[0m[91m'
+/usr/[0m[91mlocal[0m[91m/src/ffmpeg/libavformat/sapenc.c[0m[91m:207[0m[91m: undefined [0m[91mreference[0m[91m to `av_get_random_seed[0m[91m'
+/usr/local/lib/libavformat.a(sdp.o): In function `xiph_extradata2config[0m[91m':
+/usr/local/src/ffmpeg/libavformat/sdp.c:[0m[91m405: [0m[91mundefined reference to `av_base64_encode'
+/usr/local/lib/[0m[91mlibavformat.a(sdp.o[0m[91m): In function `extradata2psets':
+/[0m[91musr[0m[91m/local[0m[91m/src/ffmpeg/libavformat/sdp.c:205: undefined[0m[91m [0m[91mreference to `av_base64_encode'
+[0m[91m/usr[0m[91m/local[0m[91m/lib/libavformat.a(sdp.o): [0m[91mIn[0m[91m function[0m[91m `extradata2psets_hevc':
+/usr/local/src/ffmpeg[0m[91m/libavformat[0m[91m/sdp.c:310: undefined reference to `av_base64_encode'[0m[91m
+[0m[91m/usr/[0m[91mlocal/lib/libavformat.a(sdp.o): In function `sdp_get_address':
+[0m[91m/[0m[91musr/[0m[91mlocal/src/ffmpeg/libavformat/sdp.c:143: undefined[0m[91m reference[0m[91m to `av_find_info_tag'
+/usr/local/[0m[91mlib/[0m[91mlibavformat.a[0m[91m(sdp.o[0m[91m): In function `sdp_write_media_attributes':
+/usr/local[0m[91m/[0m[91msrc[0m[91m/ffmpeg/libavformat/sdp.c:552: undefined reference to `av_opt_flag_is_set'
+[0m[91m/usr/[0m[91mlocal/src/ffmpeg/libavformat/sdp.c:526: undefined reference to `[0m[91mav_opt_flag_is_set'[0m[91m
+/usr/local/src/ffmpeg/libavformat/sdp.c:494: undefined [0m[91mreference [0m[91mto `av_opt_flag_is_set'
+/usr/local/[0m[91msrc[0m[91m/[0m[91mffmpeg[0m[91m/libavformat/sdp.c:698[0m[91m:[0m[91m [0m[91mundefined[0m[91m [0m[91mreference[0m[91m [0m[91mto `[0m[91mav_opt_get_int[0m[91m'[0m[91m
+/usr/local[0m[91m/lib/libavformat.a(sdp.o): [0m[91mIn[0m[91m function `av_sdp_create':
+/usr/local/src/ffmpeg/libavformat/sdp.c:810: undefined reference to `av_opt_get'
+/usr/local/src/ffmpeg/libavformat/sdp.c:812: undefined reference to `av_opt_get'
+/usr/local/lib/libavformat.a(sdp.o): In function `sdp_write_media_attributes':
+/usr/local/src/ffmpeg/libavformat/sdp.c:552: undefined reference to `av_opt_flag_is_set'
+/usr/local/src/ffmpeg/libavformat/sdp.c:494: undefined reference to `av_opt_flag_is_set'
+/usr/local/src/ffmpeg/libavformat/sdp.c:526: undefined reference to `av_opt_flag_is_set'
+/usr/local/src/ffmpeg/libavformat/sdp.c:698: undefined reference to `av_opt_get_int'
+/usr/local/lib/libavformat.a(segment.o): In function `parse_times':
+/usr/local/src/ffmpeg/libavformat/segment.c:476: undefined reference to `av_parse_time'
+/usr/local/lib/libavformat.a(segment.o): In function `seg_init':
+/usr/local/src/ffmpeg/libavformat/segment.c:727: undefined reference to `av_get_media_type_string'
+/usr/local/src/ffmpeg/libavformat/segment.c:681: undefined reference to `av_parse_time'
+/usr/local/lib/libavformat.a(segment.o): In function `segment_end':
+/usr/local/src/ffmpeg/libavformat/segment.c:418: undefined reference to `av_timecode_init_from_string'
+/usr/local/src/ffmpeg/libavformat/segment.c:425: undefined reference to `av_timecode_make_string'
+/usr/local/lib/libavformat.a(segment.o): In function `seg_write_trailer':
+/usr/local/src/ffmpeg/libavformat/segment.c:980: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(segment.o): In function `segment_start':
+/usr/local/src/ffmpeg/libavformat/segment.c:258: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(segment.o): In function `seg_write_packet':
+/usr/local/src/ffmpeg/libavformat/segment.c:867: undefined reference to `av_gettime'
+/usr/local/lib/libavformat.a(srtp.o): In function `ff_srtp_free':
+/usr/local/src/ffmpeg/libavformat/srtp.c:37: undefined reference to `av_hmac_free'
+/usr/local/src/ffmpeg/libavformat/srtp.c:37: undefined reference to `av_hmac_free'
+/usr/local/lib/libavformat.a(srtp.o): In function `ff_srtp_set_crypto':
+/usr/local/src/ffmpeg/libavformat/srtp.c:87: undefined reference to `av_base64_decode'
+/usr/local/src/ffmpeg/libavformat/srtp.c:92: undefined reference to `av_aes_alloc'
+/usr/local/src/ffmpeg/libavformat/srtp.c:93: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/srtp.c:100: undefined reference to `av_aes_init'
+/usr/local/lib/libavformat.a(srtp.o): In function `encrypt_counter':
+/usr/local/src/ffmpeg/libavformat/srtp.c:48: undefined reference to `av_aes_crypt'
+/usr/local/src/ffmpeg/libavformat/srtp.c:48: undefined reference to `av_aes_crypt'
+/usr/local/src/ffmpeg/libavformat/srtp.c:48: undefined reference to `av_aes_crypt'
+/usr/local/src/ffmpeg/libavformat/srtp.c:48: undefined reference to `av_aes_crypt'
+/usr/local/src/ffmpeg/libavformat/srtp.c:48: undefined reference to `av_aes_crypt'
+/usr/local/lib/libavformat.a(srtp.o):/usr/local/src/ffmpeg/libavformat/srtp.c:48: more undefined references to `av_aes_crypt' follow
+/usr/local/lib/libavformat.a(srtp.o): In function `ff_srtp_decrypt':
+/usr/local/src/ffmpeg/libavformat/srtp.c:147: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/srtp.c:149: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/srtp.c:178: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/srtp.c:147: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/srtp.c:149: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/srtp.c:175: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/srtp.c:232: undefined reference to `av_aes_init'
+/usr/local/lib/libavformat.a(srtp.o): In function `encrypt_counter':
+/usr/local/src/ffmpeg/libavformat/srtp.c:48: undefined reference to `av_aes_crypt'
+/usr/local/lib/libavformat.a(srtp.o): In function `ff_srtp_encrypt':
+/usr/local/src/ffmpeg/libavformat/srtp.c:305: undefined reference to `av_aes_init'
+/usr/local/lib/libavformat.a(srtp.o): In function `encrypt_counter':
+/usr/local/src/ffmpeg/libavformat/srtp.c:48: undefined reference to `av_aes_crypt'
+/usr/local/lib/libavformat.a(srtp.o): In function `ff_srtp_encrypt':
+/usr/local/src/ffmpeg/libavformat/srtp.c:313: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/srtp.c:314: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/srtp.c:320: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/srtp.c:305: undefined reference to `av_aes_init'
+/usr/local/src/ffmpeg/libavformat/srtp.c:313: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/srtp.c:314: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/srtp.c:318: undefined reference to `av_hmac_update'
+/usr/local/lib/libavformat.a(swfenc.o): In function `swf_write_trailer':
+/usr/local/src/ffmpeg/libavformat/swfenc.c:495: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavformat.a(swfenc.o): In function `swf_write_video':
+/usr/local/src/ffmpeg/libavformat/swfenc.c:430: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/swfenc.c:431: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/swfenc.c:435: undefined reference to `av_fifo_generic_read'
+/usr/local/lib/libavformat.a(swfenc.o): In function `swf_write_audio':
+/usr/local/src/ffmpeg/libavformat/swfenc.c:458: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/swfenc.c:463: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavformat.a(swfenc.o): In function `swf_write_header':
+/usr/local/src/ffmpeg/libavformat/swfenc.c:196: undefined reference to `av_fifo_alloc'
+/usr/local/lib/libavformat.a(takdec.o): In function `tak_check_crc':
+/usr/local/src/ffmpeg/libavformat/takdec.c:48: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/takdec.c:48: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(tee.o): In function `log_slave':
+/usr/local/src/ffmpeg/libavformat/tee.c:415: undefined reference to `av_get_media_type_string'
+/usr/local/lib/libavformat.a(tee_common.o): In function `ff_tee_parse_slave_options':
+/usr/local/src/ffmpeg/libavformat/tee_common.c:49: undefined reference to `av_opt_get_key_value'
+/usr/local/lib/libavformat.a(uncodedframecrcenc.o): In function `write_frame':
+/usr/local/src/ffmpeg/libavformat/uncodedframecrcenc.c:142: undefined reference to `av_get_media_type_string'
+/usr/local/lib/libavformat.a(uncodedframecrcenc.o): In function `video_frame_cksum':
+/usr/local/src/ffmpeg/libavformat/uncodedframecrcenc.c:70: undefined reference to `av_adler32_update'
+/usr/local/lib/libavformat.a(vivo.o): In function `vivo_read_header':
+/usr/local/src/ffmpeg/libavformat/vivo.c:210: undefined reference to `av_parse_ratio'
+/usr/local/lib/libavformat.a(wavenc.o): In function `peak_write_chunk':
+/usr/local/src/ffmpeg/libavformat/wavenc.c:274: undefined reference to `av_gettime'
+/usr/local/lib/libavformat.a(webm_chunk.o): In function `chunk_mux_init':
+/usr/local/src/ffmpeg/libavformat/webm_chunk.c:76: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavformat/webm_chunk.c:77: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libavformat/webm_chunk.c:78: undefined reference to `av_opt_set_int'
+/usr/local/src/ffmpeg/libavformat/webm_chunk.c:79: undefined reference to `av_opt_set_int'
+/usr/local/lib/libavformat.a(wsddec.o): In function `wsd_read_header':
+/usr/local/src/ffmpeg/libavformat/wsddec.c:123: undefined reference to `av_timecode_make_smpte_tc_string'
+/usr/local/lib/libavformat.a(aadec.o): In function `aa_read_packet':
+/usr/local/src/ffmpeg/libavformat/aadec.c:237: undefined reference to `av_tea_init'
+/usr/local/src/ffmpeg/libavformat/aadec.c:238: undefined reference to `av_tea_crypt'
+/usr/local/lib/libavformat.a(aadec.o): In function `aa_read_header':
+/usr/local/src/ffmpeg/libavformat/aadec.c:141: undefined reference to `av_tea_alloc'
+/usr/local/src/ffmpeg/libavformat/aadec.c:144: undefined reference to `av_tea_init'
+/usr/local/src/ffmpeg/libavformat/aadec.c:152: undefined reference to `av_tea_crypt'
+/usr/local/lib/libavformat.a(ac3dec.o): In function `ac3_eac3_probe':
+/usr/local/src/ffmpeg/libavformat/ac3dec.c:69: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavformat/ac3dec.c:69: undefined reference to `av_crc'
+/usr/local/lib/libavformat.a(asfcrypt.o): In function `ff_asfcrypt_dec':
+/usr/local/src/ffmpeg/libavformat/asfcrypt.c:163: undefined reference to `av_des_alloc'
+/usr/local/src/ffmpeg/libavformat/asfcrypt.c:164: undefined reference to `av_rc4_alloc'
+/usr/local/src/ffmpeg/libavformat/asfcrypt.c:171: undefined reference to `av_rc4_init'
+/usr/local/src/ffmpeg/libavformat/asfcrypt.c:172: undefined reference to `av_rc4_crypt'
+/usr/local/src/ffmpeg/libavformat/asfcrypt.c:177: undefined reference to `av_des_init'
+/usr/local/src/ffmpeg/libavformat/asfcrypt.c:178: undefined reference to `av_des_crypt'
+/usr/local/src/ffmpeg/libavformat/asfcrypt.c:181: undefined reference to `av_rc4_init'
+/usr/local/src/ffmpeg/libavformat/asfcrypt.c:182: undefined reference to `av_rc4_crypt'
+/usr/local/lib/libavformat.a(audiointerleave.o): In function `ff_audio_interleave_close':
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:37: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavformat.a(audiointerleave.o): In function `ff_audio_interleave_init':
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:70: undefined reference to `av_fifo_alloc_array'
+/usr/local/lib/libavformat.a(audiointerleave.o): In function `interleave_new_audio_packet':
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:85: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:91: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:84: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:84: undefined reference to `av_fifo_size'
+/usr/local/lib/libavformat.a(audiointerleave.o): In function `ff_audio_rechunk_interleave':
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:115: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:117: undefined reference to `av_fifo_realloc2'
+/usr/local/src/ffmpeg/libavformat/audiointerleave.c:121: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavformat.a(avio.o): In function `url_alloc_for_protocol':
+/usr/local/src/ffmpeg/libavformat/avio.c:116: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavformat/avio.c:132: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_open_whitelist':
+/usr/local/src/ffmpeg/libavformat/avio.c:320: undefined reference to `av_opt_copy'
+/usr/local/src/ffmpeg/libavformat/avio.c:321: undefined reference to `av_opt_set_dict'
+/usr/local/src/ffmpeg/libavformat/avio.c:324: undefined reference to `av_opt_set_dict'
+/usr/local/src/ffmpeg/libavformat/avio.c:344: undefined reference to `av_opt_set_dict'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_closep':
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_open_whitelist':
+/usr/local/src/ffmpeg/libavformat/avio.c:321: undefined reference to `av_opt_set_dict'
+/usr/local/src/ffmpeg/libavformat/avio.c:324: undefined reference to `av_opt_set_dict'
+/usr/local/src/ffmpeg/libavformat/avio.c:344: undefined reference to `av_opt_set_dict'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_closep':
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(avio.o): In function `retry_transfer_wrapper':
+/usr/local/src/ffmpeg/libavformat/avio.c:390: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/avio.c:394: undefined reference to `av_usleep'
+/usr/local/src/ffmpeg/libavformat/avio.c:391: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/avio.c:390: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/avio.c:394: undefined reference to `av_usleep'
+/usr/local/src/ffmpeg/libavformat/avio.c:391: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/avio.c:390: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/avio.c:394: undefined reference to `av_usleep'
+/usr/local/src/ffmpeg/libavformat/avio.c:391: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_closep':
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(avio.o):/usr/local/src/ffmpeg/libavformat/avio.c:462: more undefined references to `av_opt_free' follow
+/usr/local/lib/libavformat.a(avio.o): In function `url_alloc_for_protocol':
+/usr/local/src/ffmpeg/libavformat/avio.c:116: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavformat/avio.c:132: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_closep':
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(avio.o): In function `url_alloc_for_protocol':
+/usr/local/src/ffmpeg/libavformat/avio.c:116: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavformat/avio.c:132: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_closep':
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(avio.o): In function `url_alloc_for_protocol':
+/usr/local/src/ffmpeg/libavformat/avio.c:116: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavformat/avio.c:132: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(avio.o): In function `avio_open_dir':
+/usr/local/src/ffmpeg/libavformat/avio.c:554: undefined reference to `av_opt_set_dict'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_closep':
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(avio.o): In function `url_alloc_for_protocol':
+/usr/local/src/ffmpeg/libavformat/avio.c:116: undefined reference to `av_opt_set_defaults'
+/usr/local/src/ffmpeg/libavformat/avio.c:132: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(avio.o): In function `ffurl_closep':
+/usr/local/src/ffmpeg/libavformat/avio.c:459: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavformat/avio.c:462: undefined reference to `av_opt_free'
+/usr/local/lib/libavformat.a(http.o): In function `parse_content_encoding':
+/usr/local/src/ffmpeg/libavformat/http.c:635: undefined reference to `inflateEnd'
+/usr/local/src/ffmpeg/libavformat/http.c:636: undefined reference to `inflateInit2_'
+/usr/local/src/ffmpeg/libavformat/http.c:641: undefined reference to `zlibCompileFlags'
+/usr/local/lib/libavformat.a(http.o): In function `http_close':
+/usr/local/src/ffmpeg/libavformat/http.c:1460: undefined reference to `inflateEnd'
+/usr/local/lib/libavformat.a(http.o): In function `http_read_stream':
+/usr/local/src/ffmpeg/libavformat/http.c:1301: undefined reference to `av_usleep'
+/usr/local/lib/libavformat.a(http.o): In function `http_buf_read_compressed':
+/usr/local/src/ffmpeg/libavformat/http.c:1262: undefined reference to `inflate'
+/usr/local/lib/libavformat.a(http.o): In function `http_read_stream':
+/usr/local/src/ffmpeg/libavformat/http.c:1301: undefined reference to `av_usleep'
+/usr/local/lib/libavformat.a(http.o): In function `http_buf_read_compressed':
+/usr/local/src/ffmpeg/libavformat/http.c:1262: undefined reference to `inflate'
+/usr/local/lib/libavformat.a(http.o): In function `store_icy':
+/usr/local/src/ffmpeg/libavformat/http.c:1383: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(http.o): In function `http_read_stream':
+/usr/local/src/ffmpeg/libavformat/http.c:1301: undefined reference to `av_usleep'
+/usr/local/lib/libavformat.a(http.o): In function `http_buf_read_compressed':
+/usr/local/src/ffmpeg[0m[91m/libavformat/http.c:1262: undefined reference to `inflate'
+/usr/local/lib/libavformat.a(httpauth.o): In function `update_md5_strings':
+/usr/local/src/ffmpeg/libavformat/httpauth.c:131: undefined reference to `av_md5_update'
+/usr/local/lib/libavformat.a(httpauth.o): In function `make_digest_auth':
+/usr/local/src/ffmpeg/libavformat/httpauth.c:157: undefined reference to `av_get_random_seed'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:157: undefined reference to `av_get_random_seed'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:161: undefined reference to `av_md5_alloc'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:165: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:167: undefined reference to `av_md5_final'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:173: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:175: undefined reference to `av_md5_final'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:184: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:186: undefined reference to `av_md5_final'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:190: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/httpauth.c:196: undefined reference to `av_md5_final'
+/usr/local/lib/libavformat.a(httpauth.o): In function `ff_http_auth_create_response':
+/usr/local/src/ffmpeg/libavformat/httpauth.c:274: undefined reference to `av_base64_encode'
+/usr/local/lib/libavformat.a(matroska.o): In function `ff_mkv_stereo3d_conv':
+/usr/local/src/ffmpeg/libavformat/matroska.c:157: undefined reference to `av_stereo3d_alloc'
+/usr/local/lib/libavformat.a(network.o): In function `ff_network_wait_fd_timeout':
+/usr/local/src/ffmpeg/libavformat/network.c:95: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/network.c:96: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(nut.o): In function `ff_nut_add_sp':
+/usr/local/src/ffmpeg/libavformat/nut.c:273: undefined reference to `av_tree_node_alloc'
+/usr/local/src/ffmpeg/libavformat/nut.c:286: undefined reference to `av_tree_insert'
+/usr/local/lib/libavformat.a(nut.o): In function `ff_nut_free_sp':
+/usr/local/src/ffmpeg/libavformat/nut.c:304: undefined reference to `av_tree_enumerate'
+/usr/local/src/ffmpeg/libavformat/nut.c:305: undefined reference to `av_tree_destroy'
+/usr/local/lib/libavformat.a(rtmphttp.o): In function `rtmp_http_send_cmd':
+/usr/local/src/ffmpeg/libavformat/rtmphttp.c:65: undefined reference to `av_opt_set_bin'
+/usr/local/lib/libavformat.a(rtmphttp.o): In function `rtmp_http_read':
+/usr/local/src/ffmpeg/libavformat/rtmphttp.c:133: undefined reference to `av_usleep'
+/usr/local/lib/libavformat.a(rtmphttp.o): In function `rtmp_http_send_cmd':
+/usr/local/src/ffmpeg/libavformat/rtmphttp.c:65: undefined reference to `av_opt_set_bin'
+/usr/local/lib/libavformat.a(rtmphttp.o): In function `rtmp_http_open':
+/usr/local/src/ffmpeg/libavformat/rtmphttp.c:219: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavformat/rtmphttp.c:220: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavformat/rtmphttp.c:221: undefined reference to `av_opt_set_bin'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `do_adobe_auth':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1630: undefined reference to `av_md5_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1634: undefined reference to `av_get_random_seed'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1636: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1637: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1638: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1639: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1640: undefined reference to `av_md5_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1641: undefined reference to `av_base64_encode'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1643: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1644: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1646: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1649: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1650: undefined reference to `av_md5_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1651: undefined reference to `av_base64_encode'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `do_llnw_auth':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1673: undefined reference to `av_md5_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1677: undefined reference to `av_get_random_seed'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1679: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1680: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1681: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1682: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1683: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1684: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1685: undefined reference to `av_md5_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1689: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1690: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1691: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1692: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1695: undefined reference to `av_md5_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1699: undefined reference to `av_md5_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1700: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1701: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1703: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1704: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1705: undefined reference to `av_md5_update'
+/usr/local/lib/libavformat.a(rtmpproto.o):/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1706: more undefined references to `av_md5_update' follow
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `do_llnw_auth':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1712: undefined reference to `av_md5_final'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `do_adobe_auth':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1648: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1649: undefined reference to `av_md5_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1650: undefined reference to `av_md5_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1651: undefined reference to `av_base64_encode'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `do_llnw_auth':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1694: undefined reference to `av_md5_update'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `ff_rtmp_calc_digest':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:998: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:999: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:996: undefined reference to `av_hmac_update'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `rtmp_uncompress_swfplayer':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1106: undefined reference to `inflateInit_'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1116: undefined reference to `inflate'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1134: undefined reference to `inflateEnd'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1134: undefined reference to `[0m[91minflateEnd'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `ff_rtmp_calc_digest':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:996: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `rtmp_calc_swfhash':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1209: undefined reference to `av_opt_set_bin'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `rtmp_server_handshake':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1486: undefined reference to `av_get_random_seed'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `rtmp_handshake':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1245: undefined reference to `av_lfg_init'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `ff_rtmp_calc_digest':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:998: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:999: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `rtmp_uncompress_swfplayer':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1134: undefined reference to `inflateEnd'
+/usr/local/lib/libavformat.a(rtmpproto.o): In function `ff_rtmp_calc_digest':
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:996: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:996: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:996: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:996: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:996: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:990: undefined reference to `av_hmac_alloc'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:994: undefined reference to `av_hmac_init'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:998: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:999: undefined reference to `av_hmac_update'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1001: undefined reference to `av_hmac_final'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:1003: undefined reference to `av_hmac_free'
+/usr/local/src/ffmpeg/libavformat/rtmpproto.c:996: undefined reference to `av_hmac_update'
+/usr/local/lib/libavformat.a(rtp.o): In function `ff_rtp_get_payload_type':
+/usr/local/src/ffmpeg/libavformat/rtp.c:99: undefined reference to `av_opt_get_int'
+/usr/local/src/ffmpeg/libavformat/rtp.c:109: undefined reference to `av_opt_flag_is_set'
+/usr/local/lib/libavformat.a(rtpproto.o): In function `rtp_open':
+/usr/local/src/ffmpeg/libavformat/rtpproto.c:340: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/rtpproto.c:343: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/rtpproto.c:346: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/rtpproto.c:349: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/rtpproto.c:352: undefined reference to `av_find_info_tag'
+/usr/local/lib/libavformat.a(rtpproto.o):/usr/local/src/ffmpeg/libavformat/rtpproto.c:355: more undefined references to `av_find_info_tag' follow
+/usr/local/lib/libavformat.a(udp.o): In function `udp_write':
+/usr/local/src/ffmpeg/libavformat/udp.c:1098: undefined reference to `av_fifo_space'
+/usr/local/src/ffmpeg/libavformat/udp.c:1104: undefined reference to `av_fifo_generic_write'
+/usr/local/src/ffmpeg/libavformat/udp.c:1105: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavformat.a(udp.o): In function `udp_read':
+/usr/local/src/ffmpeg/libavformat/udp.c:1028: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/udp.c:1054: undefined reference to `av_gettime'
+/usr/local/src/ffmpeg/libavformat/udp.c:1032: undefined[0m[91m reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavformat/udp.c:1039: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavformat/udp.c:1040: undefined reference to `av_fifo_drain'
+/usr/local/lib/libavformat.a(udp.o): In function `circular_buffer_task_rx':
+/usr/local/src/ffmpeg/libavformat/udp.c:532: undefined reference to `av_fifo_space'
+/usr/local/src/ffmpeg/libavformat/udp.c:546: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavformat.a(udp.o): In function `circular_buffer_task_tx':
+/usr/local/src/ffmpeg/libavformat/udp.c:561: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/udp.c:562: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/udp.c:582: undefined reference to `av_fifo_size'
+/usr/local/src/ffmpeg/libavformat/udp.c:593: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavformat/udp.c:599: undefined reference to `av_fifo_generic_read'
+/usr/local/src/ffmpeg/libavformat/udp.c:605: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/udp.c:613: undefined reference to `av_usleep'
+/usr/local/lib/libavformat.a(udp.o): In function `udp_close':
+/usr/local/src/ffmpeg/libavformat/udp.c:1157: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavformat.a(udp.o): In function `ff_udp_set_remote_url':
+/usr/local/src/ffmpeg/libavformat/udp.c:459: undefined reference to `av_find_info_tag'
+/usr/local/lib/libavformat.a(udp.o): In function `udp_open':
+/usr/local/src/ffmpeg/libavformat/udp.c:1000: undefined reference to `av_fifo_freep'
+/usr/local/src/ffmpeg/libavformat/udp.c:720: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/udp.c:727: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/udp.c:738: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/udp.c:741: undefined reference to `av_find_info_tag'
+/usr/local/src/ffmpeg/libavformat/udp.c:744: undefined reference to `av_find_info_tag'
+/usr/local/lib/libavformat.a(udp.o):/usr/local/src/ffmpeg/libavformat/udp.c:747: more undefined references to `av_find_info_tag' follow
+/usr/local/lib/libavformat.a(udp.o): In function `udp_open':
+/usr/local/src/ffmpeg/libavformat/udp.c:970: undefined reference to `av_fifo_alloc'
+/usr/local/src/ffmpeg/libavformat/udp.c:789: undefined reference to `av_find_info_tag'
+/usr/local/lib/libavformat.a(async.o): In function `ring_destroy':
+/usr/local/src/ffmpeg/libavformat/async.c:96: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavformat.a(async.o): In[0m[91m function `ring_init':
+/usr/local/src/ffmpeg/libavformat/async.c:86: undefined reference to `av_fifo_alloc'
+/usr/local/lib/libavformat.a(async.o): In function `ring_destroy':
+/usr/local/src/ffmpeg/libavformat/async.c:96: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavformat.a(async.o): In function `ring_size':
+/usr/local/src/ffmpeg/libavformat/async.c:107: undefined reference to `av_fifo_size'
+/usr/local/lib/libavformat.a(async.o): In function `ring_generic_read':
+/usr/local/src/ffmpeg/libavformat/async.c:120: undefined reference to `av_fifo_generic_peek_at'
+/usr/local/src/ffmpeg/libavformat/async.c:124: undefined reference to `av_fifo_drain'
+/usr/local/lib/libavformat.a(async.o): In function `ring_reset':
+/usr/local/src/ffmpeg/libavformat/async.c:101: undefined reference to `av_fifo_reset'
+/usr/local/lib/libavformat.a(async.o): In function `ring_space':
+/usr/local/src/ffmpeg/libavformat/async.c:112: undefined reference to `av_fifo_space'
+/usr/local/lib/libavformat.a(async.o): In function `ring_generic_write':
+/usr/local/src/ffmpeg/libavformat/async.c:134: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavformat.a(async.o): In function `ring_size':
+/usr/local/src/ffmpeg/libavformat/async.c:107: undefined reference to `av_fifo_size'
+/usr/local/lib/libavformat.a(cache.o): In function `cache_close':
+/usr/local/src/ffmpeg/libavformat/cache.c:301: undefined reference to `av_tree_enumerate'
+/usr/local/src/ffmpeg/libavformat/cache.c:302: undefined reference to `av_tree_destroy'
+/usr/local/lib/libavformat.a(cache.o): In function `cache_read':
+/usr/local/src/ffmpeg/libavformat/cache.c:162: undefined reference to `av_tree_find'
+/usr/local/lib/libavformat.a(cache.o): In function `add_entry':
+/usr/local/src/ffmpeg/libavformat/cache.c:119: undefined reference to `av_tree_find'
+/usr/local/src/ffmpeg/libavformat/cache.c:129: undefined reference to `av_tree_node_alloc'
+/usr/local/src/ffmpeg/libavformat/cache.c:138: undefined reference to `av_tree_insert'
+/usr/local/lib/libavformat.a(cache.o): In function `cache_open':
+/usr/local/src/ffmpeg/libavformat/cache.c:80: undefined reference to `avpriv_tempfile'
+/usr/local/lib/libavformat.a(crypto.o): In function `crypto_close':
+/usr/local/src/ffmpeg/libavformat/crypto.c:387: undefined reference to `av_aes_crypt'
+/usr/local/lib/libavformat.a(crypto.o): In function `crypto_write':
+/usr/local/src/ffmpeg/libavformat/crypto.c:360: undefined reference to `av_aes_crypt'
+/usr/local/src/ffmpeg/libavformat/crypto.c:356: undefined reference to `av_aes_crypt'
+/usr/local/lib/libavformat.a(crypto.o): In function `crypto_read':
+/usr/local/src/ffmpeg/libavformat/crypto.c:218: undefined reference to `av_aes_crypt'
+/usr/local/lib/libavformat.a(crypto.o): In function `crypto_open2':
+/usr/local/src/ffmpeg/libavformat/crypto.c:153: undefined reference to `av_aes_alloc'
+/usr/local/src/ffmpeg/libavformat/crypto.c:158: undefined reference to `av_aes_init'
+/usr/local/src/ffmpeg/libavformat/crypto.c:168: undefined reference to `av_aes_alloc'
+/usr/local/src/ffmpeg/libavformat/crypto.c:173: undefined reference to `av_aes_init'
+/usr/local/lib/libavformat.a(file.o): In function `file_open':
+/usr/local/src/ffmpeg/libavformat/file.c:223: undefined reference to `avpriv_open'
+/usr/local/lib/libavformat.a(ftp.o): In function `ftp_parse_date':
+/usr/local/src/ffmpeg/libavformat/ftp.c:930: undefined reference to `av_small_strptime'
+/usr/local/src/ffmpeg/libavformat/ftp.c:931: undefined reference to `av_timegm'
+/usr/local/lib/libavformat.a(hlsproto.o): In function `parse_playlist':
+/usr/local/src/ffmpeg/libavformat/hlsproto.c:176: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(hlsproto.o): In function `hls_read':
+/usr/local/src/ffmpeg/libavformat/hlsproto.c:302: undefined reference to `av_usleep'
+/usr/local/src/ffmpeg/libavformat/hlsproto.c:299: undefined reference to `av_gettime_relative'
+/usr/local/src/ffmpeg/libavformat/hlsproto.c:280: undefined reference to `av_gettime_relative'
+/usr/local/lib/libavformat.a(md5proto.o): In function `md5_close':
+/usr/local/src/ffmpeg/libavformat/md5proto.c:64: undefined reference to `av_md5_final'
+/usr/local/lib/libavformat.a(md5proto.o): In function `md5_write':
+/usr/local/src/ffmpeg/libavformat/md5proto.c:[0m[91m52: undefined reference to `av_md5_update'
+/usr/local/lib/libavformat.a(md5proto.o): In function `md5_open':
+/usr/local/src/ffmpeg/libavformat/md5proto.c:41: undefined reference to `av_md5_alloc'
+/usr/local/src/ffmpeg/libavformat/md5proto.c:44: undefined reference to `av_md5_init'
+/usr/local/lib/libavformat.a(mmsh.o): In function `mmsh_open_internal':
+/usr/local/src/ffmpeg/libavformat/mmsh.c:247: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavformat/mmsh.c:303: undefined reference to `av_opt_set'
+/usr/local/lib/libavformat.a(prompeg.o): In function `prompeg_init':
+/usr/local/src/ffmpeg/libavformat/prompeg.c:346: undefined reference to `av_get_random_seed'
+/usr/local/lib/libavcodec.a(bitstream.o): In function `bitswap_32':
+/usr/local/src/ffmpeg/libavcodec/mathops.h:255: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/mathops.h:258: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/mathops.h:257: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/mathops.h:256: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/mathops.h:255: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(bitstream.o):/usr/local/src/ffmpeg/libavcodec/mathops.h:258: more undefined references to `ff_reverse' follow
+/usr/local/lib/libavcodec.a(bitstream_filter.o): In function `av_bitstream_filter_filter':
+/usr/local/src/ffmpeg/libavcodec/bitstream_filter.c:119: undefined reference to `av_opt_next'
+/usr/local/src/ffmpeg/libavcodec/bitstream_filter.c:125: undefined reference to `av_opt_set_from_string'
+/usr/local/lib/libavcodec.a(dcaenc.o): In function `fft':
+/usr/local/src/ffmpeg/libavcodec/dcaenc.c:391: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(flvdec.o): In function `ff_flv_decode_picture_header':
+/usr/local/src/ffmpeg/libavcodec/flvdec.c:107: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(libvorbisdec.o): In function `oggvorbis_decode_close':
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:191: undefined reference to `vorbis_block_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:192: undefined reference to `vorbis_dsp_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:193: undefined reference to `vorbis_info_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:194: undefined reference to `vorbis_comment_clear'
+/usr/local/lib/libavcodec.a(libvorbisdec.o): In function `oggvorbis_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:169: undefined reference to `vorbis_synthesis'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:175: undefined reference to `vorbis_synthesis_pcmout'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:179: undefined reference to `vorbis_synthesis_read'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:170: undefined reference to `vorbis_synthesis_blockin'
+/usr/local/lib/libavcodec.a(libvorbisdec.o): In function `oggvorbis_decode_init':
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:48: undefined reference to `vorbis_info_init'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:49: undefined reference to `vorbis_comment_init'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:97: undefined reference to `vorbis_synthesis_headerin'
+/usr/local/lib/libavcodec.a(libvorbisdec.o): In function `oggvorbis_decode_close':
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:191: undefined reference to `vorbis_block_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:192: undefined reference to `vorbis_dsp_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:193: undefined reference to `vorbis_info_clear'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:194: undefined reference to `vorbis_comment_clear'
+/usr/local/lib/libavcodec.a(libvorbisdec.o): In function `oggvorbis_decode_init':
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:109: undefined reference to `vorbis_synthesis_init'
+/usr/local/src/ffmpeg/libavcodec/libvorbisdec.c:110: undefined reference to `vorbis_block_init'
+/usr/local/lib/libavcodec.a(options.o): In function `init_context_defaults':
+/usr/local/src/ffmpeg/libavcodec/options.c:111: undefined reference to `av_opt_set_defaults2'
+/usr/local/src/ffmpeg/libavcodec/options.c:141: undefined reference to `av_opt_set'
+/usr/local/src/ffmpeg/libavcodec/options.c:134: undefined reference to `av_opt_set_defaults'
+/usr/local/lib/libavcodec.a(options.o): In function `avcodec_copy_context':
+/usr/local/src/ffmpeg/libavcodec/options.c:202: undefined reference to `av_opt_free'
+/usr/local/src/ffmpeg/libavcodec/options.c:210: undefined reference to `av_opt_copy'
+/usr/local/src/ffmpeg/libavcodec/options.c:217: undefined reference to `av_opt_copy'
+/usr/local/src/ffmpeg/libavcodec/options.c:274: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(pthread_frame.o): In function `ff_frame_thread_free':
+/usr/local/src/ffmpeg/libavcodec/pthread_frame.c:606: undefined reference to `av_opt_free'
+/usr/local/lib/libavcodec.a(pthread_frame.o): In function `ff_frame_thread_init':
+/usr/local/src/ffmpeg/libavcodec/pthread_frame.c:623: undefined reference to `av_cpu_count'
+/usr/local/lib/libavcodec.a(pthread_slice.o): In function `ff_slice_thread_init':
+/usr/local/src/ffmpeg/libavcodec/pthread_slice.c:196: undefined reference to `av_cpu_count'
+/usr/local/lib/libavcodec.a(s302m.o): In function `s302m_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/s302m.c:166: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/s302m.c:167: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/s302m.c:169: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/s302m.c:168: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/s302m.c:169: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(s302m.o):/usr/local/src/ffmpeg/libavcodec/s302m.c:123: more undefined references to `ff_reverse' follow
+/usr/local/lib/libavcodec.a(tak.o): In function `ff_tak_check_crc':
+/usr/local/src/ffmpeg/libavcodec/tak.c:86: undefined reference to `av_crc_get_table'
+/usr/local/src/ffmpeg/libavcodec/tak.c:86: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(diracdsp_init.o): In function `ff_diracdsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/diracdsp_init.c:158: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(hevcdsp_init.o): In function `ff_hevc_dsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/hevcdsp_init.c:697: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(lossless_videodsp_init.o): In function `ff_llviddsp_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/lossless_videodsp_init.c:84: undefined reference to `av_get_cpu_flags'
+/usr/local/lib/libavcodec.a(xbmdec.o): In function `xbm_decode_frame':
+/usr/local/src/ffmpeg/libavcodec/xbmdec.c:106: undefined reference to `ff_reverse'
+/usr/local/src/ffmpeg/libavcodec/xbmdec.c:112: undefined reference to `ff_reverse'
+/usr/local/lib/libavcodec.a(xbmenc.o): In function `xbm_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/xbmenc.c:46: undefined reference to `ff_reverse'
+/usr/local/lib/[0m[91mlibavcodec.a(acelp_pitch_delay.o): In function `ff_amr_set_fixed_gain':
+/usr/local/src/ffmpeg/libavcodec/acelp_pitch_delay.c:136: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(acelp_vectors.o): In function `ff_adaptive_gain_control':
+/usr/local/src/ffmpeg/libavcodec/acelp_vectors.c:207: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(acelp_vectors.o): In function `ff_scale_vector_to_given_sum_of_squares':
+/usr/local/src/ffmpeg/libavcodec/acelp_vectors.c:228: undefined reference to `avpriv_scalarproduct_float_c'
+/usr/local/lib/libavcodec.a(dca_exss.o): In function `ff_dca_check_crc':
+/usr/local/src/ffmpeg[0m[91m/libavcodec/dcadec.h:84: undefined reference to `av_crc'
+/usr/local/lib/libavcodec.a(flac.o): In function `ff_flac_decode_frame_header':
+/[0m[91musr/local/src/ffmpeg/libavcodec/flac.c:138: undefined reference to `av_crc_get_table'
+/usr/local/src[0m[91m/ffmpeg/libavcodec/flac.c:138: undefined reference to `av_crc'
+[0m[91m/usr/local/lib/libavcodec.a(frame_thread_encoder.o): [0m[91mIn function `worker':
+/usr/local/src/ffmpeg/libavcodec[0m[91m/frame_thread_encoder.c:75: undefined reference to `[0m[91mav_fifo_size'
+/usr/local/src/ffmpeg/[0m[91mlibavcodec/frame_thread_encoder.c:82: undefined reference to `av_fifo_generic_read'
+/usr/[0m[91mlocal/lib/libavcodec.a(frame_thread_encoder.o): In function `[0m[91mff_frame_thread_encoder_init':
+/usr/local/src/ffmpeg[0m[91m/libavcodec/frame_thread_encoder.c:180: undefined reference to `[0m[91mav_fifo_alloc_array'
+/usr/local/lib/libavcodec.a(frame_thread_encoder.o[0m[91m): In function `ff_frame_thread_encoder_free':
+/usr[0m[91m/local/src/ffmpeg/libavcodec/frame_thread_encoder.c:246: undefined reference to[0m[91m `av_fifo_freep'
+/usr/local[0m[91m/lib/libavcodec.a(frame_thread_encoder.o): In function `ff_frame_thread_encoder_init':
+/usr/local/src/ffmpeg/libavcodec/frame_thread_encoder.c:163: undefined reference to `av_cpu_count'
+/usr/local/lib/libavcodec.a(frame_thread_encoder.o): In function `ff_frame_thread_encoder_free':
+/usr/local/src/ffmpeg/libavcodec/frame_thread_encoder.c:246: undefined reference to `av_fifo_freep'
+/usr/local/lib/libavcodec.a(frame_thread_encoder.o): In[0m[91m function `ff_thread_video_encode_frame':
+/usr/local/src/ffmpeg/libavcodec/frame_thread_encoder.c:270: undefined reference to `av_fifo_generic_write'
+/usr/local/lib/libavcodec.a(h264_slice.o): In function `h264_export_frame_props':
+/usr/local/src/ffmpeg/libavcodec/h264_slice.c:1246: undefined reference to `av_display_rotation_set'
+/usr/local/src/ffmpeg/libavcodec/h264_slice.c:1247: undefined reference to `av_display_matrix_flip'
+/usr/local/src/ffmpeg/libavcodec/h264_slice.c:1202: undefined reference to `av_stereo3d_create_side_data'
+/usr/local/lib/libavcodec.a(h264_slice.o): In function `h264_slice_init':
+/usr/local/src/ffmpeg/libavcodec/h264_slice.c:1971: undefined reference to `av_get_picture_type_char'
+/usr/local/lib/libavcodec.a(htmlsubtitles.o): In function [0m[91m`html_color_parse':
+/usr/local/src/ffmpeg/libavcodec/htmlsubtitles.c:29: undefined reference to `av_parse_color'
+/usr/local/lib/libavcodec.a(opus_celt.o): In function `ff_celt_init':
+/usr/local/src/ffmpeg/libavcodec/opus_celt.c:1019: undefined reference to `[0m[91mavpriv_float_dsp_alloc'
+/usr/local/lib/libavcodec.a(dirac_dwt_init.o): In function `ff_spatial_idwt_init_x86':
+/usr/local/src/ffmpeg/libavcodec/x86/dirac_dwt_init.c:164: undefined reference to `[0m[91mav_get_cpu_flags'
+[0m[91mcollect2: error: ld returned 1 exit status
+[0mMakefile:83: recipe for target 'motion' failed
+[91mmake: *** [motion] Error 1
+[0mMakefile:2: recipe for target 'build' failed

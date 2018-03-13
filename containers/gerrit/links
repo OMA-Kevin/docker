@@ -1,0 +1,30 @@
+gerrit install walkthrough http://codexc.com/blog/2014/09/how-to-installation-and-configuration-gerrit-v2-10-with-github-oauth/
+			   https://www.rosehosting.com/blog/how-to-install-gerrit2-on-a-centos-7-linux-vps/
+
+gerrit setup http://www.vogella.com/tutorials/Gerrit/article.html#gerrit_installation_setup
+gerrit config http://www.gromacs.org/Developer_Zone/Git/Gerrit
+gerrit config https://www.mediawiki.org/wiki/Gerrit/Advanced_usage
+https://wiki.typo3.org/Tips_and_Tricks_(Git)
+https://wiki.eclipse.org/Gerrit
+https://wiki.qt.io/Setting_up_Gerrit
+
+ssh proxy to gerrit[edit | edit source]
+If gerrit is being slow, when it comes to uploading patches, it might be a network issue. (especially if you are in Europe, at certain times of the day) If you have a server / vm in the US or other proxy that you can use, then you can access gerrit via that.
+
+In your ~/.ssh/config add something like:
+
+Host gerrit.wikimedia.org                                                                              
+  User aude                                                                                            
+  Port 29418                                                                                           
+  Hostname gerrit.wikimedia.org                                                                        
+  IdentityFile=~/.ssh/gerrit                                                                           
+  ProxyCommand nc -x 127.0.0.1:8081 %h %p
+Then connect to the proxy (e.g. via ssh, with the "-D 8081" option). Then it should work to access gerrit to upload / download patches and may be faster.
+
+
+color output git config --global color.ui auto
+Highlight wrong whitespaces in addition: git config --global color.diff.whitespace "red reverse"
+
+Aliases for frequently used commands
+	git config alias.hist 'log --format="%h %ad | %s%d [%an]" --graph --date=short'
+	git config alias.rvmaster 'push origin HEAD:refs/for/master'

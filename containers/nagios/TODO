@@ -1,0 +1,28 @@
+https://github.com/ustream/nagios-consul-plugin.git
+http://wellsie.net/p/512/
+http://labs.consol.de/lang/en/nagios/check_oracle_health/
+
+#sed -i 's/nagiosadmin/d5864,s6511,s6678,x5510,x7679,x8693,x11192,x15341/g' /etc/nagios/cgi.cfg
+#add perl-SNMP to yum pkgs
+
+https://github.com/shawn-sterling/graphios
+
+
+
+bpi http://support.nagios.com/forum/viewtopic.php?f=7&t=29201#p111820
+    http://bp-addon.monitoringexchange.org/doc/INSTALL
+
+jmx plugin - http://www.tagwith.com/question_411630_configuring-jmxeval-plugin-in-nagios
+http://exchange.nagios.org/directory/Utilities/Sync-Active-Directory-Contacts/details
+
+https://github.com/catinello/nagios-check-website
+nagios 10 options https://www.nagios.com/products/nagiosxi/screenshots#prettyPhoto
+https://github.com/NagiosEnterprises/nagiosbpi/blob/master/nagiosbpi/INSTALL
+https://communities.cisco.com/docs/DOC-52835
+http://www.claudiokuenzler.com/nagios-plugins/check_esxi_hardware.php#Usage
+
+nagios-graph:
+https://raymii.org/s/tutorials/Nagios_Core_4_Installation_on_Ubuntu_12.04.html
+
+nagvis:
+http://blog.cppse.nl/nagios4-nagvis-nagiosgraph-docker

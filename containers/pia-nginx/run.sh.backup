@@ -1,0 +1,7 @@
+#/home/x8693/docker/pia-nginx
+#172.17.0.38
+docker run -d --name pia-nginx \
+      -v /home/x8693/docker/pia-nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
+      -p 8080:8080 \
+      nginx
+

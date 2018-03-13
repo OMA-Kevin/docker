@@ -1,0 +1,24 @@
+FROM jdk
+#ENV PROACTIVE_HOME /data/scheduling
+#ENV BUILD /tmp/pa
+#WORKDIR $BUILD
+#ADD Dockerfile /tmp
+#RUN apk --update add bash ca-certificates git libstdc++ git && rm -rf /var/cache/apk/*
+#
+#RUN cd $BUILD && \
+#    git clone https://github.com/ow2-proactive/scheduling.git && \
+#    git clone https://github.com/ow2-proactive/studio.git && \
+#    git clone https://github.com/ow2-proactive/scheduling-portal.git  && \
+#    mkdir -p $BUILD/scheduling/dist/war && cd $BUILD/scheduling/dist/war && mkdir studio rm scheduling && \
+#    cd $BUILD/scheduling && ./gradlew dist && \
+#    cd $BUILD/scheduling-portal && ./gradlew war && \
+RUN cd $BUILD && \
+    mv $BUILD/data/tmp/studio/app/* /data/scheduling/dist/war/studio/ && \
+    mv $BUILD/data/tmp/scheduling-portal/scheduler-portal/build/libs/scheduler-portal-7.28.0-SNAPSHOT.war /data/scheduling/dist/war/scheduler.war && \
+    mv $BUILD/data/tmp/scheduling-portal/rm-portal/build/libs/rm-portal-7.28.0-SNAPSHOT.war /data/scheduling/dist/war/rm.war  && \
+    rm -rf $BUILD
+#EXPOSE 8080
+#ENTRYPOINT ["/data/scheduling/bin/proactive-server", "-ln" ,"0", "-Dproactive.useIPaddress=true"]
+ 
+ 
+

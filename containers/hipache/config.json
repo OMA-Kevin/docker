@@ -1,0 +1,20 @@
+{
+    "server": {
+        "debug": false,
+        "accessLog": "/var/log/hipache.log",
+        "port": 80,
+        "workers": 2,
+        "maxSockets": 100,
+        "deadBackendTTL": 10,
+        "tcpTimeout": 10,
+        "retryOnError": 3,
+        "deadBackendOn500": true,
+        "httpKeepAlive": false,
+        "lruCache": {
+            "size": 5,
+            "ttl": 5
+        }
+    },
+    "redisHost": "localhost",
+    "redisPort": 6379
+}

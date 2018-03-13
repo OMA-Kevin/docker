@@ -1,0 +1,21 @@
+FROM jdk      
+RUN apk --update add bash ca-certificates git libstdc++ git && rm -rf /var/cache/apk/*
+ENV PROACTIVE_HOME /scheduling
+WORKDIR /          
+ADD Dockerfile /                                                                      
+                                                                                      
+RUN git clone https://github.com/ow2-proactive/scheduling.git && \
+    git clone https://github.com/ow2-proactive/studio.git && \    
+    git clone https://github.com/ow2-proactive/scheduling-portal.git  && \
+    mkdir -p $PROACTIVE_HOME/dist/war/studio $PROACTIVE_HOME/dist/war/scheduling $PROACTIVE_HOME/dist/war/rm && \
+    cd $PROACTIVE_HOME && ./gradlew dist && \                                                                                                             
+    cd /scheduling-portal && ./gradlew war && \                                                                     
+    mv /studio/app/* $PROACTIVE_HOME/dist/war/studio/ && \  
+    mv /scheduling-portal/scheduler-portal/build/libs/scheduler-portal-7.28.0-SNAPSHOT.war $PROACTIVE_HOME/dist/war/scheduler.war && \
+    mv /scheduling-portal/rm-portal/build/libs/rm-portal-7.28.0-SNAPSHOT.war $PROACTIVE_HOME/dist/war/rm.war  && \                                   
+    rm -rf /scheduling-portal /studio                                                                                                          
+EXPOSE 8080                                                                                                                                    
+ENTRYPOINT ["/scheduling/bin/proactive-server", "-ln" ,"0", "-Dproactive.useIPaddress=true"]                                                   
+                                                                                                                                               
+                                                                                                                                               
+                                                         

@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+
+"""check_cas_sessions
+
+Usage:
+    check_cas_sessions (-h | --help)
+    check_cas_sessions -S -D <database> -d <duration> -s <sessions>
+    check_cas_sessions (-M | -G) -H <hostname_or_ip_address> -p <port> [-D <database>] -U <username> -P <password> -d <duration> -s <sessions>
+
+Options:
+    -h --help                               Show this screen and exit.
+    -d --duration <duration>                Duration threshold for stale sessions in days.
+    -s --sessions <sessions>                Maximum number of open sessions per user.
+    -M --mysql                              Connect to a MySQL server
+    -G --postgresql                         Connect to a PostgreSQL server
+    -S --sqlite                             Connecto to a SQLite server
+    -H --host <hostname_or_ip_address>      FQDN ir IP address of the database host to connect to.
+    -p --port <port>                        Port where the database server is listening.
+    -D --database <database>                Name or Filename if sqlite of the database to connect to [default: casino].
+    -U --username <username>                Name of the user with which to connect to the database.
+    -P --password <password>                Password of the user with which to connect to the database.
+"""
+from docopt import docopt, DocoptExit
+import psycopg2 as psql
+import MySQLdb as mdb
+import sqlite3
+import datetime
+
+OK = 0
+WARNING = 1
+CRITICAL = 2
+UNKNOWN = 3
+
+def check_sessions(args):
+    dbs = {
+        '--postgresql': psql.connect(host=args['--host'], user=args['--username'], password=args['--password'], database=args['--database']) if args['--postgresql'] else None,
+        '--mysql': mdb.connect(args['--host'], args['--username'], args['--password'], args['--database']) if args['--mysql'] else None,
+        '--sqlite': sqlite3.connect(args['--database']) if args['--sqlite'] else None,
+    }
+    try:
+        connection = dbs[filter(lambda arg: args[arg], {k: args[k] for k in ('--postgresql', '--mysql', '--sqlite')})[0]]
+        cursor = connection.cursor()
+        cursor.execute('select u.username, t.updated_at, t.long_term from casino_ticket_granting_tickets t INNER JOIN casino_users u ON t.user_id = u.id')
+        rows = cursor.fetchall()
+
+        late_sessions = filter(lambda x: datetime.datetime.utcnow() - x[1] > datetime.timedelta(days=1), filter(lambda x: not x[2], rows))
+        multi_sessions = ()
+        for i in rows:
+            if [x[0] for x in rows].count(i[0]) > 5:
+                multi_sessions += ((i[0], len(filter(lambda x: x[0] == i[0], rows))),)
+                rows = filter(lambda x: x[0] != i[0], rows)
+
+        if len(multi_sessions) > 0:
+            print "CRITICAL: There are %s users with excessive open sessions" % len(multi_sessions)
+            for user in multi_sessions:
+                print "{0} ({1})".format(user[0], user[1])
+            exit(CRITICAL)
+
+        if len(late_sessions) > 0:
+            print "WARNING: There are %s stale sessions" % len(late_sessions)
+            for session in late_sessions:
+                print "%s (%s)" % (session[0], datetime.datetime.now() - session[1])
+            exit(WARNING)
+
+        print "OK"
+        exit(OK)
+
+
+    except mdb.Error, e:
+        print "UNKNOWN: The check returned the following Error %d: %s" % (e.args[0], e.args[1])
+        exit(UNKNOWN)
+    except sqlite3.Error, e:
+        print "UNKNOWN: The check returned the following Error %d: %s" % (e.args[0], e.args[1])
+        exit(UNKNOWN)
+
+    finally:
+        if connection:
+            connection.close()
+
+
+if __name__ == '__main__':
+    try:
+        arguments = docopt(__doc__)
+        check_sessions(arguments)
+    except DocoptExit as ex:
+        print ex
+        exit(-1)

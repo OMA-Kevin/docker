@@ -1,0 +1,25 @@
+---
+build_tools:
+  - gcc
+  - glibc
+  - glibc-common
+  - make
+  - perl-ExtUtils-MakeMaker
+  - libxml2-devel
+  - libxslt-devel
+ssl_libs: openssl-devel
+ldap_libs: openldap-devel
+mysql_libs: 
+  - mysql-devel
+  - MySQL-python
+apache: httpd
+gd: gd
+gd_dev: gd-devel
+php: php
+rrdtools:
+  - rrdtool
+  - rrdtool-perl
+gd_perl:
+  - perl-GD
+  - perl-Time-HiRes
+  - perl-CGI

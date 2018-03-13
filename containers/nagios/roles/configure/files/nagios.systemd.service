@@ -1,0 +1,15 @@
+[Unit]
+Description=Nagios Network Monitoring
+Documentation=http://www.nagios.org/documentation
+
+[Service]
+Type=simple
+User=nagios
+Group=nagios
+PIDFile=/var/run/nagios/nagios.pid
+# Verify Nagios config before start as upstream suggested
+ExecStartPre=/usr/sbin/nagios -v /etc/nagios/nagios.cfg
+ExecStart=/usr/sbin/nagios /etc/nagios/nagios.cfg
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  sudo: true
+  roles:
+  - check_mk
+  
+ 
+

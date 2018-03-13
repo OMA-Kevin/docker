@@ -1,0 +1,10 @@
+type Service struct {
+    ID    string               // unique service instance ID
+    Name  string               // service name
+    IP    string               // IP address service is located at
+    Port  int                  // port service is listening on
+    Tags  []string             // extra tags to classify service
+    Attrs map[string]string    // extra attribute metadata
+}
+
+

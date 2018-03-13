@@ -1,0 +1,15 @@
+version: '2'
+services:
+
+  ansible:
+    build: .
+    image: ansible
+    container_name: ansible
+    environment:
+      SERVICE_TAGS: "infra,ansible"
+    privileged: true
+    volumes:
+#      - ~/.ssh/id_rsa.pub:/home/ubuntu/.ssh/authorized_keys
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/local/docker/ansible/config/:/config
+

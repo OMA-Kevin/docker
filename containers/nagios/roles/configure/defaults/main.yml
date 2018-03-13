@@ -1,0 +1,3 @@
+---
+# defaults file for nagios4
+nagios_web_password: nagiosadmin

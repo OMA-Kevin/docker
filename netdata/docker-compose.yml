@@ -1,0 +1,23 @@
+version: "2"
+services:
+
+  netdata:
+    build: .
+    container_name: netdata
+    hostname: netdata
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+    ports:
+      - "24224:24224"
+      - "19999:19999"
+    volumes:
+      - "/proc:/host/proc:ro"
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:rw"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+

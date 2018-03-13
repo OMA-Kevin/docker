@@ -1,0 +1,14 @@
+---
+- name: Install check-mk
+  yum: name={{ item }} state=present
+  with_items:
+    - http://xvxax501/pub/check-mk-raw-1.2.6p5-el7-34.x86_64.rpm
+
+
+- name: open up firewall for consul 
+  firewalld: port="6556/tcp" permanent=true state=enabled
+  notify:
+    - restart firewall
+
+- name: start xinetd now and on reboot
+  service: name=xinetd state=restarted enabled=yes

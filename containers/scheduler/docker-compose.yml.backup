@@ -1,0 +1,30 @@
+version: '2'
+services:
+ 
+  pa_server:
+    build:
+      context: server/.
+    image: pa_server
+    network_mode: host
+    container_name: pa_server
+    restart: always
+    environment:
+      SERVICE_TAGS: "infra,proactive,server"
+      SERVICE_8800_NAME: "proactive"
+      SERVICE_64738_name: "proactive_listener"
+    ports:
+        - "9080:8080"
+        - "64738:64738"
+
+  pa_node:
+    build:
+      context: node/.
+    image: pa_node
+    container_name: pa_node
+    restart: always
+    environment:
+      SERVICE_TAGS: "infra,proactive,node"
+    links:
+        - pa_server:Master
+    command: -r pnp://Master:64738
+    privileged: true

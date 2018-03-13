@@ -1,0 +1,13 @@
+#!/bin/bash
+
+OUTPUT=$(/usr/local/nagios/libexec/check_load "$@")
+RESULT=$?
+
+if [ $RESULT -gt 0 ]; then
+  EXTRA=$(top -n 1 -b | grep PID -A 10)
+  echo -e "$OUTPUT\n$EXTRA"
+  exit $RESULT
+else
+  echo "$OUTPUT"
+  exit $RESULT
+fi

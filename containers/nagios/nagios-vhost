@@ -1,0 +1,63 @@
+<VirtualHost *:443>
+    ServerAdmin webmaster@example.org
+    ServerName nagios.example.org
+    DocumentRoot /var/www/nagios
+
+    <Directory />
+        Options +FollowSymLinks
+        AllowOverride None
+    </Directory>
+
+    <Directory /var/www/nagios>
+        Options -Indexes +FollowSymLinks +MultiViews
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+     SSLEngine On
+     SSLCertificateFile /etc/apache2/ssl/nagios.pem
+     SSLCertificateKeyFile /etc/apache2/ssl/nagios.key
+</VirtualHost>
+
+#<VirtualHost *:443>
+#</VirtualHost>
+
+#http://bonusbits.com/wiki/HowTo:Install_Nagios_Core_on_CentOS_from_Source#Change_Apache_Site_Access_to_Virtual_Host_Based_.28Optional.29
+Change Apache Site Access to Virtual Host Based (Optional)
+Create Symbolic Link in Apache Root Directory to Nagios Web Site
+ln -s /usr/share/nagios/ /var/www/html/nagios
+Configure CGI
+Change URL HTML Path to root
+vim /usr/local/nagios/etc/cgi.cfg
+From url_html_path=/nagios To url_html_path=/
+Uncomment the Following Line
+NameVirtualHost *:80
+Add Virtual Host Info to Nagios Apache Configuration File
+
+vim /etc/httpd/conf.d/nagios.conf
+
+Examples
+<VirtualHost *:80>
+DocumentRoot /var/www/html/nagios
+ServerName nagios.yourdomain.com
+Errorlog /var/log/httpd/nagios.log
+</VirtualHost>
+
+<VirtualHost *:80>
+DocumentRoot /var/www/html/nagios
+ServerName nagios
+Errorlog /var/log/httpd/nagios.log
+</VirtualHost>
+
+<VirtualHost *:80>
+DocumentRoot /var/www/html/nagios
+ServerName hostname
+Errorlog /var/log/httpd/nagios.log
+</VirtualHost>
+
+<VirtualHost *:80>
+DocumentRoot /var/www/html/nagios
+ServerName hostip
+Errorlog /var/log/httpd/nagios.log
+</VirtualHost>
+

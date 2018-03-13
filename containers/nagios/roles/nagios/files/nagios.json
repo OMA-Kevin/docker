@@ -1,0 +1,7 @@
+{
+    "name": "nagios",
+    "tags": ["nagios","system",monitor],
+    "address": "127.0.0.1",
+    "port": 0,
+    "checks": [ { "script": "/bin/systemctl status nagios", "interval": "5s" } ]
+}

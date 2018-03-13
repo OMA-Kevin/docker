@@ -1,0 +1,230 @@
+#!/usr/bin/env python
+
+# Script for measuring response time for redmine urls.
+# It attempts to authenticate via html form which is it given on first GET.
+# It should work generally for anything that forwards properly, and has
+# "username" and "password" fields in the form.
+#
+# I tested it for CASino login and standard Redmine login
+#
+# Exmaple invocation:
+# ./redmine.py -u tkarasek -b http://193.166.24.110:8080 \
+#              -l /rb/master_backlog/digile -c 5
+
+
+import os
+import re
+import sys
+import getpass
+import argparse
+import mechanize
+import cookielib
+import logging
+import time
+import prettytable
+
+from urllib2 import HTTPError
+from sets import Set
+
+logger = logging.getLogger("mechanize")
+logger.addHandler(logging.StreamHandler(sys.stdout))
+logger.setLevel(logging.DEBUG)
+
+
+def getTimedResponse(baseurl, user, password, headers, debug=False):
+    br = mechanize.Browser()
+
+    if debug:
+        br.set_debug_http(True)
+        br.set_debug_responses(True)
+        br.set_debug_redirects(True)
+
+    br.set_cookiejar(cookielib.LWPCookieJar())
+    br.set_handle_equiv(True)
+    br.set_handle_redirect(True)
+    br.set_handle_referer(True)
+    br.set_handle_robots(False)
+    br.addheaders = [
+        ('User-agent', ('Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) '
+                        'Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')),
+        ('Accept', ('text/html,application/xhtml+xml,application/xml;q=0.9,'
+                    '*/*;q=0.8'))
+    ]
+    if headers:
+        br.addheaders += map(lambda x: x.split(': '), [el for elements in args.header for el in elements])
+
+    br.open(baseurl)
+    br.select_form(nr=0)
+    br.form['username'] = user
+    br.form['password'] = password
+    start_time = time.time()
+    response = br.submit()
+    d = time.time() - start_time
+    br.follow_link(url='/logout')
+    return { 'time': d, 'response': response }
+
+def constructBaseURL(host, uri, port, ssl):
+    return '%s://%s%s%s' % ('http' if not ssl else 'https', host, ':'+port if port else '', uri if uri else '')
+
+def usage():
+    print """Usage:
+ """ + sys.argv[0] + """ -H <vhost> | -I <IP-address> -l <username> -P <password>
+       [-u <uri>] [-p <port>] [-w <warn time>] [-c <critical time>]
+       [-k string] [-r <regex> | -R <case-insensitive regex>]
+       [-e <expect>] [-d string] [-s string] [-S] [-v]"""
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-H', '--host')
+    parser.add_argument('-I', '--IP-address')
+    parser.add_argument('-p', '--port')
+    parser.add_argument('-u', '--url')
+    parser.add_argument('-S', '--ssl', action='store_true')
+    parser.add_argument('-l', '--username')
+    parser.add_argument('-P', '--password')
+    parser.add_argument('-e', '--expect')
+    parser.add_argument('-d', '--header-string')
+    parser.add_argument('-s', '--string')
+    parser.add_argument('-k', '--header', nargs='*', action='append')
+    parser.add_argument('-r', '--regex')
+    parser.add_argument('-R', '--eregi')
+    parser.add_argument('-w', '--warning')
+    parser.add_argument('-c', '--critical')
+    parser.add_argument('-v', '--verbose', action='store_true')
+
+
+    args = parser.parse_args()
+
+    if (len(sys.argv) == 1):
+        print sys.argv[0] + ':  Could not parse arguments'
+        usage()
+        exit(-1)
+
+    if not ((args.host or args.IP_address) and args.username and args.password):
+       print sys.argv[0] + ': You must specify a server address or host name as well as a username and password'
+       usage()
+       exit(-1)
+
+    baseurl = constructBaseURL(args.host if args.host else args.IP_address, args.url, args.port, args.ssl)
+
+    try:
+        timed_response = getTimedResponse(baseurl, args.username, args.password,
+					  args.header, args.verbose)
+
+        if (args.critical):
+            if (timed_response['time'] > float(args.critical)):
+                print 'CRITICAL - Response time critical threshold exceeded | time=%ss;%s;%s;0' % (timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+                exit(2)
+
+        if (args.warning):
+            if (timed_response['time'] > float(args.warning)):
+                print 'WARNING - Response time warning threshold exceeded | time=%ss;%s;%s;0' % (timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+                exit(1)
+
+        if (args.header_string):
+            for key in timed_response['response'].info().keys():
+                if (args.header_string in key):
+                    found = True
+            if not found:
+                for value in timed_response['response'].info().values():
+                    if (args.header_string in value):
+                        found = True
+            if not found:
+                for item in timed_response['response'].info().items():
+                    if (args.header_string in ': '.join(item)):
+                        found = True
+            if not found:
+                print 'CRITICAL - Requested string not found in headers | time=%ss;%s;%s;0' % (timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+                exit(2)
+
+        if (args.expect):
+            if (args.expect not in timed_response['response'].info().getheader('status')):
+                print 'CRITICAL - Request returned wrong status code: %s | time=%ss;%s;%s;0' % (timed_response['response'].info().getheader('status'),
+							timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+                exit(2)
+
+        if (args.string):
+            if (args.string not in timed_response['response'].read()):
+                print 'CRITICAL - Requested string \"%s\" was not found on the page | time=%ss;%s;%s;0' % (args.string,
+                                                        timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+                exit(2)
+
+        if (args.regex):
+            if not (re.search(args.regex, timed_response['response'].read())):
+                print 'CRITICAL - Requested regex \"%s\" was not found on the page | time=%ss;%s;%s;0' % (args.regex,
+                                                        timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+                exit(2)
+
+        if (args.eregi):
+            if not (re.search(args.eregi, timed_response['response'].read(), re.I)):
+                print 'CRITICAL - Requested regex \"%s\" was not found on the page | time=%ss;%s;%s;0' % (args.eregi,
+                                                        timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+                exit(2)
+
+        if (args.expect):
+            print 'OK - Request returned expected status code: %s | time=%ss;%s;%s;0' % (args.expect,
+                                                        timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+            exit(0)
+
+        if (args.header_string):
+            print 'OK - Requested string found in headers | time=%ss;%s;%s;0' % (timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+            exit(0)
+
+        if (args.string):
+            print 'OK - Requested string found in page | time=%ss;%s;%s;0' % (timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+            exit(0)
+
+        if (args.regex or args.eregi):
+            print 'OK - Requested regular expression found in page | time=%ss;%s;%s;0' % (timed_response['time'],
+                                                        float(args.warning) if args.warning else '',
+                                                        float(args.critical) if args.critical else '')
+            exit(0)
+
+        print 'OK - Response: %s | time=%ss;%s;%s;0' % (timed_response['response'].info().getheader('status'),
+							timed_response['time'],
+							float(args.warning) if args.warning else '',
+							float(args.critical) if args.critical else '')
+        exit(0)
+
+    except HTTPError as httperr:
+        if (args.expect):
+            if (args.expect not in httperr.getcode()):
+                print 'CRITICAL - Request returned wrong status code: %s' % httperr.getcode()
+                exit(2)
+            else:
+                print 'OK - Request returned expected status code: %s' % httperr.getcode()
+                exit(0)
+
+        if (httperr.getcode() in Set(range(401, 418)).union(Set(range(500, 505)))):
+            print 'CRITICAL - Request failed - %s-%s' % (httperr.getcode(), httperr.reason)
+            exit(2)
+
+        print 'UNKNOWN - Request returned an unexpected status code - %s-%s' % (httperr.getcode(), httperr.reason)
+        exit(3)
+
+    except Exception as e:
+        print e
+        print 'UNKNOWN - An unexpected error ocurred'
+        exit(3)

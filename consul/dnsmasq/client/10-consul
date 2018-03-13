@@ -1,0 +1,7 @@
+server=/consul/192.168.1.120#8600
+rev-server=192.168.0.0/16,192.168.1.120#8600
+no-poll
+server=192.168.1.120
+server=192.168.1.1
+server=8.8.8.8
+cache-size=65536

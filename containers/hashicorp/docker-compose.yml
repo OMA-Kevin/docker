@@ -1,0 +1,81 @@
+version: '2'
+services:
+
+  consul:
+    image: "consul"
+    hostname: "consul"
+    container_name: "consul"
+    command: "agent -dev -client 0.0.0.0"
+    ports:
+      - "8300:8300"
+      - "8301:8301"
+      - "8302:8302"
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:53/udp"
+#    environment:
+#      - SERVICE_TAGS: "infra,monitor,consul"
+#      - SERVICE_8300_NAME: "consul-svr-rpc"
+#      - SERVICE_8301_NAME: "consul-serf-lan"
+#      - SERVICE_8302_NAME: "consul-serf-wan"
+#      - SERVICE_8400_NAME: "consul-cli-rpc"
+#      - SERVICE_8500_NAME: "consul"
+#      - SERVICE_8600_NAME: "consul-dns"
+
+  vault:
+    depends_on:
+      - consul
+    image: "vault"
+    container_name: "vault"
+    hostname: "vault"
+    links:
+      - "consul:consul"
+    environment:
+      SERVICE_TAGS: "infra,consul,vault"
+      SERVICE_8200_NAME: "consul-svr-rpc"
+      VAULT_ADDR: http://127.0.0.1:8200
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./tools/wait-for-it.sh:/wait-for-it.sh
+      - ./config/vault:/config
+      - ./config/vault/policies:/policies
+    entrypoint: /wait-for-it.sh -t 20 -h consul -p 8500 -s -- vault server -config=/config/with-consul.hcl
+
+  nomad:
+    depends_on:
+      - consul
+      - vault
+    build:
+      context: ./nomad
+    container_name: "nomad"
+    hostname: "nomad"
+    network_mode: "host"
+    environment:
+      SERVICE_TAGS: "infra,consul,nomad"
+    ports:
+      - "4646:4646"
+      - "4647:4647"
+      - "4648:4648"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /docker/data/nomad/:/data
+      - /docker/config/nomad/:/config
+
+  ui:
+    depends_on:
+      - consul
+      - nomad
+      - vault
+    image: "jippi/hashi-ui"
+    container_name: "ui"
+    hostname: "ui"
+    environment:
+      SERVICE_TAGS: "consul,nomad,vault,gui"
+      NOMAD_ENABLE: 1
+      NOMAD_ADDR: "http://10.29.42.107:4646"
+      CONSUL_ENABLE: 1
+      CONSUL_ADDR: "10.29.42.107:8500"
+    ports:
+      - "8700:3000"
+

@@ -1,0 +1,2 @@
+curl https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz | gzip -d - | tar xvf - -C /tmp/go --strip-components=1
+

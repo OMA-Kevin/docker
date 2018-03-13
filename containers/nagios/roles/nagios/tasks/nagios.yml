@@ -1,0 +1,185 @@
+---
+- name: Load distribution specifics
+  include_vars: '../vars/{{ ansible_os_family }}.yml'
+
+- name: tweak nagios localhost configuration file.
+  replace:
+    dest: /tmp/nagioscore/sample-config/template-object/localhost.cfg.in
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.line }}"
+  with_items:
+    - { regexp: 'linux-servers', line: 'others' }
+    - { regexp: 'Linux Servers', line: 'Other Servers' }
+    - { regexp: 'localhost', line: 'nagios' }
+
+- name: Add nagios logo to localhost
+  lineinfile:
+    dest: /tmp/nagioscore/sample-config/template-object/localhost.cfg.in
+    insertafter: .*127\.0\.0\.1
+    line: "\ticon_image\t\tNagios.png\n\tstatusmap_image\t\tNagios.gd2\n\t2d_coords\t\t327.5,20.0"
+    state: present
+
+#  --prefix=PREFIX         install architecture-independent files in PREFIX [/usr/local/nagios]
+#  --exec-prefix=EPREFIX   install architecture-dependent files in EPREFIX [PREFIX]
+#  --bindir=DIR            user executables [EPREFIX/bin]
+#  --sbindir=DIR           system admin executables [EPREFIX/sbin]
+#  --libexecdir=DIR        program executables [EPREFIX/libexec]
+#  --sysconfdir=/etc
+
+- name: Configure nagios
+  shell: ./configure --with-nagios-group=nagios --with-command-group=nagcmd --with-mail=/usr/bin/sendmail
+    chdir=/tmp/nagioscore
+    creates=/tmp/nagioscore/Makefile
+
+- name: Remove Alt Text on service extra actions, it will interfere on mouseovers.
+  lineinfile:
+    dest: /tmp/nagioscore/cgi/status.c
+    regexp: (.*?)TITLE='%s'(.*?)\"Perform Extra Service Actions\", (.*)
+    backrefs: yes
+    line: \1\2\3
+    state: present
+
+- name: Remove Alt Text on service extra info actions.
+  lineinfile:
+    dest: /tmp/nagioscore/cgi/extinfo.c
+    regexp: (.*?) title='Perform.+'(.*)
+    backrefs: yes
+    line: \1\2
+    state: present
+
+- name: Build nagios and install
+  shell: make {{ item }}
+    chdir=/tmp/nagioscore
+  with_items:
+    - all
+    - install
+    - install-config
+    - install-commandmode
+    - install-webconf
+  register: build_core
+- debug: var=build_core
+
+- name: Disable notifications by default
+  lineinfile:
+    dest: /usr/local/nagios/etc/nagios.cfg
+    regexp: "^enable_notifications"
+    line: "enable_notifications=0"
+    state: present
+
+- name: Set user coordinates as default map
+  lineinfile:
+    dest: /usr/local/nagios/etc/cgi.cfg
+    regexp: "^default_statusmap_layout"
+    line: "default_statusmap_layout=0"
+    state: present
+
+- name: Install systemd service
+  copy:
+    src: nagios.systemd
+    dest: /etc/systemd/system/nagios.service
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy over the event handlers folder
+  shell: cp -R contrib/eventhandlers/ /usr/local/nagios/libexec/
+    chdir=/tmp/nagioscore
+    creates=/usr/local/nagios/libexec/eventhandlers
+
+- name: Ensure ownership of event handlers folder
+  file:
+    path: /usr/local/nagios/libexec/eventhandlers
+    state: directory
+    owner: nagios
+    group: nagios
+
+- name: Remove swap check from localhost config file
+  replace:
+    dest: /usr/local/nagios/etc/objects/localhost.cfg
+    regexp: define service.*(?:\n.*){3}Swap.*(?:\n.*){2}}\n
+
+- name: Upload check_cas plugin
+  copy:
+    src: check_cas
+    dest: /usr/local/nagios/libexec/check_cas
+    owner: nagios
+    group: nagios
+    mode: 0755
+
+- name: Upload distribution logo icons
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/nagios/share/images/logos/
+    owner: nagios
+    group: nagios
+    mode: 0644
+  with_items:
+    - Fedora.png
+    - CentOS.png
+    - RedHat.png
+    - Debian.png
+    - Ubuntu.png
+    - Nagios.png
+    - grid.gd2
+    - Fedora.gd2
+    - CentOS.gd2
+    - RedHat.gd2
+    - Debian.gd2
+    - Ubuntu.gd2
+    - Nagios.gd2
+    - database.gd2
+    - drupal.gd2
+    - gitlab.gd2
+    - haproxy.gd2
+    - jenkins.gd2
+    - mysql.gd2
+    - nfs.gd2
+    - postgresql.gd2
+    - redmine.gd2
+    - forge.gd2
+    - openstack.png
+    - openstack.gd2
+
+- name: Set up default user for Web Interface Access
+  htpasswd:
+    path: /usr/local/nagios/etc/htpasswd.users
+    name: nagiosadmin
+    password: "{{ nagios_web_password }}"
+  notify: restart httpd
+
+- name: softlink nagios binary
+  file: src=/usr/local/nagios/bin/nagios dest=/usr/sbin/nagios state=link owner=nagios follow=no force=yes
+
+- name: softlink nagiostats binary
+  file: src=/usr/local/nagios/bin/nagiostats dest=/usr/sbin/nagiostats state=link owner=nagios follow=no force=yes
+
+- name: softlink nagios etc dir
+  file: src=/usr/local/nagios/etc dest=/etc/nagios owner=nagios group=nagios state=link follow=no
+
+- name: softlink nagios plugins
+  file: src=/usr/local/nagios/libexec dest=/etc/nagios/plugins owner=nagios group=nagios state=link follow=no
+
+- copy: src={{playbook_dir}}/roles/configure/files/vh-nagios.conf dest=/etc/httpd/conf.d owner=nagios group=nagios mode=664
+
+- copy: src={{playbook_dir}}/roles/configure/files/ncheck dest=/usr/bin owner=nagios group=nagios mode=0755
+
+- name: start firewall so ansible doesnt die if its down
+  service: name=firewalld.service state=started enabled=yes
+
+- name: open up firewall for http
+  firewalld: service=http permanent=true state=enabled
+
+- name: open up firewall for nagios
+  firewalld: port={{ item }} permanent=true state=enabled
+  with_items:
+    - "5666/tcp"
+    - "8090/tcp"
+  notify: restart firewalld
+
+- name: start nagios now and on reboot
+  service: name=nagios.service state=started enabled=yes
+  notify: restart httpd
+
+
+
+

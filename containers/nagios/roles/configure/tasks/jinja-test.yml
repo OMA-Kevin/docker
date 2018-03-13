@@ -1,0 +1,69 @@
+#http://adamj.eu/tech/2014/10/02/merging-groups-and-hostvars-in-ansible-variables/
+#command="{% if ansible_os_family != "RedHat" %}/usr{% endif %}/bin/nice -15 /usr/bin/rsync --server --daemon .",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa AAAB3[...]Q== endpoint-backup"
+- hosts: all
+  connection: local
+  tasks:
+    - debug:
+        # Comma-separated string of all ip4 addresses of hosts
+        msg: |
+          {% set comma = joiner(",") %}
+          {% for item in ['127.0.0.1', '127.0.0.1'] -%}
+              {{ comma() }}{{ hostvars[item].ansible_default_ipv4.address }}
+          {%- endfor %}
+
+
+
+
+
+The file looked something like this:
+NameVirtualHost *:80
+
+<VirtualHost *:80>
+  ServerName www.domain.tld
+  DocumentRoot /www/domain
+  [more rules...]
+</VirtualHost>
+
+<VirtualHost *:80>
+  ServerName www.otherdomain.tld
+  DocumentRoot /www/otherdomain
+  [more rules...]
+</VirtualHost>
+
+[more definitions here...]
+
+However, this file grows over time into an unmanageable mess, as I've had more than 20 vhosts at times. (Aside: I could avoid this mess by working on sites individually with different Vagrant/Ansible profiles per instance, but when I'm doing generic work on a normal LAMP stack, I like having one main VM that has all the tools installed (mostly so I don't have to keep booting and halting VMs and loading up my small SSD with a bunch of VMs)).
+
+Ansible and it's built-in integration with the Jinja2 templating system makes managing virtual hosts (and other files where you might have a lot of repeated boilerplate with different variables) simple.
+
+As a simple example (without many options for the virtual hosts), here's all I had to do to make Ansible and Jinja do the heavy lifting for me:
+
+1. Add .j2 to the end of my vhosts.conf file to indicate that it's a Jinja2 template.
+
+2. Modify the vhosts.conf.j2 template so instead of listing all the virtual hosts, it just has one definition inside a for loop, like so:
+NameVirtualHost *:80
+
+{% for vhost in apache_vhosts %}
+<VirtualHost *:80>
+  ServerName {{ vhost.servername }}
+  DocumentRoot {{ vhost.documentroot }}
+{% if vhost.serveradmin is defined %}
+  ServerAdmin {{ vhost.serveradmin }}
+{% endif %}
+  <Directory "{{ vhost.documentroot }}">
+    AllowOverride All
+    Options -Indexes FollowSymLinks
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>
+
+{% endfor %}
+
+(The extra space before the endfor is to allow for a space between each vhost entry, and the if clause is indented as such to prevent the following line from being indented an extra space).
+
+3. Define the apache_vhosts variable inside your playbook, or via an included playbook, or via any other supported Ansible variable definition method, for example:
+vars:
+  apache_vhosts:
+    - {servername: "www.domain.tld", documentroot: "/www/domain"}
+    - {servername: "www.otherdomain.tld", documentroot: "/www/otherdomain", serveradmin: "webmaster@otherdomain.tld"}

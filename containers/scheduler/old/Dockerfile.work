@@ -1,0 +1,14 @@
+FROM jdk
+RUN apk --update add bash ca-certificates git libstdc++ && rm -rf /var/cache/apk/*
+ENV PROACTIVE_HOME /data/scheduling
+COPY data /data
+RUN cd /data/scheduling && ./gradlew dist && \
+    cd /data/tmp/scheduling-portal && ./gradlew war && \
+    mv /data/tmp/studio/app/* /data/scheduling/dist/war/studio/ && \
+    mv /data/tmp/scheduling-portal/scheduler-portal/build/libs/scheduler-portal-7.28.0-SNAPSHOT.war /data/scheduling/dist/war/scheduler.war && \
+    mv /data/tmp/scheduling-portal/rm-portal/build/libs/rm-portal-7.28.0-SNAPSHOT.war /data/scheduling/dist/war/rm.war  && \
+    rm -rf /data/tmp
+EXPOSE 8080
+ENTRYPOINT ["/data/scheduling/bin/proactive-server", "-ln" ,"0", "-Dproactive.useIPaddress=true"]
+ 
+ 

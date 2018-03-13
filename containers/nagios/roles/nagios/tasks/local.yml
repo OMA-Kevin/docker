@@ -1,0 +1,2 @@
+- user: name=x8693 groups=nagios,nagcmd append=yes
+- shell: sed -i 's/nagiosadmin/d5864,s6511,s6678,x5510,x7679,x8693,x11192,x15341/g' /etc/nagios/cgi.cfg

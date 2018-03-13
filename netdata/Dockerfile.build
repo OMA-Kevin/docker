@@ -1,0 +1,8 @@
+FROM alpine:3.5
+RUN apk add --no-cache alpine-sdk bash curl zlib-dev util-linux-dev libmnl-dev gcc make git autoconf automake pkgconfig python logrotate nodejs
+RUN git clone https://github.com/firehol/netdata.git --depth=1 && cd netdata && ./netdata-installer.sh 
+#RUN echo -e "#!/usr/bin/env bash\n/usr/sbin/netdata" >/etc/local.d/netdata.start && chmod 755 /etc/local.d/netdata.start
+#RUN echo -e "#!/usr/bin/env bash\nkillall netdata" >/etc/local.d/netdata.stop && chmod 755 /etc/local.d/netdata.stop
+#RUN rc-update add local
+#EXPOSE 19999
+#CMD /usr/sbin/netdata -D -s /host -p ${NETDATA_PORT}

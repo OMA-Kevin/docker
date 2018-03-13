@@ -1,0 +1,26 @@
+---
+#- debug: var={{NAGIOS_HOST_GROUP}}
+#- debug: var={{group_names}}
+#- debug: var=group_names
+#- yum:
+
+- name: create generated config directory
+  local_action: file path=/etc/nagios/ansible state=directory owner=nagios group=nagios mode=0775
+- local_action: file path=/etc/nagios/ansible/hosts/ state=directory owner=nagios group=nagios mode=0775
+- local_action: file path=/etc/nagios/ansible/hostgroups/ state=directory owner=nagios group=nagios mode=0775
+- local_action: file path=/etc/nagios/ansible/exthostinfo/ state=directory owner=nagios group=nagios mode=0775
+
+- name: template hostsgroup
+  local_action: template src=hostgroup.j2 dest=/etc/nagios/ansible/hostgroups/{{group_names[0]}}.cfg owner=nagios group=nagios mode=0665
+
+- name: template hosts
+  local_action: template src=host.j2 dest=/etc/nagios/ansible/hosts/{{ansible_hostname}}.cfg owner=nagios group=nagios mode=0665
+
+- name: template hostsextinfo
+  local_action: template src=hostextinfo.j2 dest=/etc/nagios/ansible/exthostinfo/{{ansible_hostname}}.cfg owner=nagios group=nagios mode=0665
+
+- name: copy nagios check script
+  local_action: copy src=ncheck dest=/usr/bin/ncheck owner=nagios group=nagios mode=0755
+
+
+

@@ -1,0 +1,21 @@
+data_dir="/nomad/data"
+server {
+  enabled=true,
+  bootstrap_expect=3,
+  data_dir="/nomad/data",
+  encrypt="IeOu+TXcc8jjMeunXj96Fw==",
+  retry_join=["10.29.42.111", "10.29.42.116"]
+}
+
+consul {
+  address = "http://consul.oppd.oppd-ds.com:80"
+}
+
+client {
+  enabled       = false
+  network_speed = "10"
+  options {
+    "driver.raw_exec.enable" = "1"
+  }
+}
+

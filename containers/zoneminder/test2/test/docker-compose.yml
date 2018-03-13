@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  zoneminder:
+    build: ../containers/zoneminder
+    environment:
+      - "MYSQL_HOST=mariadb"
+      - "MYSQL_DATABASE=zm"
+      - "MYSQL_USER=zm"
+      - "MYSQL_PASSWORD=zm"
+      - "PHP_TZ=Europe/Paris"
+
+  mariadb:
+    image: mariadb
+    environment:
+      - "MYSQL_RANDOM_ROOT_PASSWORD=yes"
+      - "MYSQL_DATABASE=zm"
+      - "MYSQL_USER=zm"
+      - "MYSQL_PASSWORD=zm"

@@ -1,0 +1,31 @@
+---
+- hosts: all
+  name: Gather facts from hosts
+  tasks: [ ]
+
+- hosts: all
+  sudo: true
+  roles:
+  - configure
+
+- hosts: localhost
+  sudo: true
+  tasks:
+  - user: name=x8693 groups=nagios,nagcmd append=yes
+  - command: nagios -v /etc/nagios/nagios.cfg
+    register: check_result
+  - debug: var=check_result
+  - lineinfile: dest=/etc/nagios/nagios.cfg insertafter="^#cfg_dir=/usr/local/nagios/etc/routers" line="cfg_dir=/etc/nagios/ansible"
+  - copy: src={{playbook_dir}}/roles/configure/files/nagios.conf dest=/etc/httpd/conf.d owner=nagios group=nagios mode=664
+  - copy: src={{playbook_dir}}/roles/configure/files/ncheck dest=/usr/bin owner=nagios group=nagios mode=0755
+  - copy: src={{playbook_dir}}/roles/configure/files/check_snmp_storage dest=/usr/lib64/nagios/plugins/check_snmp_storage owner=nagios group=nagios mode=0755
+  - copy: src={{playbook_dir}}/roles/configure/files/check_snmp_load    dest=/usr/lib64/nagios/plugins/check_snmp_load owner=nagios group=nagios mode=0755
+  - copy: src={{playbook_dir}}/roles/configure/files/commands.cfg dest=/etc/nagios/ansible owner=nagios group=nagios mode=0755
+  - copy: src={{playbook_dir}}/roles/configure/files/linux-contact-group.cfg dest=/etc/nagios/ansible owner=nagios group=nagios mode=0755
+  - copy: src={{playbook_dir}}/roles/configure/files/service-group.cfg dest=/etc/nagios/ansible owner=nagios group=nagios mode=0755
+  - copy: src={{playbook_dir}}/roles/configure/files/services.cfg dest=/etc/nagios/ansible owner=nagios group=nagios mode=0755
+  - firewalld: port="6556/tcp" permanent=true state=enabled
+  - service: name=firewalld state=restarted
+  - service: name=httpd state=restarted
+  - service: name=nagios state=restarted
+

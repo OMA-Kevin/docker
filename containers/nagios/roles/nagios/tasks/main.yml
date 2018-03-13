@@ -1,0 +1,5 @@
+---
+- include: setup.yml
+- include: nagios.yml
+- include: local.yml
+- include: plugins.yml

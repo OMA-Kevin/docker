@@ -1,0 +1,27 @@
+version: '2'
+services:
+ 
+  pa_server:
+    image: tobwiens/proactive-scheduler
+    command: -Dproactive.net.netmask=192.168.1.121/24
+    network_mode: host
+    container_name: pa_server
+    restart: always
+    environment:
+      SERVICE_TAGS: "infra,proactive,server"
+      SERVICE_8800_NAME: "proactive"
+      SERVICE_64738_name: "proactive_listener"
+    ports:
+        - "9080:8080"
+        - "64738:64738"
+
+  pa_node:
+    image: tobwiens/proactive-node
+    container_name: pa_node
+    network_mode: host
+    container_name: pa_node
+    restart: always
+    environment:
+      SERVICE_TAGS: "infra,proactive,node"
+    command: -r pnp://192.168.1.121:64738
+    privileged: true

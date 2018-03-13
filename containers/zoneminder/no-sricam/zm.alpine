@@ -1,0 +1,85 @@
+ZoneMinder video camera security and surveillance
+ZoneMinder usually runs with apache, but in this short howto we use lighttpd.
+First add the needed packages to our system
+apk add zoneminder mysql mysql-client lighttpd php5-fpm php5-pdo php5-pdo_mysql
+Initialize mysql database
+/etc/init.d/mariadb setup
+set root password for mysql as instructed by mysql setup
+/usr/bin/mysqladmin -u root password 'your_secure_root_mysql_password'
+Create a zoneminder MySQL database and user
+mysql> create database zm;
+mysql> CREATE USER zm@localhost IDENTIFIED BY 'your_zm_password_as_set_in_config';
+mysql> grant CREATE, INSERT, SELECT, DELETE, UPDATE, DROP on zm.* to zm@localhost;
+We are running lighttpd so lets run php-fpm as lighttpd user/group
+vim /etc/php/php-fpm.conf
+Which should look like:
+; Unix user/group of processes
+; Note: The user is mandatory. If the group is not set, the default user's group
+;       will be used.
+;user = nobody
+;group = nobody
+user = lighttpd
+group = lighttpd
+Enable the php cgi fpm config in lighttpd.conf
+vim /etc/lighttpd/lighttpd.conf
+Go down to the includes section, it should look like:
+# {{{ includes
+include "mime-types.conf"
+# uncomment for cgi support
+   include "mod_cgi.conf"
+# uncomment for php/fastcgi support
+#   include "mod_fastcgi.conf"
+# uncomment for php/fastcgi fpm support
+   include "mod_fastcgi_fpm.conf"
+
+# }}}
+Edit lighttpd cgi config and add old style cgi support by adding to cgi.assign
+vim /etc/lighttpd/mod_cgi.conf
+which should look like
+cgi.assign = (
+    ""      =>      "",
+    ".pl"   =>      "/usr/bin/perl",
+    ".cgi"  =>      "/usr/bin/perl"
+)
+start php-fpm
+/etc/init.d/php-fpm start
+start lighttpd
+/etc/init.d/lighttpd start
+Set the MySQL hostname, username, password.
+Change the ZoneMinder user (ZM_WEB_USER) and group (ZM_WEB_GROUP) to lighttpd
+And set ZM_SERVER_HOST to your zoneMinder hostname/ipaddress
+vim /etc/zm.conf
+Which should look like:
+# Username and group that web daemon (httpd/apache) runs as
+ZM_WEB_USER=lighttpd
+ZM_WEB_GROUP=lighttpd
+# ZoneMinder database type: so far only mysql is supported
+ZM_DB_TYPE=mysql
+
+# ZoneMinder database hostname or ip address
+ZM_DB_HOST=localhost
+
+# ZoneMinder database name
+ZM_DB_NAME=zm
+
+# ZoneMinder database user
+ZM_DB_USER=zm
+
+# ZoneMinder database password
+ZM_DB_PASS=your_zm_password_as_set_in_config
+
+# Host of this machine
+ZM_SERVER_HOST=yourserver
+Change ownership of zm.conf to lighttpd
+chown lighttpd.lighttpd /etc/zm.conf
+Initialize the zoneminder database
+/etc/init.d/zoneminder setup
+Start zoneminder
+/etc/init.d/zoneminder start
+Profit!
+To access zoneminder, browse to http://yourserver/zm/
+To make it start automatically on boot:
+rc-update add lighttpd default
+rc-update add mariadb default
+rc-update add php-fpm default
+rc-update add zoneminder default

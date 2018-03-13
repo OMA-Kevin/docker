@@ -1,0 +1,13 @@
+{
+  "advertise_addr": "10.29.42.107",
+  "bootstrap_expect": 3,
+  "datacenter": "oppd",
+  "data_dir": "/tmp/consul",
+  "encrypt": "IeOu+TXcc8jjMeunXj96Fw==",
+  "log_level": "INFO",
+  "retry_join: ["10.29.42.111", "10.29.42.116"]
+  "server": true
+  "syslog": true
+  "ui": true
+}
+

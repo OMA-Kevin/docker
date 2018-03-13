@@ -1,0 +1,10 @@
+---
+- yum: name=nagios-plugins-all state=present
+- shell: "sed -i 's@/usr/local/nagios/libexec@/usr/lib64/nagios/plugins@g' /etc/nagios/resource.cfg"
+- command: nagios -v /etc/nagios/nagios.cfg
+  register: check_result
+- debug: var=check_result
+- service: name=firewalld state=restarted
+- service: name=httpd state=restarted
+- service: name=nagios state=restarted
+

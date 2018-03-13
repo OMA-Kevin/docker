@@ -1,0 +1,11 @@
+https://github.com/veggiemonk/awesome-docker#dev-tools
+http://www.alexecollins.com/first-steps-with-docker/
+http://docs.docker.com/articles/basics/
+https://docs.docker.com/reference/builder/
+https://gerrit.googlesource.com/?format=HTML
+
+
+http://gitenterprise.me/2015/02/27/gerrit-2-10-rpm-and-debian-packages-available/
+rpm -i https://gerritforge.com/gerritforge-repo-1-1.noarch.rpm
+
+http://thepracticalsysadmin.com/category/monitoring/
